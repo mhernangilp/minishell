@@ -11,7 +11,6 @@ int main(int argc, char **argv)
 	}
 	while (1)
 	{
-		// Leer una línea de entrada utilizando readline
 		input = readline("Ingrese un comando: ");
 
 		// Verificar si se presionó Ctrl+D para salir del bucle
