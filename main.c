@@ -11,17 +11,15 @@ int main(int argc, char **argv)
 	}
 	while (1)
 	{
-		// Leer una línea de entrada utilizando readline
-		input = readline("Ingrese un comando: ");
-
+		input = readline(ENTRADA_MS);
 		// Verificar si se presionó Ctrl+D para salir del bucle
 		if (input == NULL)
 		{
-			printf("\nSaliendo...\n");
-			break;
+			printf("exit\n");
+			exit(1);
 		}
 		add_history(input);
-		printf("Has ingresado: %s\n", input);
+		builtins(input);
 		if (ft_strcmp(input, "ls") > 0)
 		{
 			execve("/bin/ls", argv, NULL);
@@ -34,6 +32,26 @@ int main(int argc, char **argv)
 }
 
 
+void builtins(char *input)
+{
+	char *buffer;
+	
+	buffer = malloc (sizeof (size_t));
+	if (ft_strcmp(input, "exit") > 0)
+	{
+		printf("exit\n");
+		exit(1);
+	}
+	else if (ft_strcmp(input, "pwd") > 0)
+	{
+		if (getcwd(buffer, 1024) != NULL)
+		{
+			printf("%s\n", buffer);
+			free(buffer);
+		}
+	}
+}
+
 int ft_strcmp(char *str, char *cmp)
 {
 	int i;
@@ -44,5 +62,7 @@ int ft_strcmp(char *str, char *cmp)
 		if (str[i] != cmp[i])
 			return (-1);
 	}
+	if (cmp[i])
+		return (-1);
 	return (i);
 }
