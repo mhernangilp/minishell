@@ -3,7 +3,8 @@
 int main(int argc, char **argv) 
 {
 	char *input;
-	//(void) argv;
+	
+	(void) argv;
 	if (argc != 1)
 	{
 		printf("Wrong parameters\n");
@@ -19,15 +20,12 @@ int main(int argc, char **argv)
 			exit(1);
 		}
 		add_history(input);
-		builtins(input);
-		if (ft_strcmp(input, "ls") > 0)
-		{
-			execve("/bin/ls", argv, NULL);
-			printf("Este comando que coñi es?\n");
-		}
+		// CREAR HISTORIAL
+		// PARSEO
+		//EJECUCIÓN
+			//(builtins(input))
 		free(input);
 	}
-
 	return (0);
 }
 
