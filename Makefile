@@ -35,7 +35,8 @@ clean:
 	@echo $(RED)"minishell OBJS were deleted"$(NO_COLOR)
 
 fclean: clean
-	@make fclean -C $(LIBFT_PATH)
+	$(RM) $(LIBFT)
+	@echo $(RED)"libft.a deleted"$(NO_COLOR)
 	$(RM) $(NAME)
 	@echo $(RED)"$(NAME) deleted"$(NO_COLOR)
 
