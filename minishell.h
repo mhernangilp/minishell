@@ -6,20 +6,18 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/09/25 16:03:07 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/09/25 16:56:30 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <dirent.h>
 # include <string.h>
-# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "libft.h"
 
 # define ENTRADA_MS "\001\033[93m\002minishell > \001\033[0;0m\002"
 
