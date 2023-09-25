@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
+/*   Updated: 2023/09/25 16:05:48 by gfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int main(int argc, char **argv) 
+int	main(int argc, char **argv)
 {
-	char *input;
-	
+	char	*input;
+
 	(void) argv;
 	if (argc != 1)
 	{
@@ -13,27 +25,25 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		input = readline(ENTRADA_MS);
-		// Verificar si se presionó Ctrl+D para salir del bucle
 		if (input == NULL)
 		{
 			printf("exit\n");
 			exit(1);
 		}
 		add_history(input);
-		// CREAR HISTORIAL
-		// PARSEO
-		//EJECUCIÓN
-			//(builtins(input))
+	/*	CREAR HISTORIAL
+		PARSEO
+		EJECUCIÓN
+			(builtins(input))*/
 		free(input);
 	}
 	return (0);
 }
 
-
-void builtins(char *input)
+void	builtins(char *input)
 {
-	char *buffer;
-	
+	char	*buffer;
+
 	buffer = malloc (sizeof (size_t));
 	if (ft_strcmp(input, "exit") > 0)
 	{
@@ -50,9 +60,9 @@ void builtins(char *input)
 	}
 }
 
-int ft_strcmp(char *str, char *cmp)
+int	ft_strcmp(char *str, char *cmp)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i])

@@ -2,8 +2,10 @@ NAME = minishell
 
 SRC = main.c
 
-RM = rm -f
 CC = gcc
+RM = rm -f
+LIBFT_PATH = libft/
+LIBFT = libft/libft.a
 FLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=addres
 READLINE_FLAGS = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include 
 #READLINE_FLAGS = -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include
@@ -16,19 +18,24 @@ NO_COLOR	= '\033[0m'
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(LIBFT):
+	@make -C $(LIBFT_PATH)
+
+$(NAME): $(LIBFT) $(OBJS)
 	@echo $(GREEN)"Generating executable..."$(NO_COLOR)
-	$(CC) $(FLAGS) $(READLINE_FLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) $(READLINE_FLAGS) $(OBJS) $(LIBFT) -I $(LIBFT_PATH) -o $(NAME)
 	@echo $(GREEN)"$(NAME) Generated!"$(NO_COLOR)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
 clean:
+	@make clean -C $(LIBFT_PATH)
 	$(RM) $(OBJS)
-	@echo $(RED)"OBJS were deleted"$(NO_COLOR)
+	@echo $(RED)"minishell OBJS were deleted"$(NO_COLOR)
 
 fclean: clean
+	@make fclean -C $(LIBFT_PATH)
 	$(RM) $(NAME)
 	@echo $(RED)"$(NAME) deleted"$(NO_COLOR)
 
