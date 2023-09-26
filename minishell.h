@@ -22,6 +22,14 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
+typedef struct s_bridge
+{
+	char	*infile;
+	char	*outfile;
+	char	**commands;
+	int	ncommands;
+} t_bridge;
+
 void	rl_replace_line(const char *text, int clear_undo);
 void	builtins(char *input);
 int		ft_strcmp(char *str, char *cmp);
