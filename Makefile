@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = main.c
+SRC = src/main.c src/parse.c
 
 CC = gcc
 RM = rm -f

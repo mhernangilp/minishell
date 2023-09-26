@@ -6,7 +6,7 @@
 #    By: mhernang <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/13 14:33:23 by mhernang          #+#    #+#              #
-#    Updated: 2023/02/07 11:49:11 by mhernang         ###   ########.fr        #
+#    Updated: 2023/09/26 14:56:28 by gfernand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ ${NAME}: ${OBJ} ${INCLUDE}
 
 
 %.o: %.c
-	${CC} ${CCFLAGS} -c -o $@ $<
+	${CC} ${FLAGS} -c -o $@ $<
 
 bonus: ${B_OBJ} ${INCLUDE}
 	${LIB} ${NAME} ${B_OBJ}

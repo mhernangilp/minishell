@@ -6,11 +6,11 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/09/25 17:01:08 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:08:34 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	main(int argc, char **argv)
 {
@@ -31,6 +31,7 @@ int	main(int argc, char **argv)
 			exit(1);
 		}
 		add_history(input);
+		check_pipes(input);
 	/*	CREAR HISTORIAL
 		PARSEO
 		EJECUCIÓN
