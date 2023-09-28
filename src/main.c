@@ -12,22 +12,18 @@
 
 #include "../minishell.h"
 
-static void	leaks(void)
-{
-	system("leaks minishell");
-}
+static void	init_parse_struct(t_parse *parse);
 
 int	main(int argc, char **argv)
 {
 	char	*input;
+	t_parse	*parse;
 
-	atexit(leaks);
 	(void) argv;
 	if (argc != 1)
-	{
-		printf("Wrong parameters\n");
-		exit(1);
-	}
+		putexit("Wrong parameters\n");
+	parse = malloc (sizeof (t_parse));
+	init_parse_struct(parse);
 	while (1)
 	{
 		input = readline(ENTRADA_MS);
@@ -37,7 +33,7 @@ int	main(int argc, char **argv)
 			exit(1);
 		}
 		add_history(input);
-		check_pipes(input);
+		check_pipes(parse, input);
 	/*	CREAR HISTORIAL
 		PARSEO
 		EJECUCIÓN
@@ -46,38 +42,15 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
-void	builtins(char *input)
-{
-	char	*buffer;
 
-	buffer = malloc (sizeof (size_t));
-	if (ft_strcmp(input, "exit") > 0)
-	{
-		printf("exit\n");
-		exit(1);
-	}
-	else if (ft_strcmp(input, "pwd") > 0)
-	{
-		if (getcwd(buffer, 1024) != NULL)
-		{
-			printf("%s\n", buffer);
-			free(buffer);
-		}
-	}
-	free(buffer);
+static void	init_parse_struct(t_parse *parse)
+{
+	parse->commands = 0;
+	parse->str_space = NULL;
 }
 
-int	ft_strcmp(char *str, char *cmp)
+void	putexit(char *s)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] != cmp[i])
-			return (-1);
-	}
-	if (cmp[i])
-		return (-1);
-	return (i);
+	printf("%s", s);
+	exit(1);
 }

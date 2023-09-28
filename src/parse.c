@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-void	check_pipes(char *input)
+void	check_pipes(t_parse *parse, char *input)
 {
 	char	**str_pipe;
-	char	***str_space;
 	int		i;
 	int		j;
+	int		history;
 
 	/* HAY QUE TENER EN CUENTA EL COMPORTAMIENTO DE MAS DE UN PIPE SEGUIDO */
 	/*	
@@ -37,23 +37,27 @@ void	check_pipes(char *input)
 		}
 	}
 	*/
+	history = open(".history", O_WRONLY | O_CREAT | O_APPEND,
+			S_IRUSR | S_IWUSR);
+	write(history, input, strlen(input));
+	write(history, "\n", 1);
 	str_pipe = ft_split(input, '|');
-	i = 0;
-	while (str_pipe[i])
-		i++;
-	str_space = ((char ***) malloc (sizeof (char **) * i));
+	parse->commands = 0;
+	while (str_pipe[parse->commands])
+		parse->commands++;
+	parse->str_space = ((char ***) malloc (sizeof (char **) * parse->commands));
 	i = -1;
-	j = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
-		str_space[i] = ft_split(str_pipe[i], ' ');
-		printf("PIPE %d - %s\n", i, str_pipe[i]);
-		while (str_space[i][++j] && str_space[i][j][0])
-			printf("SPACE %d - %s\n", j, str_space[i][j]);
+		parse->str_space[i] = ft_split(str_pipe[i], ' ');
+		printf("%d PIPE - %s\n", i, str_pipe[i]);
+		j = -1;
+		while (parse->str_space[i][++j] && parse->str_space[i][j][0])
+			printf("SPACE %d - %s\n", j, parse->str_space[i][j]);
 	}
 	ft_splitfree(str_pipe);
 	/*i = -1;
-	while (str_space[++i] && str_space[i][0] && str_space[i][0][0])
-		ft_splitfree(str_space[i]);*/
-	free(str_space);
+	while (parse->str_space[++i])
+		ft_splitfree(parse->str_space[i]);*/
+	free(parse->str_space);
 }
