@@ -12,10 +12,16 @@
 
 #include "../minishell.h"
 
+static void	leaks(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv)
 {
 	char	*input;
 
+	atexit(leaks);
 	(void) argv;
 	if (argc != 1)
 	{
@@ -40,7 +46,6 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
-
 void	builtins(char *input)
 {
 	char	*buffer;
@@ -59,6 +64,7 @@ void	builtins(char *input)
 			free(buffer);
 		}
 	}
+	free(buffer);
 }
 
 int	ft_strcmp(char *str, char *cmp)
