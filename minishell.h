@@ -32,11 +32,16 @@ typedef struct s_bridge
 	int	ncommands;
 } t_bridge;
 
+typedef struct	s_parse
+{
+	char	***str_space;
+	int	commands;
+}	t_parse;
+
 void	rl_replace_line(const char *text, int clear_undo);
-void	builtins(char *input);
-int		ft_strcmp(char *str, char *cmp);
+void	putexit(char *s);
 
 /* PARSE */
-void	check_pipes(char *input);
+void	check_pipes(t_parse *parse, char *input);
 
 #endif

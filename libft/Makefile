@@ -68,17 +68,19 @@ B_OBJ = ${B_SRC:.c=.o}
 
 RED	= '\033[1;31m'
 GREEN	= '\033[1;32m'
+PINK	= '\033[1;35m'
 NO_COLOR	= '\033[0m'
 
 all:	${NAME}
 
 ${NAME}: ${OBJ} ${INCLUDE}
 	${LIB} ${NAME} ${OBJ}
-	@echo $(GREEN)"$(NAME) Generated!"$(NO_COLOR)
+	@echo $(PINK)"$(NAME) Generated!"$(NO_COLOR)
 
 
 %.o: %.c
-	${CC} ${FLAGS} -c -o $@ $<
+	${CC} ${FLAGS} -c -o $@ $<   
+	@echo $(GREEN)"[OK]"$(NO_COLOR)
 
 bonus: ${B_OBJ} ${INCLUDE}
 	${LIB} ${NAME} ${B_OBJ}

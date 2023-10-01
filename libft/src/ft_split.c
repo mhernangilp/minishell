@@ -12,92 +12,83 @@
 
 #include "../libft.h"
 
-static int	ft_delcount(char const *s, char c)
+static char	**ft_site(char **str, const char *s, char c);
+static int	ft_count(const char *s, char c);
+
+char	**ft_split(const char *s, char c)
+{
+	size_t	count;
+	char	**str;
+
+	count = ft_count(s, c);
+	str = (char **)malloc(sizeof(char *) *(count + 1));
+	if (!str)
+		return (NULL);
+	ft_site(str, s, c);
+	return (str);
+}
+
+static int	ft_count(const char *s, char c)
 {
 	int	i;
 	int	count;
 
-	if (s[0] == 0)
-		return (0);
 	i = 0;
-	count = 0;
-	if (s[i] == c)
-		count--;
+	count = 1;
+	if (!s)
+		return (0);
 	while (s[i])
 	{
-		if (s[i] == c)
-		{
-			while (s[i + 1] == c)
-				i++;
-			if (s[i + 1])
-				count++;
-		}
+		if (s[i] == c && s[i + 1] != c && s[i + 1])
+			count++;
 		i++;
 	}
-	count++;
+	if (s[0] == c || s[0] == '\0')
+		count--;
 	return (count);
 }
 
-static void	ft_loop(char const *s, char *c, int *csize, char **p)
+static char	**ft_site(char **str, const char *s, char c)
 {
 	int	i;
-	int	j;
+	int	found;
 	int	count;
+	int	start;
 
 	i = 0;
-	j = 0;
-	while (j < *csize)
+	found = 1;
+	count = ft_count(s, c);
+	while (found <= count)
 	{
-		count = 0;
-		while (s[i] == *c)
-			i++;
-		while (s[i] != *c && s[i])
+		if (s[i] != c)
 		{
-			p[j][count] = s[i];
-			i++;
-			count++;
+			start = i++;
+			while (s[i] != c && s[i])
+				i++;
+			str[found - 1] = ft_substr(s, start, (i - 1) - start + 1);
+			if (str == NULL)
+				return (ft_splitfree(str));
+			found++;
 		}
-		p[j][count] = '\0';
-		j++;
+		else
+			i++;
 	}
+	str[found - 1] = NULL;
+	return (str);
 }
 
-static void	ft_fillco(char const *s, char c, int csize, char **p)
+char	**ft_splitfree(char **str)
 {
 	int	i;
-	int	count;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (j < csize)
+	if (str == NULL)
+		return (NULL);
+	while (str[i] != NULL)
 	{
-		count = 0;
-		while (s[i] == c)
-			i++;
-		while (s[i] != c && s[i])
-		{
-			count++;
-			i++;
-		}
-		p[j] = malloc(count * sizeof(char) + 1);
-		j++;
+		free(str[i]);
+		i++;
 	}
-	ft_loop(s, &c, &csize, p);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	int		cosize;
-	char	**p;
-
-	if (!s)
-		return (NULL);
-	cosize = ft_delcount(s, c);
-	p = malloc((cosize + 1) * sizeof(char *));
-	if (!p)
-		return (NULL);
-	p[cosize] = NULL;
-	ft_fillco(s, c, cosize, p);
-	return (p);
+	free(str);
+	return (NULL);
 }

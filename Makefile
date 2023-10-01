@@ -14,6 +14,7 @@ OBJS = $(SRC:.c=.o)
 
 RED	= '\033[1;31m'
 GREEN	= '\033[1;32m'
+PINK	= '\033[1;35m'
 NO_COLOR	= '\033[0m'
 
 all: $(NAME)
@@ -22,12 +23,13 @@ $(LIBFT):
 	@make -C $(LIBFT_PATH)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@echo $(GREEN)"Generating executable..."$(NO_COLOR)
+	@echo $(PINK)"Generating executable..."$(NO_COLOR)
 	$(CC) $(FLAGS) $(READLINE_FLAGS) $(OBJS) $(LIBFT) -I $(LIBFT_PATH) -o $(NAME)
-	@echo $(GREEN)"$(NAME) Generated!"$(NO_COLOR)
+	@echo $(PINK)"$(NAME) Generated!"$(NO_COLOR)
 
 %.o: %.c
 	$(CC) $(FLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo $(GREEN)"[OK]"$(NO_COLOR)
 
 clean:
 	@make clean -C $(LIBFT_PATH)
