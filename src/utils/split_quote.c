@@ -117,6 +117,6 @@ static	int	ft_count(const char *s, char c)
 		count--;
 	if (quote == 1)
 		return (-1);
-	printf("count %d\n", count);
+	printf("Count %d\n", count);
 	return (count);
 }
