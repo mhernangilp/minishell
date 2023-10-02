@@ -47,12 +47,7 @@ void	start_parse(t_parse *parse, char *input)
 static void	check_pipes(char *input)
 {
 	int	i;
-	int	history;
 
-	history = open(".history", O_WRONLY | O_CREAT | O_APPEND,
-			S_IRUSR | S_IWUSR);
-	write(history, input, strlen(input) + 1);
-	write(history, "\n", 1);
 	/* HAY QUE TENER EN CUENTA EL COMPORTAMIENTO DE MAS DE UN PIPE SEGUIDO */
 	i = -1;
 	while (input[++i])
