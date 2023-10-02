@@ -22,6 +22,16 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
+typedef struct s_bridge
+{
+	char	*infile;
+	char	**here_doc;
+	char	*outfile;
+	int	out_mode;
+	char	***commands;
+	int	ncommands;
+} t_bridge;
+
 typedef struct	s_parse
 {
 	char	***str_space;
