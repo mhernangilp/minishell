@@ -19,7 +19,7 @@ void	start_parse(t_parse *parse, char *input)
 {
 	char	**str_pipe;
 	int		i;
-	int		j;
+	//int		j;
 
 	check_pipes(input);
 	str_pipe = ft_split(input, '|');
@@ -32,12 +32,16 @@ void	start_parse(t_parse *parse, char *input)
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
 		parse->str_space[i] = ft_split(str_pipe[i], ' ');
-		printf("%d PIPE - %s\n", i, str_pipe[i]);
-		j = -1;
+		//printf("%d PIPE - %s\n", i, str_pipe[i]);
+		/*j = -1;
 		while (parse->str_space[i][++j] && parse->str_space[i][j][0])
-			printf("SPACE %d - %s\n", j, parse->str_space[i][j]);
+			printf("SPACE %d - %s\n", j, parse->str_space[i][j]);*/
 	}
 	ft_splitfree(str_pipe);
+	str_pipe = split_quote(input, '|');
+	i = -1;
+	while (str_pipe[++i])
+		printf("%d PIPE - %s\n", i, str_pipe[i]);
 	/*i = -1;
 	while (parse->str_space[++i])
 		ft_splitfree(parse->str_space[i]);*/

@@ -43,5 +43,6 @@ void	putexit(char *s);
 
 /* PARSE */
 void	start_parse(t_parse *parse, char *input);
+char    **split_quote(const char *s, char c);
 
 #endif
