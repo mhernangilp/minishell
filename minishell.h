@@ -28,7 +28,7 @@ typedef struct s_bridge
 	char	**here_doc;
 	char	*outfile;
 	int	out_mode;
-	char	**commands;
+	char	***commands;
 	int	ncommands;
 } t_bridge;
 
