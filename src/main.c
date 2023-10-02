@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 			exit(1);
 		}
 		add_history(input);
-		check_pipes(parse, input);
+		start_parse(parse, input);
 	/*	CREAR HISTORIAL
 		PARSEO
 		EJECUCIÓN

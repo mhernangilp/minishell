@@ -42,6 +42,6 @@ void	rl_replace_line(const char *text, int clear_undo);
 void	putexit(char *s);
 
 /* PARSE */
-void	check_pipes(t_parse *parse, char *input);
+void	start_parse(t_parse *parse, char *input);
 
 #endif

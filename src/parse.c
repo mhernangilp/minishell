@@ -12,39 +12,21 @@
 
 #include "../minishell.h"
 
-void	check_pipes(t_parse *parse, char *input)
+static void	check_pipes(char *input);
+static void	delete_spaces(char *input);
+
+void	start_parse(t_parse *parse, char *input)
 {
 	char	**str_pipe;
 	int		i;
 	int		j;
-	int		history;
 
-	/* HAY QUE TENER EN CUENTA EL COMPORTAMIENTO DE MAS DE UN PIPE SEGUIDO */
-	/*	
-	i = -1;
-	while (input[++i])
-	{
-		if (input[i] == '|')
-		{
-			if (input[i + 1] == '|')
-			{
-				if (input[i + 2] == '|' && input[i + 3] == '|')
-					break; //ERROR, SON MAS DE TRES (||)
-				else if (input[i + 2] == '|')
-					break; //ERROR SON TRES (|)
-				//BIEN, SON DOS
-			}
-		}
-	}
-	*/
-	history = open(".history", O_WRONLY | O_CREAT | O_APPEND,
-			S_IRUSR | S_IWUSR);
-	write(history, input, strlen(input));
-	write(history, "\n", 1);
+	check_pipes(input);
 	str_pipe = ft_split(input, '|');
 	parse->commands = 0;
 	while (str_pipe[parse->commands])
 		parse->commands++;
+	printf("commands %d\n", parse->commands);
 	parse->str_space = ((char ***) malloc (sizeof (char **) * parse->commands));
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
@@ -60,4 +42,61 @@ void	check_pipes(t_parse *parse, char *input)
 	while (parse->str_space[++i])
 		ft_splitfree(parse->str_space[i]);*/
 	free(parse->str_space);
+}
+
+static void	check_pipes(char *input)
+{
+	int	i;
+	int	history;
+
+	history = open(".history", O_WRONLY | O_CREAT | O_APPEND,
+			S_IRUSR | S_IWUSR);
+	write(history, input, strlen(input) + 1);
+	write(history, "\n", 1);
+	/* HAY QUE TENER EN CUENTA EL COMPORTAMIENTO DE MAS DE UN PIPE SEGUIDO */
+	i = -1;
+	while (input[++i])
+	{
+		if (input[i] == '|')
+		{
+			if (input[i + 1] == '|')
+			{
+				if (input[i + 2] == '|' && input[i + 3] == '|')
+					//ERROR, SON MAS DE TRES (||)
+					putexit("syntax error near unexpected token `||'");
+				else if (input[i + 2] == '|')
+					//ERROR SON TRES (|)
+					putexit("syntax error near unexpected token `|'");
+				//BIEN, SON DOS
+			}
+		}
+	}
+	delete_spaces(input);
+}
+
+static void	delete_spaces(char *input)
+{
+	int	i;
+
+	i = 0;
+	if (input[i] == '|')
+		putexit("syntax error near unexpected token `|'");
+	
+	while (input[i])
+	{
+		if (i == 0 || input[i] == '|')
+		{
+			if (i == 0 && input[i] != ' ' && input[i] == '|')
+				break;
+			i++;
+			while (input[i] == ' ')
+				i++;
+			if (input[i] == '|' && input[i - 1] != '|')
+				putexit("syntax error near unexpected token `|'");
+			if (input[i] != '|')
+				i++;
+		}
+		else
+			i++;
+	}
 }
