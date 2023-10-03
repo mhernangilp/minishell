@@ -2,8 +2,8 @@
 #include "../../minishell.h"
 
 static char	**ft_word(char **str, const char *s, char c, int count);
+static int  quote(const char *s, int i);
 static char	**ft_free(char **str);
-static	int	ft_count(const char *s, char c);
 
 char	**split_quote(const char *s, char c)
 {
@@ -12,17 +12,21 @@ char	**split_quote(const char *s, char c)
 	char	**str;
 
 	i = 0;
-	count = ft_count(s, c);
-	/*if (!s)
-		return (0);
-	while (s[i])
+	count = 1;
+	i = -1;
+	while (s[++i])
 	{
+		if (s[i] == '"' || s[i] == '\'')
+		{
+			i = quote(s, i);
+			if (i < 0)
+				return (NULL);
+		}
 		if (s[i] == c && s[i + 1] != c && s[i + 1])
-			count++;
-		i++;
+				count++;
 	}
 	if (s[0] == c || s[0] == '\0')
-		count--;*/
+		count--;
 	str = (char **)malloc(sizeof(char *) *(count + 1));
 	if (!str)
 		return (NULL);
@@ -30,36 +34,44 @@ char	**split_quote(const char *s, char c)
 	return (str);
 }
 
+static int  quote(const char *s, int i)
+{
+	int quote;
+	
+	quote = 0;
+	if (s[i] == '\'')
+		quote = 1;
+	else
+		quote = 2;
+	while (s[++i] && quote)
+	{
+		if ((s[i] == '\'' && quote == 1) || (s[i] == '"' && quote == 2))
+			quote = 0;
+	}
+	if (quote)
+		return (-1);
+	return (i);
+}
+
 static char	**ft_word(char **str, const char *s, char c, int count)
 {
 	int	i;
 	int	found;
 	int	start;
-	int quote;
 
 	i = 0;
 	found = 1;
-	quote = 0;
 	while (found <= count)
 	{
 		if (s[i] != c)
 		{
 			start = i;
-			while (s[i] && !quote)
+			while (s[i] && s[i] != c)
 			{
 				if (s[i] == '"' || s[i] == '\'')
-				{
-					quote = 1;
-					while (s[i] && quote)
-					{
-						if (s[i] == '"' || s[i] == '\'')
-							quote = -1;
-						i++;
-					}
-				}
-				else if (s[i] == c)
-					quote = 3;
-				i++;
+					i = quote(s, i);
+				else
+					i++;
 			}
 			str[found - 1] = ft_substr(s, start, (i - start));
 			if (str == NULL)
@@ -87,38 +99,4 @@ static char	**ft_free(char **str)
 	}
 	free(str);
 	return (NULL);
-}
-
-static	int	ft_count(const char *s, char c)
-{
-	int	i;
-	int	count;
-	int	quote;
-
-	quote = 0;
-	count = 1;
-	i = -1;
-	while (s[++i])
-	{
-		if (s[i] == '"' || s[i] == '\'')
-		{
-			if (s[i] == '\'')
-				quote = 1;
-			else
-				quote = 2;
-			while (s[++i] && quote)
-			{
-				if ((s[i] == '\'' && quote == 1) || (s[i] == '"' && quote == 2))
-					quote = 0;
-			}
-			if (quote)
-				return (-1);
-		}
-		if (s[i] == c && s[i + 1] != c && s[i + 1])
-				count++;
-	}
-	if (s[0] == c || s[0] == '\0')
-		count--;
-	printf("COUNT %d\n", count);
-	return (count);
 }
