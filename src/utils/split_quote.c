@@ -13,7 +13,7 @@ char	**split_quote(const char *s, char c)
 
 	i = 0;
 	count = ft_count(s, c);
-/*	if (!s)
+	/*if (!s)
 		return (0);
 	while (s[i])
 	{
@@ -102,21 +102,23 @@ static	int	ft_count(const char *s, char c)
 	{
 		if (s[i] == '"' || s[i] == '\'')
 		{
-			quote = 1;
-			while (s[i] && quote)
+			if (s[i] == '\'')
+				quote = 1;
+			else
+				quote = 2;
+			while (s[++i] && quote)
 			{
-				if (s[i] == '"' || s[i] == '\'')
-					quote = -1;
-				i++;
+				if ((s[i] == '\'' && quote == 1) || (s[i] == '"' && quote == 2))
+					quote = 0;
 			}
+			if (quote)
+				return (-1);
 		}
-		else if (s[i] == c && s[i + 1] != c && s[i + 1])
+		if (s[i] == c && s[i + 1] != c && s[i + 1])
 				count++;
 	}
 	if (s[0] == c || s[0] == '\0')
 		count--;
-	if (quote == 1)
-		return (-1);
-	printf("Count %d\n", count);
+	printf("COUNT %d\n", count);
 	return (count);
 }
