@@ -45,8 +45,8 @@ int	main(int argc, char **argv)
 
 static void	init_parse_struct(t_parse *parse)
 {
-	parse->commands = 0;
-	parse->str_space = NULL;
+	parse->nb_commands = 0;
+	parse->command = NULL;
 }
 
 void	putexit(char *s)

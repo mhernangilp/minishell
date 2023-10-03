@@ -13,7 +13,8 @@
 #include "../minishell.h"
 
 static void	check_pipes(char *input);
-static void	delete_spaces(char *input);
+static void delete_quotes(t_parse *parse);
+static void	space_into_papes(char *input);
 
 void	start_parse(t_parse *parse, char *input)
 {
@@ -23,22 +24,54 @@ void	start_parse(t_parse *parse, char *input)
 
 	check_pipes(input);
 	str_pipe = split_quote(input, '|');
-	parse->commands = 0;
-	while (str_pipe[parse->commands])
-		parse->commands++;
-	printf("commands %d\n", parse->commands);
-	parse->str_space = ((char ***) malloc (sizeof (char **) * parse->commands));
+	parse->nb_commands = 0;
+	while (str_pipe[parse->nb_commands])
+		parse->nb_commands++;
+	printf("commands %d\n", parse->nb_commands);
+	parse->command = ((char ***) malloc (sizeof (char **) * parse->nb_commands));
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
-		parse->str_space[i] = split_quote(str_pipe[i], ' ');
+		parse->command[i] = split_quote(str_pipe[i], ' ');
 		printf("%d PIPE - %s\n", i, str_pipe[i]);
 		j = -1;
-		while (parse->str_space[i][++j] && parse->str_space[i][j][0])
-			printf("SPACE %d - %s\n", j, parse->str_space[i][j]);
+		while (parse->command[i][++j] && parse->command[i][j][0])
+			printf("SPACE %d - %s\n", j, parse->command[i][j]);
 	}
+	delete_quotes(parse);
 	ft_splitfree(str_pipe);
-	free(parse->str_space);
+	free(parse->command);
+}
+
+static void delete_quotes(t_parse *parse)
+{
+	int i;
+	int j;
+	int k;
+	int len;
+	char    *aux;
+
+	i = -1;
+	while (parse->command[++i])
+	{
+		j = -1;
+		while (parse->command[i][++j])
+		{
+			if (parse->command[i][j][0] == '"' || parse->command[i][j][0] == '\'')
+			{
+				len = ft_strlen(parse->command[i][j]);
+				aux = malloc (sizeof (char *) * len - 2);
+				k = 0;
+				while (++k < len - 1)
+					aux[k - 1] = parse->command[i][j][k];
+				aux[k - 1] = '\0';
+				free(parse->command[i][j]);
+				parse->command[i][j] = aux;
+				printf("%s\n", parse->command[i][j]);
+				free(aux);
+			}
+		}
+	}
 }
 
 static void	check_pipes(char *input)
@@ -63,10 +96,10 @@ static void	check_pipes(char *input)
 			}
 		}
 	}
-	delete_spaces(input);
+	space_into_papes(input);
 }
 
-static void	delete_spaces(char *input)
+static void	space_into_papes(char *input)
 {
 	int	i;
 

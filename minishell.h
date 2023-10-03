@@ -34,8 +34,8 @@ typedef struct s_bridge
 
 typedef struct	s_parse
 {
-	char	***str_space;
-	int	commands;
+	char	***command;
+	int	nb_commands;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
