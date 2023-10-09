@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/09/26 14:08:34 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:57:51 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,24 @@
 
 static void	init_parse_struct(t_parse *parse);
 
+void	leaks(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv)
 {
 	char	*input;
 	t_parse	*parse;
 
+	atexit(leaks);
 	(void) argv;
 	if (argc != 1)
 		putexit("Wrong parameters\n");
 	parse = malloc (sizeof (t_parse));
-	init_parse_struct(parse);
 	while (1)
 	{
+		init_parse_struct(parse);
 		input = readline(ENTRADA_MS);
 		if (input == NULL)
 		{
@@ -34,18 +40,15 @@ int	main(int argc, char **argv)
 		}
 		add_history(input);
 		start_parse(parse, input);
-	/*	CREAR HISTORIAL
-		PARSEO
-		EJECUCIÓN
-			(builtins(input))*/
 		free(input);
 	}
+	free(parse);
 	return (0);
 }
 
 static void	init_parse_struct(t_parse *parse)
 {
-	parse->nb_commands = 0;
+	parse->ncommands = 0;
 	parse->command = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/09/26 14:03:22 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:55:54 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ typedef struct s_bridge
 	char	*infile;
 	char	**here_doc;
 	char	*outfile;
-	int	out_mode;
+	int		out_mode;
 	char	***commands;
-	int	ncommands;
-} t_bridge;
+	int		ncommands;
+}	t_bridge;
 
-typedef struct	s_parse
+typedef struct s_parse
 {
 	char	***command;
-	int	nb_commands;
+	int		ncommands;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
@@ -43,6 +43,7 @@ void	putexit(char *s);
 
 /* PARSE */
 void	start_parse(t_parse *parse, char *input);
-char    **split_quote(const char *s, char c);
+char	**split_quote(const char *s, char c);
+char	*remove_matched_quotes(const char *s);
 
 #endif

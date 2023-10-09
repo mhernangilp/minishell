@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_quote.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/09 12:49:17 by gfernand          #+#    #+#             */
+/*   Updated: 2023/10/09 14:02:44 by gfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../minishell.h"
 
 static char	**ft_word(char **str, const char *s, char c, int count);
-static int  quote(const char *s, int i);
+static int	quote(const char *s, int i);
 static char	**ft_free(char **str);
 
 char	**split_quote(const char *s, char c)
@@ -34,10 +45,10 @@ char	**split_quote(const char *s, char c)
 	return (str);
 }
 
-static int  quote(const char *s, int i)
+static int	quote(const char *s, int i)
 {
-	int quote;
-	
+	int	quote;
+
 	quote = 0;
 	if (s[i] == '\'')
 		quote = 1;
