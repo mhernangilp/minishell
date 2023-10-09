@@ -6,15 +6,13 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/09 14:01:50 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:01:29 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 static void	check_pipes(char *input);
-//static void delete_quotes(t_parse *parse);
-static void	space_into_papes(char *input);
 
 void	start_parse(t_parse *parse, char *input)
 {
@@ -83,46 +81,27 @@ static void	check_pipes(char *input)
 {
 	int	i;
 
-	/* HAY QUE TENER EN CUENTA EL COMPORTAMIENTO DE MAS DE UN PIPE SEGUIDO */
-	i = -1;
-	while (input[++i])
-	{
-		if (input[i] == '|')
-		{
-			if (input[i + 1] == '|')
-			{
-				if (input[i + 2] == '|' && input[i + 3] == '|')
-					putexit("syntax error near unexpected token `||'");
-				else if (input[i + 2] == '|')
-					putexit("syntax error near unexpected token `|'");
-			}
-		}
-	}
-	space_into_papes(input);
-}
-
-static void	space_into_papes(char *input)
-{
-	int	i;
-
 	i = 0;
-	if (input[i] == '|')
-		putexit("syntax error near unexpected token `|'");
 	while (input[i])
 	{
 		if (i == 0 || input[i] == '|')
 		{
-			if (i == 0 && input[i] != ' ' && input[i] == '|')
+			if ((input[i] == '|' && input[i + 1] == '|') || input[0] == '|')
+			{
+				if (input[i + 2] == '|' && input[i + 3] == '|')
+					putexit("syntax error near unexpected token `||'");
+				else if (input[i + 2] == '|' || input[0] == '|')
+					putexit("syntax error near unexpected token `|'");
+			}
+			if (i == 0 && input[i] == '|')
 				break ;
 			i++;
 			while (input[i] == ' ')
 				i++;
 			if (input[i] == '|' && input[i - 1] != '|')
 				putexit("syntax error near unexpected token `|'");
-			if (input[i] != '|')
-				i++;
 		}
-		else
+		if (input[i] != '|')
 			i++;
 	}
 }
