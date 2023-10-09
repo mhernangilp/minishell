@@ -116,7 +116,7 @@ static int	spaces_inside(char *input, char c)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == c)
+		if (input[i] == c || (input[i] == ' ' && i == 0))
 		{
 			i++;
 			while (input[i] && (input[i] == ' ' || input[i] == '\t'))
