@@ -39,7 +39,7 @@ void	start_parse(t_parse *parse, char *input)
 		while (parse->command[i][++j] && parse->command[i][j][0])
 		{
 			parse->command[i][j] = remove_matched_quotes(parse->command[i][j]);
-			printf("SPACE %d - %s\n", j, parse->command[i][j]);
+			printf("----SPACE %d- %s\n", j, parse->command[i][j]);
 		}
 	}
 	ft_splitfree(str_pipe);
@@ -82,28 +82,21 @@ char	*remove_matched_quotes(const char *s)
 
 static int	check_rps(char *input, char c)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (input[++i])
 	{
+		if (input[i] == '"' || input[i] == '\'')
+			i = quote(input, i);
 		if ((input[i] == c && input[i + 1] == c) || input[0] == c)
 		{
 			if (input[i + 2] == c && input[i + 3] == c)
-			{
-				printf("syntax error near unexpected token `%c%c'\n", c, c);
-				return (0);
-			}
+				return (putreturn(c, 2));
 			else if ((input[i + 2] == c || input[0] == c) && c != '|')
-			{
-				printf("syntax error near unexpected token `%c'\n", c);
-				return (0);
-			}
+				return (putreturn(c, 1));
 			else if (c == '|')
-			{
-				printf("syntax error near unexpected token `%c'\n", c);
-				return (0);
-			}
+				return (putreturn(c, 1));
 		}
 	}
 	return (spaces_inside(input, c));
@@ -116,19 +109,27 @@ static int	spaces_inside(char *input, char c)
 	i = 0;
 	while (input[i])
 	{
+		if (input[i] == '"' || input[i] == '\'')
+			i = quote(input, i);
 		if (input[i] == c || (input[i] == ' ' && i == 0))
 		{
 			i++;
 			while (input[i] && (input[i] == ' ' || input[i] == '\t'))
 				i++;
 			if (!input[i] || (input[i] == c && input[i - 1] != c))
-			{
-				printf("syntax error near unexpected token `%c'\n", c);
-				return (0);
-			}
+				return (putreturn(c, 1));
 		}
-		if (input[i] != c)
+		if (input[i] != c && input[i] != '"' && input[i] != '\'')
 			i++;
 	}
 	return (1);
+}
+
+int	putreturn(char c, int nb_c)
+{
+	if (nb_c == 1)
+		printf("syntax error near unexpected token `%c'\n", c);
+	else
+		printf("syntax error near unexpected token `%c%c'\n", c, c);
+	return (0);
 }

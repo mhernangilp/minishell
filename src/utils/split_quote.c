@@ -13,7 +13,6 @@
 #include "../../minishell.h"
 
 static char	**ft_word(char **str, const char *s, char c, int count);
-static int	quote(const char *s, int i);
 static char	**ft_free(char **str);
 
 char	**split_quote(const char *s, char c)
@@ -45,7 +44,7 @@ char	**split_quote(const char *s, char c)
 	return (str);
 }
 
-static int	quote(const char *s, int i)
+int	quote(const char *s, int i)
 {
 	int	quote;
 

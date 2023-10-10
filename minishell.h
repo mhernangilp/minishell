@@ -40,10 +40,12 @@ typedef struct s_parse
 
 void	rl_replace_line(const char *text, int clear_undo);
 void	putexit(char *s);
+int		putreturn(char c, int nb_c);
 
 /* PARSE */
 void	start_parse(t_parse *parse, char *input);
 char	**split_quote(const char *s, char c);
+int		quote(const char *s, int i);
 char	*remove_matched_quotes(const char *s);
 
 #endif
