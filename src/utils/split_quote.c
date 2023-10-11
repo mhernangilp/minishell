@@ -13,7 +13,6 @@
 #include "../../minishell.h"
 
 static char	**ft_word(char **str, const char *s, char c, int count);
-static char	**ft_free(char **str);
 
 char	**split_quote(const char *s, char c)
 {
@@ -44,25 +43,6 @@ char	**split_quote(const char *s, char c)
 	return (str);
 }
 
-int	quote(const char *s, int i)
-{
-	int	quote;
-
-	quote = 0;
-	if (s[i] == '\'')
-		quote = 1;
-	else
-		quote = 2;
-	while (s[++i] && quote)
-	{
-		if ((s[i] == '\'' && quote == 1) || (s[i] == '"' && quote == 2))
-			quote = 0;
-	}
-	if (quote)
-		return (-1);
-	return (i);
-}
-
 static char	**ft_word(char **str, const char *s, char c, int count)
 {
 	int	i;
@@ -85,7 +65,7 @@ static char	**ft_word(char **str, const char *s, char c, int count)
 			}
 			str[found - 1] = ft_substr(s, start, (i - start));
 			if (str == NULL)
-				return (ft_free(str));
+				return (ft_splitfree(str));
 			found++;
 		}
 		else
@@ -94,19 +74,52 @@ static char	**ft_word(char **str, const char *s, char c, int count)
 	str[found - 1] = NULL;
 	return (str);
 }
-
-static char	**ft_free(char **str)
+int	quote(const char *s, int i)
 {
-	int	i;
+	int	quote;
 
-	i = 0;
-	if (str == NULL)
-		return (NULL);
-	while (str[i] != NULL)
+	quote = 0;
+	if (s[i] == '\'')
+		quote = 1;
+	else
+		quote = 2;
+	while (s[++i] && quote)
 	{
-		free(str[i]);
-		i++;
+		if ((s[i] == '\'' && quote == 1) || (s[i] == '"' && quote == 2))
+			quote = 0;
 	}
-	free(str);
-	return (NULL);
+	if (quote)
+		return (-1);
+	return (i);
+}
+
+char	*remove_matched_quotes(const char *s)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		inside_quotes;
+
+	result = (char *)malloc(ft_strlen(s) + 1);
+	if (result == NULL)
+		putexit("Error de memoria\n");
+	i = -1;
+	j = -1;
+	inside_quotes = 0;
+	while (s[++i])
+	{
+		if (s[i] == '\'' && !inside_quotes)
+			inside_quotes = 1;
+		else if (s[i] == '\'' && inside_quotes == 1)
+			inside_quotes = 0;
+		else if (s[i] == '"' && !inside_quotes)
+			inside_quotes = 2;
+		else if (s[i] == '"' && inside_quotes == 2)
+			inside_quotes = 0;
+		else
+			result[++j] = s[i];
+	}
+	result[ft_strlen(s)] = '\0';
+	free((char *) s);
+	return (result);
 }

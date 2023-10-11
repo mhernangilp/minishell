@@ -33,7 +33,6 @@ int	main(int argc, char **argv)
 	{
 		init_parse_struct(parse);
 		input = readline(ENTRADA_MS);
-		printf("ENTRA");
 		if (input == NULL)
 		{
 			printf("exit\n");

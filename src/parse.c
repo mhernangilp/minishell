@@ -49,37 +49,6 @@ void	start_parse(t_parse *parse, char *input)
 	free(parse->command);
 }
 
-char	*remove_matched_quotes(const char *s)
-{
-	char	*result;
-	int		i;
-	int		j;
-	int		inside_quotes;
-
-	result = (char *)malloc(ft_strlen(s) + 1);
-	if (result == NULL)
-		putexit("Error de memoria\n");
-	i = -1;
-	j = -1;
-	inside_quotes = 0;
-	while (s[++i])
-	{
-		if (s[i] == '\'' && !inside_quotes)
-			inside_quotes = 1;
-		else if (s[i] == '\'' && inside_quotes == 1)
-			inside_quotes = 0;
-		else if (s[i] == '"' && !inside_quotes)
-			inside_quotes = 2;
-		else if (s[i] == '"' && inside_quotes == 2)
-			inside_quotes = 0;
-		else
-			result[++j] = s[i];
-	}
-	result[ft_strlen(s)] = '\0';
-	free((char *) s);
-	return (result);
-}
-
 static int	check_rps(char *input, char c)
 {
 	int	i;
