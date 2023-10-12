@@ -57,7 +57,13 @@ static int	check_rps(char *input, char c)
 	while (input[++i])
 	{
 		if (input[i] == '"' || input[i] == '\'')
+		{
 			i = quote(input, i);
+			if (i == -1)
+				return (putreturn('\'', 1));
+			else if (i == -2)
+				return (putreturn('"', 1));
+		}
 		if ((input[i] == c && input[i + 1] == c) || input[0] == c)
 		{
 			if (input[i + 2] == c && input[i + 3] == c)

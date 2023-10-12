@@ -74,6 +74,7 @@ static char	**ft_word(char **str, const char *s, char c, int count)
 	str[found - 1] = NULL;
 	return (str);
 }
+
 int	quote(const char *s, int i)
 {
 	int	quote;
@@ -88,8 +89,10 @@ int	quote(const char *s, int i)
 		if ((s[i] == '\'' && quote == 1) || (s[i] == '"' && quote == 2))
 			quote = 0;
 	}
-	if (quote)
+	if (quote == 1)
 		return (-1);
+	else if (quote == 2)
+		return (-2);
 	return (i);
 }
 
