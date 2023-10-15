@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/15 14:09:56 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:04:31 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 {
 	char	*input;
 	t_parse	*parse;
-	t_bridge	*bridge = NULL;
+	t_bridge	*bridge;
 
 	(void) argv;
 	if (argc != 1)
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 		}
 		add_history(input);
 		start_parse(parse, input);
-		
+		bridge = test_execution();
 		execution(bridge);
 		free(input);
 	}

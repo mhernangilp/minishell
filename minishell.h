@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/15 13:56:47 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:29:24 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,8 @@ void	execution(t_bridge *bridge);
 
 /* ERRORS */
 void	error_msg(char *msg);
+
+/* TEST EXECUTION */
+t_bridge	*test_execution();
 
 #endif
