@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/15 14:29:24 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:22:28 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct s_bridge
 {
 	char	*infile;
-	char	**here_doc;
+	char	*here_doc;
 	char	*outfile;
 	int	out_mode;
 	char	***commands;
@@ -36,6 +36,8 @@ typedef struct s_exec
 {
 	pid_t		*pid;
 	int			**pipe;
+	int			in;
+	int			out;
 	char		**paths;
 	t_bridge	*bridge;
 }	t_exec;
@@ -52,13 +54,24 @@ void	putexit(char *s);
 /* PARSE */
 void	start_parse(t_parse *parse, char *input);
 
-/* EXECUTION */
-void	execution(t_bridge *bridge);
+///// EXECUTION /////
 
-/* ERRORS */
+//execution.c
+void	execution(t_bridge *bridge);
+void	close_all(t_exec *exec);
+
+//child_process.c
+void	child_process(t_exec exec, int num);
+
+//set_redirections.c
+void	set_redirections(t_exec *exec, int num);
+
+///// ERRORS /////
+//errors.c
 void	error_msg(char *msg);
 
-/* TEST EXECUTION */
+///// TEST EXECUTION /////
+//test_execution.c
 t_bridge	*test_execution();
 
 #endif

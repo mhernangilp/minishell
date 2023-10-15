@@ -7,9 +7,7 @@ t_bridge	*test_execution()
 
 	bridge = malloc(sizeof(t_bridge));
 	bridge -> infile = NULL;
-	bridge -> here_doc = malloc(2 * sizeof(char *));
-	bridge -> here_doc[0] = NULL;
-	bridge -> here_doc[1] = NULL;
+	bridge -> here_doc = NULL;
 	bridge -> outfile = NULL;
 	bridge -> out_mode = 0;
 	bridge -> ncommands = 2;

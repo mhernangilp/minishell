@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/15 16:04:31 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:47:53 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ static void	init_parse_struct(t_parse *parse)
 void	putexit(char *s)
 {
 	printf("%s", s);
-	exit(1);
+	exit(0);
 }

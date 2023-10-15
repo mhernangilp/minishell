@@ -6,11 +6,37 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:17:09 by mhernang          #+#    #+#             */
-/*   Updated: 2023/10/15 13:56:56 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:24:34 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	close_all(t_exec *exec)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (exec -> bridge -> ncommands - 1))
+	{
+		close(exec -> pipe[i][0]);
+		close(exec -> pipe[i][1]);
+	}
+}
+
+static char	**get_paths()
+{
+	char	*path;
+	char	**paths;
+
+	path = getenv("PATH");
+	if (!path)
+		return (NULL);
+	paths = ft_split(path, ':');
+	if (!paths)
+		error_msg("Error searching PATH");
+	return (paths);
+}
 
 static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 {
@@ -34,11 +60,33 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 	if (!(exec -> pid))
 		error_msg("Error allocating memory\n");
 	exec -> bridge = bridge;
+	exec -> in = -1;
+	exec -> out = -1;
+}
+
+static void	wait_all(t_exec *exec)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (exec -> bridge -> ncommands))
+		waitpid(exec -> pid[i], NULL, 0);
 }
 
 void	execution(t_bridge *bridge)
 {
 	t_exec	exec;
+	int		i;
 
 	initialize_exec(&exec, bridge);
+	exec.paths = get_paths();
+	i = -1;
+	while (++i < exec.bridge -> ncommands)
+	{
+		exec.pid[i] = fork();
+		if (exec.pid[i] == 0)
+				child_process(exec, i);
+	}
+	close_all(&exec);
+	wait_all(&exec);
 }
