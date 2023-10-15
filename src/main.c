@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/09/26 14:08:34 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:09:56 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv)
 {
 	char	*input;
 	t_parse	*parse;
+	t_bridge	*bridge = NULL;
 
 	(void) argv;
 	if (argc != 1)
@@ -34,10 +35,8 @@ int	main(int argc, char **argv)
 		}
 		add_history(input);
 		start_parse(parse, input);
-	/*	CREAR HISTORIAL
-		PARSEO
-		EJECUCIÓN
-			(builtins(input))*/
+		
+		execution(bridge);
 		free(input);
 	}
 	return (0);

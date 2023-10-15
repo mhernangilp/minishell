@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/09/26 14:03:22 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/15 13:56:47 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ typedef struct s_bridge
 	int	ncommands;
 } t_bridge;
 
+typedef struct s_exec
+{
+	pid_t		*pid;
+	int			**pipe;
+	char		**paths;
+	t_bridge	*bridge;
+}	t_exec;
+
 typedef struct	s_parse
 {
 	char	***str_space;
@@ -43,5 +51,11 @@ void	putexit(char *s);
 
 /* PARSE */
 void	start_parse(t_parse *parse, char *input);
+
+/* EXECUTION */
+void	execution(t_bridge *bridge);
+
+/* ERRORS */
+void	error_msg(char *msg);
 
 #endif
