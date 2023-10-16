@@ -6,18 +6,23 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/16 15:03:38 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:10:00 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	start_parse(t_parse *parse, char *input)
+static void	init_parse_struct(t_parse *parse);
+
+void	start_parse(char *input)
 {
+	t_parse	*parse;
 	char	**str_pipe;
 	int		i;
 	int		j;
 
+	parse = malloc (sizeof (t_parse));
+	init_parse_struct(parse);
 	if (!check_rps(input, '|') || !check_rps(input, '<') || !check_rps(input, '>'))
 		return ;
 	str_pipe = split_quote(input, '|');
@@ -44,4 +49,11 @@ void	start_parse(t_parse *parse, char *input)
 	while (parse->command[++i])
 		ft_splitfree(parse->command[i]);
 	free(parse->command);
+	free(parse);
+}
+
+static void	init_parse_struct(t_parse *parse)
+{
+	parse->ncommands = 0;
+	parse->command = NULL;
 }

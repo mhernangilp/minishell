@@ -39,7 +39,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 void	putexit(char *s);
 
 /* PARSE */
-void	start_parse(t_parse *parse, char *input);
+void	start_parse(char *input);
 char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
 char	*remove_matched_quotes(const char *s);
