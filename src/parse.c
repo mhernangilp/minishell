@@ -63,6 +63,8 @@ static int	check_rps(char *input, char c)
 				return (putreturn('\'', 1));
 			else if (i == -2)
 				return (putreturn('"', 1));
+			i--;
+			printf("la comilla %d-%c\n", i, input[i]);
 		}
 		if ((input[i] == c && input[i + 1] == c) || input[0] == c)
 		{
