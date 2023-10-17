@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/16 17:10:00 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:06:41 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	start_parse(char *input)
 	if (!check_rps(input, '|') || !check_rps(input, '<') || !check_rps(input, '>'))
 		return ;
 	str_pipe = split_quote(input, '|');
-	parse->ncommands = 0;
 	while (str_pipe[parse->ncommands])
 		parse->ncommands++;
 	printf("commands %d\n", parse->ncommands);
@@ -51,6 +50,15 @@ void	start_parse(char *input)
 	free(parse->command);
 	free(parse);
 }
+
+/*
+ *	redirecciones (<, <<, >, >>, |)
+ *
+ *
+ *	expansion de variables ($PATH, $USER...)
+ *
+ *
+ * */
 
 static void	init_parse_struct(t_parse *parse)
 {
