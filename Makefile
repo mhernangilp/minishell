@@ -28,8 +28,8 @@ $(NAME): $(LIBFT) $(OBJS)
 	@echo $(PINK)"$(NAME) Generated!"$(NO_COLOR)
 
 %.o: %.c
+	@echo $(GREEN)"[OK]"$(NO_COLOR) "\c"
 	$(CC) $(FLAGS) -I $(LIBFT_PATH) -c $< -o $@
-	@echo $(GREEN)"[OK]"$(NO_COLOR)
 
 clean:
 	@make clean -C $(LIBFT_PATH)
