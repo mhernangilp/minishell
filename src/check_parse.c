@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 
+static int  special_caracter(char *input, int i);
 static int	spaces_inside(char *input, char c);
 static int	putreturn(char c, int nb_c);
 
@@ -22,6 +23,8 @@ int	check_rps(char *input, char c)
 	i = -1;
 	while (input[++i])
 	{
+		if (!special_caracter(input, i))
+			return (0);
 		if (input[i] == '"' || input[i] == '\'')
 		{
 			i = quote(input, i);
@@ -43,6 +46,16 @@ int	check_rps(char *input, char c)
 	return (spaces_inside(input, c));
 }
 
+static int  special_caracter(char *input, int i)
+{
+	if (input[i] == ';')
+		return (putreturn(';', 1));
+	else if (input[i] == '\\')
+		return (putreturn('\\', 1));
+	else
+		return (1);
+}
+
 static int	spaces_inside(char *input, char c)
 {
 	int	i;
@@ -59,6 +72,8 @@ static int	spaces_inside(char *input, char c)
 				i++;
 			if (!input[i] || (input[i] == c && input[i - 1] != c))
 				return (putreturn(c, 1));
+			if (input[i] == '\'' || input[i] == '"')
+				i--;
 		}
 		if (input[i] != c)
 			i++;

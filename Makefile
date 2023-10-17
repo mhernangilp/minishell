@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = src/main.c src/parse.c src/check_rps.c src/utils/split_quote.c src/utils/remove_quotes.c
+SRC = src/main.c src/parse.c src/check_parse.c src/utils/split_quote.c src/utils/remove_quotes.c
 
 CC = gcc
 RM = rm -f
