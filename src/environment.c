@@ -5,11 +5,13 @@ static int	count_env(char *s);
 static char	*cut_and_get_env(t_parse *parse, char *s, int i);
 static void	expand_variable(t_parse *parse, char *s);
 static int	env_to_str(t_parse *parse, char *s, int i, int e);
+static int	type_of_quote(char *str, int i, int quote);
 
 char	*environments(t_parse *parse, char *str)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+	int	quote;
 
 	parse->nb_env = count_env(str);
 	if (parse->nb_env == 0)
@@ -17,18 +19,18 @@ char	*environments(t_parse *parse, char *str)
 	parse->env = (char **)malloc (sizeof (char *) * (parse->nb_env + 1));
 	i = -1;
 	j = -1;
-	parse->l_d = 0; 
+	parse->l_d = 0;
+	quote = 0;
 	while (str[++i])
 	{
-		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '.')
-		{
+		quote = type_of_quote(str, i, quote);
+		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '.' && quote != 1)
 			parse->env[++j] = cut_and_get_env(parse, str, i);
-			//printf("ENV%d %s\n", j, parse->env[j]);
-		}
 	}
 	parse->env[++j] = NULL;
-//	ft_splitfree(parse->env);
 	expand_variable(parse, str);
+	free(parse->env);
+	free(str);
 	return (parse->r_env);
 }
 
@@ -55,6 +57,17 @@ static int	count_env(char *s)
 	return (count_env);
 }
 
+static int	type_of_quote(char *str, int i, int quote)
+{
+	if (str[i] == '\'' && !quote)
+		quote = 1;
+	else if (str[i] == '"' && !quote)
+		quote = 2;
+	else if ((str[i] == '\'' && quote == 1) || (str[i] == '"' && quote == 2))
+		quote = 0;
+	return (quote);
+}
+
 static char	*cut_and_get_env(t_parse *parse, char *s, int i)
 {
 	char	*env;
@@ -73,6 +86,7 @@ static char	*cut_and_get_env(t_parse *parse, char *s, int i)
 
 static	void	expand_variable(t_parse *parse, char *s)
 {
+	int	quote;
 	int	e_len;
 	int	i;
 	int	e;
@@ -86,9 +100,11 @@ static	void	expand_variable(t_parse *parse, char *s)
 	parse->a = -1;
 	i = -1;
 	e = -1;
+	quote = 0;
 	while (s[++i])
 	{
-		if (s[i] == '$' && s[i + 1] != ' ' && s[i + 1] != '.' && s[i + 1])
+		quote = type_of_quote(s, i, quote);
+		if (s[i] == '$' && s[i + 1] != ' ' && s[i + 1] != '.' && s[i + 1] && quote != 1)
 			i = env_to_str(parse, s, i, ++e);
 		else
 			parse->r_env[++parse->a] = s[i];
