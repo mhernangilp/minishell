@@ -14,7 +14,7 @@
 
 static void	init_parse_struct(t_parse *parse);
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_parse	*parse;
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 		add_history(input);
 		start_parse(parse, input);
 		bridge = test_execution();
-		execution(bridge);
+		execution(bridge, envp);
 		free(input);
 	}
 	return (0);

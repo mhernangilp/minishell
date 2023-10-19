@@ -6,10 +6,17 @@ t_bridge	*test_execution()
 	t_bridge	*bridge;
 
 	bridge = malloc(sizeof(t_bridge));
-	bridge -> infile = NULL;
-	bridge -> here_doc = NULL;
-	bridge -> outfile = NULL;
-	bridge -> out_mode = 0;
+	bridge -> redirect = malloc(2 * sizeof(char *));
+	bridge -> redirect[0] = malloc(4 * sizeof(char *));
+	bridge -> redirect[0][0] = NULL;
+	bridge -> redirect[0][1] = NULL;
+	bridge -> redirect[0][2] = NULL;
+	bridge -> redirect[0][3] = "-1";
+	bridge -> redirect[1] = malloc(4 * sizeof(char *));
+	bridge -> redirect[1][0] = NULL;
+	bridge -> redirect[1][1] = NULL;
+	bridge -> redirect[1][2] = NULL;
+	bridge -> redirect[1][3] = "-1";
 	bridge -> ncommands = 2;
 	bridge -> commands = malloc(2 * sizeof(char *));
 	bridge -> commands[0] = malloc(3 * sizeof(char *));

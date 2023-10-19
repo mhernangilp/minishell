@@ -12,6 +12,27 @@
 
 #include "../minishell.h"
 
+static void	wait_all(t_exec *exec);
+static char	**get_paths();
+static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp);
+
+void	execution(t_bridge *bridge, char **envp)
+{
+	t_exec	exec;
+	int		i;
+
+	initialize_exec(&exec, bridge, envp);
+	exec.paths = get_paths();
+	i = -1;
+	while (++i < exec.bridge -> ncommands)
+	{
+		exec.pid[i] = fork();
+		if (exec.pid[i] == 0)
+				child_process(exec, i);
+	}
+	close_all(&exec);
+	wait_all(&exec);
+}
 void	close_all(t_exec *exec)
 {
 	int	i;
@@ -22,6 +43,15 @@ void	close_all(t_exec *exec)
 		close(exec -> pipe[i][0]);
 		close(exec -> pipe[i][1]);
 	}
+}
+
+static void	wait_all(t_exec *exec)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (exec -> bridge -> ncommands))
+		waitpid(exec -> pid[i], NULL, 0);
 }
 
 static char	**get_paths()
@@ -38,7 +68,7 @@ static char	**get_paths()
 	return (paths);
 }
 
-static void	initialize_exec(t_exec *exec, t_bridge *bridge)
+static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp)
 {
 	int	i;
 
@@ -56,37 +86,21 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 			error_msg("Error creating pipe\n");
 	}
 	  printf("Allocating memory for %d pids\n", bridge -> ncommands);
+	exec -> envp = envp;
 	exec -> pid = malloc((bridge -> ncommands) * sizeof(pid_t));
 	if (!(exec -> pid))
 		error_msg("Error allocating memory\n");
 	exec -> bridge = bridge;
-	exec -> in = -1;
-	exec -> out = -1;
-}
-
-static void	wait_all(t_exec *exec)
-{
-	int	i;
-
+	exec -> in_out = malloc(bridge -> ncommands * sizeof(int *));
+	if (!(exec -> in_out))
+		error_msg("Error allocating memory\n");
 	i = -1;
-	while (++i < (exec -> bridge -> ncommands))
-		waitpid(exec -> pid[i], NULL, 0);
-}
-
-void	execution(t_bridge *bridge)
-{
-	t_exec	exec;
-	int		i;
-
-	initialize_exec(&exec, bridge);
-	exec.paths = get_paths();
-	i = -1;
-	while (++i < exec.bridge -> ncommands)
+	while (++i < (bridge -> ncommands))
 	{
-		exec.pid[i] = fork();
-		if (exec.pid[i] == 0)
-				child_process(exec, i);
+		exec -> in_out[i] = malloc(2 * sizeof(int));
+		if (!(exec -> in_out[i]))
+			error_msg("Error allocating memory\n");
+		exec -> in_out[i][0] = -1;
+		exec -> in_out[i][1] = -1;
 	}
-	close_all(&exec);
-	wait_all(&exec);
 }

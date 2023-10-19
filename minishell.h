@@ -18,16 +18,15 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/wait.h>
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
 typedef struct s_bridge
 {
-	char	*infile;
-	char	*here_doc;
-	char	*outfile;
-	int	out_mode;
+	char	***redirect;
 	char	***commands;
 	int	ncommands;
 } t_bridge;
@@ -36,9 +35,9 @@ typedef struct s_exec
 {
 	pid_t		*pid;
 	int			**pipe;
-	int			in;
-	int			out;
+	int		**in_out;
 	char		**paths;
+	char		**envp;
 	t_bridge	*bridge;
 }	t_exec;
 
@@ -57,7 +56,7 @@ void	start_parse(t_parse *parse, char *input);
 ///// EXECUTION /////
 
 //execution.c
-void	execution(t_bridge *bridge);
+void	execution(t_bridge *bridge, char **envp);
 void	close_all(t_exec *exec);
 
 //child_process.c
@@ -69,6 +68,11 @@ void	set_redirections(t_exec *exec, int num);
 ///// ERRORS /////
 //errors.c
 void	error_msg(char *msg);
+
+///// LIBFT /////
+char	**ft_split(const char *s, char c);
+int	ft_atoi(const char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 ///// TEST EXECUTION /////
 //test_execution.c

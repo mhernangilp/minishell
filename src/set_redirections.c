@@ -12,41 +12,51 @@
 
 #include "../minishell.h"
 
-static void	in_red(t_exec *exec)
-{
-	exec -> in = open(exec -> bridge -> infile, O_RDONLY);
-	if (exec -> in < 0)
-		error_msg("Error infile");
-	dup2(exec -> in, 0);
-}
-
-static void	out_red(t_exec *exec)
-{
-	if (exec -> bridge -> outfile)
-	{
-		if (exec -> bridge -> out_mode == 0)
-			exec -> out = open(exec -> bridge -> outfile, O_CREAT
-				| O_WRONLY | O_TRUNC, 0666);
-		else
-			exec -> out = open(exec -> bridge -> outfile, O_CREAT
-				| O_WRONLY | O_APPEND, 0666);
-	}
-	if (exec -> out < 0)
-		error_msg("Error outfile");
-	dup2(exec -> out, 1);
-}
+static void	in_red(t_exec *exec, int num);
+static void	out_red(t_exec *exec, int num);
+static void	set_pipes(t_exec *exec, int num);
 
 void	set_redirections(t_exec *exec, int num)
 {
-	if (num == 0)
-	{
-		if (exec -> bridge -> infile)
-			in_red(exec);
-		else if (exec -> bridge -> here_doc)
-			printf("Heredoc\n");
-			//load_heredoc();
-	}
-	if (num == (exec -> bridge -> ncommands - 1))
-		if (exec -> bridge -> outfile)
-			out_red(exec);
+	if (exec -> bridge -> redirect[num][0])
+		in_red(exec, num);
+	else if (exec -> bridge -> redirect[num][1])
+		printf("Heredoc >\n");
+		//load_heredoc();
+	if (exec -> bridge -> redirect[num][2])
+		out_red(exec, num);
+	set_pipes(exec, num);
+}
+
+static void	set_pipes(t_exec *exec, int num)
+{
+	if (num != 0)
+		if (exec -> in_out[num][0] == -1)
+			dup2(exec -> pipe[num][0], 0);
+	if (num != (exec -> bridge -> ncommands - 1))
+		if (exec -> in_out[num][1] == -1)
+			dup2(exec -> pipe[num + 1][1], 1);
+}
+
+static void	in_red(t_exec *exec, int num)
+{
+	exec -> in_out[num][0] = open(exec -> bridge -> redirect[num][0], O_RDONLY);
+	if (exec -> in_out[num][0] < 0)
+		error_msg("Error infile");
+	dup2(exec -> in_out[num][0], 0);
+}
+
+static void	out_red(t_exec *exec, int num)
+{
+	if (ft_atoi(exec -> bridge -> redirect[num][3]) == 0)
+		exec -> in_out[num][1] = open(exec -> bridge -> redirect[num][2], O_CREAT
+			| O_WRONLY | O_TRUNC, 0666);
+	else if (ft_atoi(exec -> bridge -> redirect[num][3]) == 1)
+		exec -> in_out[num][1] = open(exec -> bridge -> redirect[num][2], O_CREAT
+			| O_WRONLY | O_APPEND, 0666);
+	else 
+		error_msg("Error with outfile redirection mode");
+	if (exec -> in_out[num][1] < 0)
+		error_msg("Error outfile");
+	dup2(exec -> in_out[num][1], 1);
 }
