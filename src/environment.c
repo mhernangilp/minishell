@@ -7,12 +7,14 @@ static void	expand_variable(t_parse *parse, char *s);
 static int	env_to_str(t_parse *parse, char *s, int i, int e);
 static int	type_of_quote(char *str, int i, int quote);
 
-char	*environments(t_parse *parse, char *str)
+char	*environments(char *str)
 {
-	int	i;
-	int	j;
-	int	quote;
+	int		i;
+	int		j;
+	int		quote;
+	t_parse	*parse;
 
+	parse = malloc (sizeof (t_parse));
 	parse->nb_env = count_env(str);
 	if (parse->nb_env == 0)
 		return (str);

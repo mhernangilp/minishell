@@ -25,19 +25,17 @@
 typedef struct s_bridge
 {
 	char	**redirect;
-	char	***commands;
-	int		ncommands;
+	char	***command;
+	int		n_cmds;
 }	t_bridge;
 
 typedef struct s_parse
 {
-	char	***command;
 	char	**env;
 	char	*r_env;
 	int		nb_env;
 	int		l_d;
 	int		a;
-	int		ncommands;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
@@ -49,6 +47,6 @@ char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
 char	*remove_matched_quotes(const char *s);
 int		check_rps(char *input, char c);
-char	*environments(t_parse *parse, char *str);
+char	*environments(char *str);
 
 #endif

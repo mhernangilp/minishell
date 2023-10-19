@@ -12,44 +12,44 @@
 
 #include "../minishell.h"
 
-static void	init_parse_struct(t_parse *parse);
+static void	init_bridge_struct(t_bridge *bridge);
 
 void	start_parse(char *input)
 {
-	t_parse	*parse;
+	t_bridge	*bridge;
 	char	**str_pipe;
 	int		i;
 	int		j;
 
-	parse = malloc (sizeof (t_parse));
-	init_parse_struct(parse);
+	bridge = malloc (sizeof (t_bridge));
+	init_bridge_struct(bridge);
 	if (!check_rps(input, '|') || !check_rps(input, '<') || !check_rps(input, '>'))
 		return ;
 	str_pipe = split_quote(input, '|');
-	while (str_pipe[parse->ncommands])
-		parse->ncommands++;
-	printf("commands %d\n", parse->ncommands);
-	parse->command = ((char ***) malloc (sizeof (char **) * (parse->ncommands + 1)));
-	parse->command[parse->ncommands] = NULL;
+	while (str_pipe[bridge->n_cmds])
+		bridge->n_cmds++;
+	printf("commands %d\n", bridge->n_cmds);
+	bridge->command = ((char ***) malloc (sizeof (char **) * (bridge->n_cmds + 1)));
+	bridge->command[bridge->n_cmds] = NULL;
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
-		parse->command[i] = split_quote(str_pipe[i], ' ');
+		bridge->command[i] = split_quote(str_pipe[i], ' ');
 		printf("%d PIPE - %s\n", i, str_pipe[i]);
 		j = -1;
-		while (parse->command[i][++j] && parse->command[i][j][0])
+		while (bridge->command[i][++j] && bridge->command[i][j][0])
 		{
-			parse->command[i][j] = environments(parse, parse->command[i][j]);
-			parse->command[i][j] = remove_matched_quotes(parse->command[i][j]);
-			printf("----SPACE %d- %s\n", j, parse->command[i][j]);
+			bridge->command[i][j] = environments(bridge->command[i][j]);
+			bridge->command[i][j] = remove_matched_quotes(bridge->command[i][j]);
+			printf("----SPACE %d- %s\n", j, bridge->command[i][j]);
 		}
 	}
 	ft_splitfree(str_pipe);
 	i = -1;
-	while (parse->command[++i])
-		ft_splitfree(parse->command[i]);
-	free(parse->command);
-	free(parse);
+	while (bridge->command[++i])
+		ft_splitfree(bridge->command[i]);
+	free(bridge->command);
+	free(bridge);
 }
 
 /*
@@ -59,8 +59,8 @@ void	start_parse(char *input)
  *
  * */
 
-static void	init_parse_struct(t_parse *parse)
+static void	init_bridge_struct(t_bridge *bridge)
 {
-	parse->ncommands = 0;
-	parse->command = NULL;
+	bridge->n_cmds = 0;
+	bridge->command = NULL;
 }
