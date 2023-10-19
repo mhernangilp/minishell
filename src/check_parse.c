@@ -63,8 +63,6 @@ static int	spaces_inside(char *input, char c)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '"' || input[i] == '\'')
-			i = quote(input, i);
 		if (input[i] == c || (input[i] == ' ' && i == 0))
 		{
 			i++;
@@ -72,9 +70,9 @@ static int	spaces_inside(char *input, char c)
 				i++;
 			if (!input[i] || (input[i] == c && input[i - 1] != c))
 				return (putreturn(c, 1));
-			if (input[i] == '\'' || input[i] == '"')
-				i--;
 		}
+		if (input[i] == '"' || input[i] == '\'')
+			i = quote(input, i);
 		if (input[i] != c)
 			i++;
 	}
