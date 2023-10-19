@@ -10,27 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static void	init_bridge_struct(t_bridge *bridge);
+static void	do_bridge(t_bridge *bridge, char **str_pipe);
+static void	free_commands(t_bridge *bridge, char **str_pipe);
 
 void	start_parse(char *input)
 {
 	t_bridge	*bridge;
-	char	**str_pipe;
-	int		i;
-	int		j;
+	char		**str_pipe;
 
 	bridge = malloc (sizeof (t_bridge));
 	init_bridge_struct(bridge);
-	if (!check_rps(input, '|') || !check_rps(input, '<') || !check_rps(input, '>'))
+	if (!check_rps(input, '|') || !check_rps(input, '<')
+		|| !check_rps(input, '>'))
 		return ;
 	str_pipe = split_quote(input, '|');
 	while (str_pipe[bridge->n_cmds])
 		bridge->n_cmds++;
-	printf("commands %d\n", bridge->n_cmds);
-	bridge->command = ((char ***) malloc (sizeof (char **) * (bridge->n_cmds + 1)));
+	bridge->command = malloc (sizeof (char **) * (bridge->n_cmds + 1));
 	bridge->command[bridge->n_cmds] = NULL;
+	do_bridge(bridge, str_pipe);
+	free_commands(bridge, str_pipe);
+}
+
+/*
+ *	redirecciones (<, <<, >, >>, |)
+ *
+ *	expansion de variables ($PATH, $USER...)
+ *
+ * */
+
+static void	do_bridge(t_bridge *bridge, char **str_pipe)
+{
+	int	i;
+	int	j;
+
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
@@ -40,10 +56,16 @@ void	start_parse(char *input)
 		while (bridge->command[i][++j] && bridge->command[i][j][0])
 		{
 			bridge->command[i][j] = environments(bridge->command[i][j]);
-			bridge->command[i][j] = remove_matched_quotes(bridge->command[i][j]);
+			bridge->command[i][j] = remove_quotes(bridge->command[i][j]);
 			printf("----SPACE %d- %s\n", j, bridge->command[i][j]);
 		}
 	}
+}
+
+static void	free_commands(t_bridge *bridge, char **str_pipe)
+{
+	int	i;
+
 	ft_splitfree(str_pipe);
 	i = -1;
 	while (bridge->command[++i])
@@ -51,13 +73,6 @@ void	start_parse(char *input)
 	free(bridge->command);
 	free(bridge);
 }
-
-/*
- *	redirecciones (<, <<, >, >>, |)
- *
- *	expansion de variables ($PATH, $USER...)
- *
- * */
 
 static void	init_bridge_struct(t_bridge *bridge)
 {

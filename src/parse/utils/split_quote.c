@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../../minishell.h"
 
 static char	**ft_word(char **str, const char *s, char c, int count);
 static int	count_inside_quotes(const char *s, char c, int i);

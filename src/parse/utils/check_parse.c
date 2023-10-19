@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../../minishell.h"
 
-static int  special_caracter(char *input, int i);
+static int	special_caracter(char *input, int i);
 static int	spaces_inside(char *input, char c);
 static int	putreturn(char c, int nb_c);
 
@@ -46,7 +46,7 @@ int	check_rps(char *input, char c)
 	return (spaces_inside(input, c));
 }
 
-static int  special_caracter(char *input, int i)
+static int	special_caracter(char *input, int i)
 {
 	if (input[i] == ';')
 		return (putreturn(';', 1));

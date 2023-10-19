@@ -43,10 +43,15 @@ void	putexit(char *s);
 
 /* PARSE */
 void	start_parse(char *input);
+int		check_rps(char *input, char c);
 char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
-char	*remove_matched_quotes(const char *s);
-int		check_rps(char *input, char c);
+char	*remove_quotes(const char *s);
+/* ENV */
 char	*environments(char *str);
+int		count_env(char *s);
+char	*cut_and_get_env(t_parse *parse, char *s, int i);
+int		env_to_str(t_parse *parse, char *s, int i, int e);
+int		type_of_quote(char *str, int i, int quote);
 
 #endif
