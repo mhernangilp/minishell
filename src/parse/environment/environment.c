@@ -3,7 +3,7 @@
 
 static void	expand_variable(t_parse *parse, char *s);
 
-char	*environments(char *str)
+char	*environments(char *s)
 {
 	int		i;
 	int		j;
@@ -11,24 +11,24 @@ char	*environments(char *str)
 	t_parse	*parse;
 
 	parse = malloc (sizeof (t_parse));
-	parse->nb_env = count_env(str);
+	parse->nb_env = count_env(s);
 	if (parse->nb_env == 0)
-		return (str);
+		return (s);
 	parse->env = (char **)malloc (sizeof (char *) * (parse->nb_env + 1));
 	i = -1;
 	j = -1;
 	parse->l_d = 0;
 	quote = 0;
-	while (str[++i])
+	while (s[++i])
 	{
-		quote = type_of_quote(str, i, quote);
-		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '.' && quote != 1)
-			parse->env[++j] = cut_and_get_env(parse, str, i);
+		quote = type_of_quote(s, i, quote);
+		if (s[i] == '$' && s[i + 1] != ' ' && s[i + 1] != '.' && quote != 1)
+			parse->env[++j] = cut_and_get_env(parse, s, i);
 	}
 	parse->env[++j] = NULL;
-	expand_variable(parse, str);
+	expand_variable(parse, s);
 	free(parse->env);
-	free(str);
+	free(s);
 	return (parse->r_env);
 }
 

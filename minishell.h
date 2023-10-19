@@ -48,7 +48,7 @@ char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
 char	*remove_quotes(const char *s);
 /* ENV */
-char	*environments(char *str);
+char	*environments(char *s);
 int		count_env(char *s);
 char	*cut_and_get_env(t_parse *parse, char *s, int i);
 int		env_to_str(t_parse *parse, char *s, int i, int e);
