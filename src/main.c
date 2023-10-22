@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/16 17:20:43 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:47:53 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 	system("leaks minishell");
 }*/
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	t_parse	*parse;
+	t_bridge	*bridge;
 
 	//atexit(leaks);
 	(void) argv;
@@ -34,7 +36,9 @@ int	main(int argc, char **argv)
 			exit(1);
 		}
 		add_history(input);
-		start_parse(input);
+		start_parse(parse, input);
+		bridge = test_execution();
+		execution(bridge, envp);
 		free(input);
 	}
 	return (0);
@@ -43,5 +47,5 @@ int	main(int argc, char **argv)
 void	putexit(char *s)
 {
 	printf("%s", s);
-	exit(1);
+	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/16 15:04:18 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:22:28 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,28 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/wait.h>
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
 typedef struct s_bridge
 {
-	char	**redirect;
+	char	***redirect;
 	char	***commands;
 	int		ncommands;
 }	t_bridge;
+
+typedef struct s_exec
+{
+	pid_t		*pid;
+	int			**pipe;
+	int		**in_out;
+	char		**paths;
+	char		**envp;
+	t_bridge	*bridge;
+}	t_exec;
 
 typedef struct s_parse
 {
@@ -44,5 +56,30 @@ char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
 char	*remove_matched_quotes(const char *s);
 int		check_rps(char *input, char c);
+
+///// EXECUTION /////
+
+//execution.c
+void	execution(t_bridge *bridge, char **envp);
+void	close_all(t_exec *exec);
+
+//child_process.c
+void	child_process(t_exec exec, int num);
+
+//set_redirections.c
+void	set_redirections(t_exec *exec, int num);
+
+///// ERRORS /////
+//errors.c
+void	error_msg(char *msg);
+
+///// LIBFT /////
+char	**ft_split(const char *s, char c);
+int	ft_atoi(const char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
+
+///// TEST EXECUTION /////
+//test_execution.c
+t_bridge	*test_execution();
 
 #endif
