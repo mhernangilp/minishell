@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:17:09 by mhernang          #+#    #+#             */
-/*   Updated: 2023/10/15 17:24:34 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:07:51 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp)
 {
 	int	i;
 
-	  printf("Allocating memory for %d pipes\n", bridge -> ncommands - 1);
 	exec -> pipe = malloc((bridge -> ncommands - 1) * sizeof(int *));
 	if (!(exec -> pipe))
 		error_msg("Error allocating memory\n");
@@ -85,7 +84,6 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp)
 		if (pipe(exec -> pipe[i]) < 0)
 			error_msg("Error creating pipe\n");
 	}
-	  printf("Allocating memory for %d pids\n", bridge -> ncommands);
 	exec -> envp = envp;
 	exec -> pid = malloc((bridge -> ncommands) * sizeof(pid_t));
 	if (!(exec -> pid))

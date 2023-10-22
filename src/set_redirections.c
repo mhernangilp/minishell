@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:10:56 by mhernang          #+#    #+#             */
-/*   Updated: 2023/10/15 19:07:09 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:09:31 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static void	set_pipes(t_exec *exec, int num)
 {
 	if (num != 0)
 		if (exec -> in_out[num][0] == -1)
-			dup2(exec -> pipe[num][0], 0);
+			dup2(exec -> pipe[num - 1][0], 0);
 	if (num != (exec -> bridge -> ncommands - 1))
 		if (exec -> in_out[num][1] == -1)
-			dup2(exec -> pipe[num + 1][1], 1);
+			dup2(exec -> pipe[num][1], 1);
 }
 
 static void	in_red(t_exec *exec, int num)
