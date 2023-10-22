@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/16 17:20:43 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:47:53 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*input;
-	t_bridge	*bridge;
+	char	*input;
 
 	//atexit(leaks);
 	(void) argv;
