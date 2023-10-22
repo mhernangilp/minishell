@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 #include <string.h>
 
 t_bridge	*test_execution()
@@ -17,7 +17,7 @@ t_bridge	*test_execution()
 	bridge -> redirect[1][1] = NULL;
 	bridge -> redirect[1][2] = NULL;
 	bridge -> redirect[1][3] = "-1";
-	bridge -> ncommands = 2;
+	bridge -> n_cmds = 2;
 	bridge -> commands = malloc(2 * sizeof(char *));
 	bridge -> commands[0] = malloc(3 * sizeof(char *));
 	bridge -> commands[0][0] = strdup("ls");

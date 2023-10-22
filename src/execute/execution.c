@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static void	wait_all(t_exec *exec);
 static char	**get_paths();
@@ -24,7 +24,7 @@ void	execution(t_bridge *bridge, char **envp)
 	initialize_exec(&exec, bridge, envp);
 	exec.paths = get_paths();
 	i = -1;
-	while (++i < exec.bridge -> ncommands)
+	while (++i < exec.bridge -> n_cmds)
 	{
 		exec.pid[i] = fork();
 		if (exec.pid[i] == 0)
@@ -38,7 +38,7 @@ void	close_all(t_exec *exec)
 	int	i;
 
 	i = -1;
-	while (++i < (exec -> bridge -> ncommands - 1))
+	while (++i < (exec -> bridge -> n_cmds - 1))
 	{
 		close(exec -> pipe[i][0]);
 		close(exec -> pipe[i][1]);
@@ -50,7 +50,7 @@ static void	wait_all(t_exec *exec)
 	int	i;
 
 	i = -1;
-	while (++i < (exec -> bridge -> ncommands))
+	while (++i < (exec -> bridge -> n_cmds))
 		waitpid(exec -> pid[i], NULL, 0);
 }
 
@@ -72,11 +72,11 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp)
 {
 	int	i;
 
-	exec -> pipe = malloc((bridge -> ncommands - 1) * sizeof(int *));
+	exec -> pipe = malloc((bridge -> n_cmds - 1) * sizeof(int *));
 	if (!(exec -> pipe))
 		error_msg("Error allocating memory\n");
 	i = -1;
-	while (++i < (bridge -> ncommands - 1))
+	while (++i < (bridge -> n_cmds - 1))
 	{
 		exec -> pipe[i] = malloc(2 * sizeof(int));
 		if (!(exec -> pipe[i]))
@@ -85,15 +85,15 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp)
 			error_msg("Error creating pipe\n");
 	}
 	exec -> envp = envp;
-	exec -> pid = malloc((bridge -> ncommands) * sizeof(pid_t));
+	exec -> pid = malloc((bridge -> n_cmds) * sizeof(pid_t));
 	if (!(exec -> pid))
 		error_msg("Error allocating memory\n");
 	exec -> bridge = bridge;
-	exec -> in_out = malloc(bridge -> ncommands * sizeof(int *));
+	exec -> in_out = malloc(bridge -> n_cmds * sizeof(int *));
 	if (!(exec -> in_out))
 		error_msg("Error allocating memory\n");
 	i = -1;
-	while (++i < (bridge -> ncommands))
+	while (++i < (bridge -> n_cmds))
 	{
 		exec -> in_out[i] = malloc(2 * sizeof(int));
 		if (!(exec -> in_out[i]))

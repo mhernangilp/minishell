@@ -20,7 +20,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	t_parse	*parse;
 	t_bridge	*bridge;
 
 	//atexit(leaks);
@@ -36,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 			exit(1);
 		}
 		add_history(input);
-		start_parse(parse, input);
+		start_parse(input);
 		bridge = test_execution();
 		execution(bridge, envp);
 		free(input);

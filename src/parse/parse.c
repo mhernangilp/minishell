@@ -26,12 +26,12 @@ void	start_parse(char *input)
 	if (!check_rps(input, '|') || !check_rps(input, '<') || !check_rps(input, '>'))
 		return ;
 	str_pipe = split_quote(input, '|');
-	parse->ncommands = 0;
-	while (str_pipe[parse->ncommands])
-		parse->ncommands++;
-	printf("commands %d\n", parse->ncommands);
-	parse->command = ((char ***) malloc (sizeof (char **) * (parse->ncommands + 1)));
-	parse->command[parse->ncommands] = NULL;
+	parse->n_cmds = 0;
+	while (str_pipe[parse->n_cmds])
+		parse->n_cmds++;
+	printf("commands %d\n", parse->n_cmds);
+	parse->command = ((char ***) malloc (sizeof (char **) * (parse->n_cmds + 1)));
+	parse->command[parse->n_cmds] = NULL;
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
@@ -54,6 +54,6 @@ void	start_parse(char *input)
 
 static void	init_parse_struct(t_parse *parse)
 {
-	parse->ncommands = 0;
+	parse->n_cmds = 0;
 	parse->command = NULL;
 }

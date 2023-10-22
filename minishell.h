@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include "libft.h"
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
@@ -28,7 +29,7 @@ typedef struct s_bridge
 {
 	char	***redirect;
 	char	***commands;
-	int		ncommands;
+	int		n_cmds;
 }	t_bridge;
 
 typedef struct s_exec
@@ -44,7 +45,7 @@ typedef struct s_exec
 typedef struct s_parse
 {
 	char	***command;
-	int		ncommands;
+	int		n_cmds;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);

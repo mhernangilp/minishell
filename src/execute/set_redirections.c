@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static void	in_red(t_exec *exec, int num);
 static void	out_red(t_exec *exec, int num);
@@ -33,7 +33,7 @@ static void	set_pipes(t_exec *exec, int num)
 	if (num != 0)
 		if (exec -> in_out[num][0] == -1)
 			dup2(exec -> pipe[num - 1][0], 0);
-	if (num != (exec -> bridge -> ncommands - 1))
+	if (num != (exec -> bridge -> n_cmds - 1))
 		if (exec -> in_out[num][1] == -1)
 			dup2(exec -> pipe[num][1], 1);
 }
