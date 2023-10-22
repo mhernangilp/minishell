@@ -6,54 +6,76 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/16 17:10:00 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:27:12 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-static void	init_parse_struct(t_parse *parse);
+static void	init_bridge_struct(t_bridge *bridge);
+static void	do_bridge(t_bridge *bridge, char **str_pipe);
+static void	free_commands(t_bridge *bridge, char **str_pipe);
 
 void	start_parse(char *input)
 {
-	t_parse	*parse;
-	char	**str_pipe;
-	int		i;
-	int		j;
+	t_bridge	*bridge;
+	char		**str_pipe;
 
-	parse = malloc (sizeof (t_parse));
-	init_parse_struct(parse);
-	if (!check_rps(input, '|') || !check_rps(input, '<') || !check_rps(input, '>'))
+	bridge = malloc (sizeof (t_bridge));
+	init_bridge_struct(bridge);
+	if (!check_rps(input, '|') || !check_rps(input, '<')
+		|| !check_rps(input, '>'))
 		return ;
 	str_pipe = split_quote(input, '|');
-	parse->n_cmds = 0;
-	while (str_pipe[parse->n_cmds])
-		parse->n_cmds++;
-	printf("commands %d\n", parse->n_cmds);
-	parse->command = ((char ***) malloc (sizeof (char **) * (parse->n_cmds + 1)));
-	parse->command[parse->n_cmds] = NULL;
+	while (str_pipe[bridge->n_cmds])
+		bridge->n_cmds++;
+	bridge->commands = malloc (sizeof (char **) * (bridge->n_cmds + 1));
+	bridge->commands[bridge->n_cmds] = NULL;
+	do_bridge(bridge, str_pipe);
+	free_commands(bridge, str_pipe);
+}
+
+/*
+ *	redirecciones (<, <<, >, >>, |)
+ *
+ *	expansion de variables ($PATH, $USER...)
+ *
+ * */
+
+static void	do_bridge(t_bridge *bridge, char **str_pipe)
+{
+	int	i;
+	int	j;
+
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
-		parse->command[i] = split_quote(str_pipe[i], ' ');
+		bridge->commands[i] = split_quote(str_pipe[i], ' ');
 		printf("%d PIPE - %s\n", i, str_pipe[i]);
 		j = -1;
-		while (parse->command[i][++j] && parse->command[i][j][0])
+		while (bridge->commands[i][++j] && bridge->commands[i][j][0])
 		{
-			parse->command[i][j] = remove_matched_quotes(parse->command[i][j]);
-			printf("----SPACE %d- %s\n", j, parse->command[i][j]);
+			bridge->commands[i][j] = environments(bridge->commands[i][j]);
+			bridge->commands[i][j] = remove_quotes(bridge->commands[i][j]);
+			printf("----SPACE %d- %s\n", j, bridge->commands[i][j]);
 		}
 	}
-	ft_splitfree(str_pipe);
-	i = -1;
-	while (parse->command[++i])
-		ft_splitfree(parse->command[i]);
-	free(parse->command);
-	free(parse);
 }
 
-static void	init_parse_struct(t_parse *parse)
+static void	free_commands(t_bridge *bridge, char **str_pipe)
 {
-	parse->n_cmds = 0;
-	parse->command = NULL;
+	int	i;
+
+	ft_splitfree(str_pipe);
+	i = -1;
+	while (bridge->commands[++i])
+		ft_splitfree(bridge->commands[i]);
+	free(bridge->commands);
+	free(bridge);
+}
+
+static void	init_bridge_struct(t_bridge *bridge)
+{
+	bridge->n_cmds = 0;
+	bridge->commands = NULL;
 }

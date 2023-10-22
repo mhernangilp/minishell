@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../../minishell.h"
 
-static int  special_caracter(char *input, int i);
+static int	special_caracter(char *input, int i);
 static int	spaces_inside(char *input, char c);
 static int	putreturn(char c, int nb_c);
 
@@ -37,16 +37,14 @@ int	check_rps(char *input, char c)
 		{
 			if (input[i + 2] == c && input[i + 3] == c)
 				return (putreturn(c, 2));
-			else if ((input[i + 2] == c || input[0] == c) && c != '|')
-				return (putreturn(c, 1));
-			else if (c == '|')
+			else if (input[i + 2] == c || input[0] == c || c == '|')
 				return (putreturn(c, 1));
 		}
 	}
 	return (spaces_inside(input, c));
 }
 
-static int  special_caracter(char *input, int i)
+static int	special_caracter(char *input, int i)
 {
 	if (input[i] == ';')
 		return (putreturn(';', 1));
@@ -63,8 +61,6 @@ static int	spaces_inside(char *input, char c)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '"' || input[i] == '\'')
-			i = quote(input, i);
 		if (input[i] == c || (input[i] == ' ' && i == 0))
 		{
 			i++;
@@ -72,9 +68,9 @@ static int	spaces_inside(char *input, char c)
 				i++;
 			if (!input[i] || (input[i] == c && input[i - 1] != c))
 				return (putreturn(c, 1));
-			if (input[i] == '\'' || input[i] == '"')
-				i--;
 		}
+		if (input[i] == '"' || input[i] == '\'')
+			i = quote(input, i);
 		if (input[i] != c)
 			i++;
 	}

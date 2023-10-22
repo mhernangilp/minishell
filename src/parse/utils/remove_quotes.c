@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../../minishell.h"
 
 static char	*malloc_quotes(const char *s);
 
-char	*remove_matched_quotes(const char *s)
+char	*remove_quotes(const char *s)
 {
 	char	*result;
 	int		i;
@@ -51,6 +51,7 @@ static char	*malloc_quotes(const char *s)
 	int		inside_quotes;
 
 	nb_quotes = 0;
+	inside_quotes = 0;
 	i = -1;
 	while (s[++i])
 	{

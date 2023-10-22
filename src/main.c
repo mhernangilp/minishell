@@ -20,7 +20,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	t_bridge	*bridge;
 
 	//atexit(leaks);
 	(void) argv;
