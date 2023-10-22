@@ -28,7 +28,7 @@
 typedef struct s_bridge
 {
 	char	**redirect;
-	char	***command;
+	char	***commands;
 	int		n_cmds;
 }	t_bridge;
 
@@ -36,7 +36,7 @@ typedef struct s_exec
 {
 	pid_t		*pid;
 	int			**pipe;
-	int		**in_out;
+	int			**in_out;
 	char		**paths;
 	char		**envp;
 	t_bridge	*bridge;
@@ -85,11 +85,11 @@ void	error_msg(char *msg);
 
 ///// LIBFT /////
 char	**ft_split(const char *s, char c);
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 
 ///// TEST EXECUTION /////
 //test_execution.c
-t_bridge	*test_execution();
+t_bridge		*test_execution();
 
 #endif
