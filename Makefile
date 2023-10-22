@@ -4,7 +4,7 @@ SRC =	src/main.c \
 		src/parse/parse.c \
 		src/parse/environment/environment.c src/parse/environment/utils_env.c \
 		src/parse/utils/split_quote.c src/parse/utils/remove_quotes.c src/parse/utils/check_parse.c \
-		src/execution.c src/errors.c src/child_process.c src/set_redirections.c src/test_execution.c \
+		src/execution/execution.c src/execution/errors.c src/execution/child_process.c src/execution/set_redirections.c src/execution/test_execution.c \
 
 CC = gcc
 RM = rm -f

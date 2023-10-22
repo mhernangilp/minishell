@@ -30,9 +30,8 @@
 
 typedef struct s_bridge
 {
-	char	**redirect;
+	char	***redirect;
 	char	***commands;
-	int		n_cmds;
 	int		n_cmds;
 }	t_bridge;
 
@@ -46,23 +45,8 @@ typedef struct s_exec
 	t_bridge	*bridge;
 }	t_exec;
 
-typedef struct s_exec
-{
-	pid_t		*pid;
-	int			**pipe;
-	int			**in_out;
-	char		**paths;
-	char		**envp;
-	t_bridge	*bridge;
-}	t_exec;
-
 typedef struct s_parse
 {
-	char	**env;
-	char	*r_env;
-	int		nb_env;
-	int		l_d;
-	int		a;
 	char	**env;
 	char	*r_env;
 	int		nb_env;
@@ -103,42 +87,10 @@ void	set_redirections(t_exec *exec, int num);
 //errors.c
 void	error_msg(char *msg);
 
-///// LIBFT /////
+/*//// LIBFT /////
 char	**ft_split(const char *s, char c);
 int		ft_atoi(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
-
-///// TEST EXECUTION /////
-//test_execution.c
-t_bridge		*test_execution();
-char	*remove_quotes(const char *s);
-/* ENV */
-char	*environments(char *s);
-int		count_env(char *s);
-char	*cut_and_get_env(t_parse *parse, char *s, int i);
-int		env_to_str(t_parse *parse, char *s, int i, int e);
-int		type_of_quote(char *str, int i, int quote);
-
-///// EXECUTION /////
-
-//execution.c
-void	execution(t_bridge *bridge, char **envp);
-void	close_all(t_exec *exec);
-
-//child_process.c
-void	child_process(t_exec exec, int num);
-
-//set_redirections.c
-void	set_redirections(t_exec *exec, int num);
-
-///// ERRORS /////
-//errors.c
-void	error_msg(char *msg);
-
-///// LIBFT /////
-char	**ft_split(const char *s, char c);
-int		ft_atoi(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char const *s1, char const *s2);*/
 
 ///// TEST EXECUTION /////
 //test_execution.c

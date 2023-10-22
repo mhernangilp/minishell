@@ -19,7 +19,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
+	t_bridge	*bridge;
+	char		*input;
 
 	//atexit(leaks);
 	(void) argv;
