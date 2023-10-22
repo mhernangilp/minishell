@@ -12,7 +12,10 @@
 
 #include "../minishell.h"
 
-static void	init_parse_struct(t_parse *parse);
+/*void	leaks(void)
+{
+	system("leaks minishell");
+}*/
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -20,11 +23,10 @@ int	main(int argc, char **argv, char **envp)
 	t_parse	*parse;
 	t_bridge	*bridge;
 
+	//atexit(leaks);
 	(void) argv;
 	if (argc != 1)
 		putexit("Wrong parameters\n");
-	parse = malloc (sizeof (t_parse));
-	init_parse_struct(parse);
 	while (1)
 	{
 		input = readline(ENTRADA_MS);
@@ -40,12 +42,6 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 	}
 	return (0);
-}
-
-static void	init_parse_struct(t_parse *parse)
-{
-	parse->commands = 0;
-	parse->str_space = NULL;
 }
 
 void	putexit(char *s)

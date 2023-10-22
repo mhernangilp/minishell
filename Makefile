@@ -1,12 +1,13 @@
 NAME = minishell
 
-SRC = src/main.c src/parse.c src/execution.c src/errors.c src/child_process.c src/set_redirections.c src/test_execution.c
+SRC = src/main.c src/parse.c src/check_parse.c src/utils/split_quote.c src/utils/remove_quotes.c \
+        src/execution.c src/errors.c src/child_process.c src/set_redirections.c src/test_execution.c
 
 CC = gcc
 RM = rm -f
 LIBFT_PATH = libft/
 LIBFT = libft/libft.a
-FLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=addres
+FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 READLINE_FLAGS = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include 
 #READLINE_FLAGS = -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include
 
@@ -28,8 +29,8 @@ $(NAME): $(LIBFT) $(OBJS)
 	@echo $(PINK)"$(NAME) Generated!"$(NO_COLOR)
 
 %.o: %.c
+	@echo $(GREEN)"[OK]"$(NO_COLOR) "\c"
 	$(CC) $(FLAGS) -I $(LIBFT_PATH) -c $< -o $@
-	@echo $(GREEN)"[OK]"$(NO_COLOR)
 
 clean:
 	@make clean -C $(LIBFT_PATH)

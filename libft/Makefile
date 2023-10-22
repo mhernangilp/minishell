@@ -79,8 +79,8 @@ ${NAME}: ${OBJ} ${INCLUDE}
 
 
 %.o: %.c
+	@echo $(GREEN)"[OK]"$(NO_COLOR) "\c"
 	${CC} ${FLAGS} -c -o $@ $<   
-	@echo $(GREEN)"[OK]"$(NO_COLOR)
 
 bonus: ${B_OBJ} ${INCLUDE}
 	${LIB} ${NAME} ${B_OBJ}
