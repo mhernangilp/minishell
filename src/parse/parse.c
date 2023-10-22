@@ -51,13 +51,13 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
 		bridge->commands[i] = split_quote(str_pipe[i], ' ');
-		printf("%d PIPE - %s\n", i, str_pipe[i]);
+		printf("%d PIPE-> %s\n", i, str_pipe[i]);
 		j = -1;
 		while (bridge->commands[i][++j] && bridge->commands[i][j][0])
 		{
 			bridge->commands[i][j] = environments(bridge->commands[i][j]);
 			bridge->commands[i][j] = remove_quotes(bridge->commands[i][j]);
-			printf("----SPACE %d- %s\n", j, bridge->commands[i][j]);
+			printf("\t %dCOMMAND-> %s\n", j, bridge->commands[i][j]);
 		}
 	}
 }
