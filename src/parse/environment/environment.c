@@ -2,12 +2,11 @@
 #include "../../../minishell.h"
 
 static void	expand_variable(t_parse *parse, char *s);
+static void	parse_env(t_parse *parse, char *s);
+static void	get_env(t_parse *parse, char *s);
 
 char	*environments(char *s)
 {
-	int		i;
-	int		j;
-	int		quote;
 	t_parse	*parse;
 
 	parse = malloc (sizeof (t_parse));
@@ -15,17 +14,9 @@ char	*environments(char *s)
 	if (parse->nb_env == 0)
 		return (s);
 	parse->env = (char **)malloc (sizeof (char *) * (parse->nb_env + 1));
-	i = -1;
-	j = -1;
-	parse->l_d = 0;
-	quote = 0;
-	while (s[++i])
-	{
-		quote = type_of_quote(s, i, quote);
-		if (s[i] == '$' && s[i + 1] != ' ' && s[i + 1] != '.' && quote != 1)
-			parse->env[++j] = cut_and_get_env(parse, s, i);
-	}
-	parse->env[++j] = NULL;
+	if (!parse->env)
+		putexit("Malloc error\n");
+	get_env(parse, s);
 	expand_variable(parse, s);
 	free(parse->env);
 	free(s);
@@ -34,10 +25,8 @@ char	*environments(char *s)
 
 static	void	expand_variable(t_parse *parse, char *s)
 {
-	int	quote;
 	int	e_len;
 	int	i;
-	int	e;
 
 	e_len = 0;
 	i = -1;
@@ -45,6 +34,36 @@ static	void	expand_variable(t_parse *parse, char *s)
 		e_len += ft_strlen(parse->env[i]);
 	e_len = e_len - parse->l_d + 1;
 	parse->r_env = malloc (sizeof (char *) * (ft_strlen(s) + e_len));
+	if (!parse->r_env)
+		putexit("Malloc error\n");
+	parse_env(parse, s);
+}
+
+static void	get_env(t_parse *parse, char *s)
+{
+	int	i;
+	int	j;
+	int	quote;
+
+	parse->l_d = 0;
+	i = -1;
+	j = -1;
+	quote = 0;
+	while (s[++i])
+	{
+		quote = type_of_quote(s, i, quote);
+		if (s[i] == '$' && s[i + 1] != ' ' && s[i + 1] != '.' && quote != 1)
+			parse->env[++j] = cut_and_get_env(parse, s, i);
+	}
+	parse->env[++j] = NULL;
+}
+
+static void	parse_env(t_parse *parse, char *s)
+{
+	int	i;
+	int	e;
+	int	quote;
+
 	parse->a = -1;
 	i = -1;
 	e = -1;
