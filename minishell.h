@@ -13,6 +13,10 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define NORMAL 0
+# define HEREDOC 1
+# define APPEND 1
+
 # include <dirent.h>
 # include <string.h>
 # include <fcntl.h>
@@ -28,10 +32,23 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
+typedef struct s_red
+{
+	int	num;
+	char	**file;
+	int	*type;
+}	t_red;
+
+typedef struct s_cmdred
+{
+	t_red	*inred;
+	t_red	*outred;
+}	t_cmdred;
+
 typedef struct s_bridge
 {
-	char	***redirect;
-	char	***commands;
+	t_cmdred	*redirect;
+	char		***commands;
 	int		n_cmds;
 }	t_bridge;
 
@@ -87,10 +104,10 @@ void	set_redirections(t_exec *exec, int num);
 //errors.c
 void	error_msg(char *msg);
 
-/*//// LIBFT /////
+//// LIBFT /////
 char	**ft_split(const char *s, char c);
 int		ft_atoi(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);*/
+char	*ft_strjoin(char const *s1, char const *s2);
 
 ///// TEST EXECUTION /////
 //test_execution.c
