@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:10:56 by mhernang          #+#    #+#             */
-/*   Updated: 2023/10/22 19:09:31 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:50:24 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@ static void	set_pipes(t_exec *exec, int num);
 
 void	set_redirections(t_exec *exec, int num)
 {
-	if (exec -> bridge -> redirect[num][0])
+	if (exec -> bridge -> redirect[num].inred)
 		in_red(exec, num);
-	else if (exec -> bridge -> redirect[num][1])
-		printf("Heredoc >\n");
-		//load_heredoc();
-	if (exec -> bridge -> redirect[num][2])
+	if (exec -> bridge -> redirect[num].outred)
 		out_red(exec, num);
 	set_pipes(exec, num);
 }
@@ -40,23 +37,42 @@ static void	set_pipes(t_exec *exec, int num)
 
 static void	in_red(t_exec *exec, int num)
 {
-	exec -> in_out[num][0] = open(exec -> bridge -> redirect[num][0], O_RDONLY);
-	if (exec -> in_out[num][0] < 0)
-		error_msg("Error infile");
+	int	i;
+
+	i = -1;
+	while (++i < exec -> bridge -> redirect[num].inred -> num)
+	{
+		if (exec -> bridge -> redirect[num].inred -> type[i] == NORMAL)
+		exec -> in_out[num][0] = open(exec -> bridge -> redirect[num].inred
+				-> file[i], O_RDONLY);
+		else if (exec -> bridge -> redirect[num].inred -> type[i] == HEREDOC)
+			printf("Hago heredoc\n");
+		else
+			error_msg("Error with infile redirection mode");
+		//eliminar .heredoc?
+		if (exec -> in_out[num][0] < 0)
+			error_msg("Error infile");
+	}
 	dup2(exec -> in_out[num][0], 0);
 }
 
 static void	out_red(t_exec *exec, int num)
 {
-	if (ft_atoi(exec -> bridge -> redirect[num][3]) == 0)
-		exec -> in_out[num][1] = open(exec -> bridge -> redirect[num][2], O_CREAT
-			| O_WRONLY | O_TRUNC, 0666);
-	else if (ft_atoi(exec -> bridge -> redirect[num][3]) == 1)
-		exec -> in_out[num][1] = open(exec -> bridge -> redirect[num][2], O_CREAT
-			| O_WRONLY | O_APPEND, 0666);
-	else 
-		error_msg("Error with outfile redirection mode");
-	if (exec -> in_out[num][1] < 0)
-		error_msg("Error outfile");
+	int	i;
+
+	i = -1;
+	while (++i < exec -> bridge -> redirect[num].outred -> num)
+	{
+		if (exec -> bridge -> redirect[num].outred -> type[i] == NORMAL)
+			exec -> in_out[num][1] = open(exec -> bridge -> redirect[num].outred
+					-> file[i], O_CREAT | O_WRONLY | O_TRUNC, 0666);
+		else if (exec -> bridge -> redirect[num].outred -> type[i] == APPEND)
+			exec -> in_out[num][1] = open(exec -> bridge -> redirect[num].outred
+					-> file[i], O_CREAT | O_WRONLY | O_APPEND, 0666);
+		else 
+			error_msg("Error with outfile redirection mode");
+		if (exec -> in_out[num][1] < 0)
+			error_msg("Error outfile");
+	}
 	dup2(exec -> in_out[num][1], 1);
 }
