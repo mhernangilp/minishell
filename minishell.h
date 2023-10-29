@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/15 17:22:28 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:50:28 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,13 @@ void	error_msg(char *msg);
 
 //// LIBFT /////
 char	**ft_split(const char *s, char c);
-int		ft_atoi(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 
 ///// TEST EXECUTION /////
 //test_execution.c
 t_bridge		*test_execution();
+t_bridge		*test_execution2();
+t_bridge		*test_execution3();
+t_bridge		*test_execution4();
 
 #endif
