@@ -87,6 +87,8 @@ int		count_env(char *s);
 char	*cut_and_get_env(t_parse *parse, char *s, int i);
 int		env_to_str(t_parse *parse, char *s, int i, int e);
 int		type_of_quote(char *str, int i, int quote);
+/* REDIRECTIONS */
+void    fill_redirections(t_bridge *bridge, char **s);
 
 ///// EXECUTION /////
 

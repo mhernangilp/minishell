@@ -45,6 +45,7 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
+		fill_redirections(bridge, str_pipe);
 		bridge->commands[i] = split_quote(str_pipe[i], ' ');
 		printf("%d PIPE-> %s\n", i, str_pipe[i]);
 		j = -1;
