@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/17 18:27:12 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/30 11:03:41 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,12 @@ void	start_parse(char *input)
 	while (str_pipe[bridge->n_cmds])
 		bridge->n_cmds++;
 	bridge->commands = malloc (sizeof (char **) * (bridge->n_cmds + 1));
+	if (!bridge->commands)
+		putexit("Malloc error\n");
 	bridge->commands[bridge->n_cmds] = NULL;
 	do_bridge(bridge, str_pipe);
 	free_commands(bridge, str_pipe);
 }
-
-/*
- *	redirecciones (<, <<, >, >>, |)
- *
- *	expansion de variables ($PATH, $USER...)
- *
- * */
 
 static void	do_bridge(t_bridge *bridge, char **str_pipe)
 {
@@ -78,4 +73,5 @@ static void	init_bridge_struct(t_bridge *bridge)
 {
 	bridge->n_cmds = 0;
 	bridge->commands = NULL;
+	bridge->redirect = NULL;
 }
