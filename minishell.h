@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/29 18:50:28 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:40:01 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*cut_and_get_env(t_parse *parse, char *s, int i);
 int		env_to_str(t_parse *parse, char *s, int i, int e);
 int		type_of_quote(char *str, int i, int quote);
 /* REDIRECTIONS */
-void    fill_redirections(t_bridge *bridge, char **s);
+char	**fill_redirections(t_bridge *bridge, char **s);
 
 ///// EXECUTION /////
 

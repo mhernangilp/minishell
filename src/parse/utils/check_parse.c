@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:00:54 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/16 15:05:06 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/10/30 14:07:16 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	check_rps(char *input, char c)
 			else if (i == -2)
 				return (putreturn('"', 1));
 		}
-		if ((input[i] == c && input[i + 1] == c) || input[0] == c)
+		if ((input[i] == c && input[i + 1] == c) || (input[0] == c && c != '<'))
 		{
 			if (input[i + 2] == c && input[i + 3] == c)
 				return (putreturn(c, 2));
-			else if (input[i + 2] == c || input[0] == c || c == '|')
+			else if (input[i + 2] == c || input[0] == c)
 				return (putreturn(c, 1));
 		}
 	}
@@ -61,7 +61,7 @@ static int	spaces_inside(char *input, char c)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == c || (input[i] == ' ' && i == 0))
+		if (input[i] == c || (input[i] == ' ' && i == 0 && c != '<'))
 		{
 			i++;
 			while (input[i] && (input[i] == ' ' || input[i] == '\t'))
