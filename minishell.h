@@ -34,9 +34,9 @@
 
 typedef struct s_red
 {
-	int	num;
+	int		num;
 	char	**file;
-	int	*type;
+	int		*type;
 }	t_red;
 
 typedef struct s_cmdred
@@ -49,7 +49,7 @@ typedef struct s_bridge
 {
 	t_cmdred	*redirect;
 	char		***commands;
-	int		n_cmds;
+	int			n_cmds;
 }	t_bridge;
 
 typedef struct s_exec
@@ -69,6 +69,9 @@ typedef struct s_parse
 	int		nb_env;
 	int		l_d;
 	int		a;
+	char	*rdirect;
+	int		start_rdir;
+	int		nb_rdir;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
@@ -82,13 +85,13 @@ char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
 char	*remove_quotes(const char *s);
 /* ENV */
-char	*environments(char *s);
+char	*environments(t_parse *parse, char *s);
 int		count_env(char *s);
 char	*cut_and_get_env(t_parse *parse, char *s, int i);
 int		env_to_str(t_parse *parse, char *s, int i, int e);
 int		type_of_quote(char *str, int i, int quote);
 /* REDIRECTIONS */
-char	**fill_redirections(t_bridge *bridge, char **s);
+char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s);
 
 ///// EXECUTION /////
 

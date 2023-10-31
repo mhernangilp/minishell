@@ -16,11 +16,8 @@ static void	expand_variable(t_parse *parse, char *s);
 static void	parse_env(t_parse *parse, char *s);
 static void	get_env(t_parse *parse, char *s);
 
-char	*environments(char *s)
+char	*environments(t_parse *parse, char *s)
 {
-	t_parse	*parse;
-
-	parse = malloc (sizeof (t_parse));
 	parse->nb_env = count_env(s);
 	if (parse->nb_env == 0)
 		return (s);

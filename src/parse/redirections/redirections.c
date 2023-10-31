@@ -12,18 +12,19 @@
 
 #include "../../../minishell.h"
 
-static int	malloc_redirect(char **s, int i, int j, int m);
-static char	**out_redirect(char **s, int i, int j, int m);
+static int	malloc_redirect(t_parse *parse, char **s, int i, int j);
+static char	**out_redirect(t_parse *parse, char **s, int i, int j);
 
-char	**fill_redirections(t_bridge *bridge, char **s)
+char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 {
 	int		i;
 	int		j;
-	int		m;
 
+	parse->nb_rdir = 0;
 	i = -1;
 	while (s[++i])
 	{
+		//count_redirections(parse, s[i]);
 		j = -1;
 		while (s[i][++j])
 		{
@@ -31,19 +32,45 @@ char	**fill_redirections(t_bridge *bridge, char **s)
 				j = quote(s[i], j);
 			if (s[i][j] == '<' || s[i][j] == '>')
 			{
-				m = j;
-				j = malloc_redirect(s, i, j, m) - 1;
-				s = out_redirect(s, i, j, m);
+				parse->start_rdir = j;
+				j = malloc_redirect(parse, s, i, j) - 1;
+				s = out_redirect(parse, s, i, j);
+				//redirect_struct(parse, bridge, i);
 			}
 		}
 	}
-	bridge->n_cmds = bridge->n_cmds + 2 - 1 - 1;
+	(void) bridge;
 	return (s);
 }
-
-static int	malloc_redirect(char **s, int i, int j, int m)
+/*
+static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i)
 {
-	char	*aux_redirect;
+	parse->rdirect = remove_quotes(parse->rdirect);
+	if (parse->rdirect[0] == '<')
+	{
+		bridge->redirect[i].inred = (t_red *)malloc(sizeof(t_red));
+		bridge->redirect[i].inred->num = 1;
+		bridge->redirect[i].inred->file = malloc (sizeof(char *) * );
+		bridge->redirect[i].inred->file[0] = parse->rdirect;
+		bridge->redirect[i].inred->type = (int *)malloc(1 * sizeof(int));
+		if (parse->rdirect[1] != '<')
+			bridge->redirect[i].inred->type[0] = NORMAL;
+		else
+			bridge->redirect[i].inred->type[0] = HEREDOC;
+		bridge->redirect[i].outred = NULL;
+		bridge->redirect->inred->num++;
+	}
+	else if (parse->rdirect[0] == '>')
+	printf("NUM-> %d\n", bridge->redirect->inred.num);
+	free (parse->rdirect);
+}
+
+static void	count_redirections(t_parse *parse, char *s)
+{
+}*/
+
+static int	malloc_redirect(t_parse *parse, char **s, int i, int j)
+{
 
 	if (s[i][j + 1] == '<' || s[i][j + 1] == '>')
 		j += 2;
@@ -54,15 +81,16 @@ static int	malloc_redirect(char **s, int i, int j, int m)
 	while (s[i][j] && s[i][j] != ' ' && s[i][j] != '\t' && s[i][j] != '<'
 				&& s[i][j] != '>')
 		j++;
-	//bridge->redirect = ft_substr(s[i], m, j - m);
-	aux_redirect = ft_substr(s[i], m, j - m);
-	printf("%dREDIRECT ==%s\n", i, aux_redirect);
-	free (aux_redirect);
+	parse->rdirect = ft_substr(s[i], parse->start_rdir, j - parse->start_rdir);
+	printf("%d REDIRECT->%s\n", i, parse->rdirect);
 	return (j);
 }
 
-static char	**out_redirect(char **s, int i, int j, int m)
+static char	**out_redirect(t_parse *parse, char **s, int i, int j)
 {
+	int	m;
+
+	m = parse->start_rdir;
 	while (s[i][m] && m <= j)
 	{
 		s[i][m] = ' ';

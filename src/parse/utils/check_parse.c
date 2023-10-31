@@ -46,6 +46,8 @@ int	check_rps(char *input, char c)
 
 static int	special_caracter(char *input, int i)
 {
+	if (input[i] == '>' && input[i + 1] == '<')
+		return (putreturn('<', 1));
 	if (input[i] == ';')
 		return (putreturn(';', 1));
 	else if (input[i] == '\\')
