@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_history(input);
 		start_parse(input);
-		bridge = test_execution();
+		bridge = test_execution4();
 		execution(bridge, envp);
 		free(input);
 	}
