@@ -8,6 +8,8 @@ void	count_redirections(t_parse *parse, char *s)
 	i = -1;
 	while (s[++i])
 	{
+		if (s[i] == '"' || s[i] == '\'')
+			i = quote(s, i);
 		if (s[i] == '<')
 		{
 			i++;

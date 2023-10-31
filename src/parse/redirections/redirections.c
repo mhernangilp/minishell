@@ -20,13 +20,15 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 	int		i;
 	int		j;
 
-	parse->n_ip = 0;
-	parse->n_op = 0;
 	i = -1;
 	while (s[++i])
 	{
+		parse->n_ip = 0;
+		parse->n_op = 0;
 		count_redirections(parse, s[i]);
 		data_struct(parse, bridge, i);
+		parse->locate_ip_dir = -1;
+		parse->locate_op_dir = -1;
 		j = -1;
 		while (s[i][++j])
 		{
@@ -34,6 +36,10 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 				j = quote(s[i], j);
 			if (s[i][j] == '<' || s[i][j] == '>')
 			{
+				if (s[i][j] == '<')
+					parse->locate_ip_dir++;
+				else
+					parse->locate_op_dir++;
 				parse->start_rdir = j;
 				j = malloc_redirect(parse, s, i, j) - 1;
 				s = out_redirect(parse, s, i, j);
@@ -41,6 +47,9 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 			}
 		}
 	}
+	printf("REDIR-> %s\n", bridge->redirect[0].inred->file[0]);
+//	printf("REDIR-> %s\n", bridge->redirect[0].inred->file[1]);
+//	printf("REDIR-> %s\n", bridge->redirect[1].inred->file[0]);
 	return (s);
 }
 
@@ -53,6 +62,8 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 		bridge->redirect[i].inred->type = malloc (sizeof(int) * parse->n_ip);
 		bridge->redirect[i].inred->num = parse->n_ip;
 	}
+	else
+		bridge->redirect[i].inred = NULL;
 	if (parse->n_op)
 	{
 		bridge->redirect[i].outred = (t_red *)malloc(sizeof(t_red));
@@ -60,26 +71,33 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 		bridge->redirect[i].outred->type = malloc (sizeof(int) * parse->n_ip);
 		bridge->redirect[i].outred->num = parse->n_ip;
 	}
+	else
+		bridge->redirect[i].outred = NULL;
 }
 
 static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i)
 {
+	int	ip;
+	int	op;
+
+	ip = parse->locate_ip_dir;
+	op = parse->locate_op_dir;
 	parse->rdirect = remove_quotes(parse->rdirect);
 	if (parse->rdirect[0] == '<')
 	{
-		bridge->redirect[i].inred->file[0] = parse->rdirect;
+		bridge->redirect[i].inred->file[ip] = parse->rdirect;
 		if (parse->rdirect[1] != '<')
-			bridge->redirect[i].inred->type[0] = NORMAL;
+			bridge->redirect[i].inred->type[ip] = NORMAL;
 		else
-			bridge->redirect[i].inred->type[0] = HEREDOC;
+			bridge->redirect[i].inred->type[ip] = HEREDOC;
 	}
 	else if (parse->rdirect[0] == '>')
 	{
-		bridge->redirect[i].outred->file[0] = parse->rdirect;
+		bridge->redirect[i].outred->file[op] = parse->rdirect;
 		if (parse->rdirect[1] != '>')
-			bridge->redirect[i].outred->type[0] = NORMAL;
+			bridge->redirect[i].outred->type[op] = NORMAL;
 		else
-			bridge->redirect[i].outred->type[0] = APPEND;
+			bridge->redirect[i].outred->type[op] = APPEND;
 	}
 	free (parse->rdirect);
 }

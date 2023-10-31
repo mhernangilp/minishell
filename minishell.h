@@ -73,6 +73,8 @@ typedef struct s_parse
 	int		start_rdir;
 	int		n_ip;
 	int		n_op;
+	int		locate_ip_dir;
+	int		locate_op_dir;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
