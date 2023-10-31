@@ -21,11 +21,11 @@ void	start_parse(char *input)
 	t_bridge	*bridge;
 	char		**str_pipe;
 
-	bridge = malloc (sizeof (t_bridge));
-	init_bridge_struct(bridge);
 	if (!check_rps(input, '|') || !check_rps(input, '<')
 		|| !check_rps(input, '>'))
 		return ;
+	bridge = malloc (sizeof (t_bridge));
+	init_bridge_struct(bridge);
 	str_pipe = split_quote(input, '|');
 	while (str_pipe[bridge->n_cmds])
 		bridge->n_cmds++;

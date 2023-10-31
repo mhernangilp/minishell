@@ -71,7 +71,8 @@ typedef struct s_parse
 	int		a;
 	char	*rdirect;
 	int		start_rdir;
-	int		nb_rdir;
+	int		n_ip;
+	int		n_op;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
@@ -92,6 +93,9 @@ int		env_to_str(t_parse *parse, char *s, int i, int e);
 int		type_of_quote(char *str, int i, int quote);
 /* REDIRECTIONS */
 char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s);
+void	count_redirections(t_parse *parse, char *s);
+int		malloc_redirect(t_parse *parse, char **s, int i, int j);
+char	**out_redirect(t_parse *parse, char **s, int i, int j);
 
 ///// EXECUTION /////
 

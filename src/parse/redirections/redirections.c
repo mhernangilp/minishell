@@ -12,19 +12,21 @@
 
 #include "../../../minishell.h"
 
-static int	malloc_redirect(t_parse *parse, char **s, int i, int j);
-static char	**out_redirect(t_parse *parse, char **s, int i, int j);
+static void	data_struct(t_parse *parse, t_bridge *bridge, int i);
+static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i);
 
 char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 {
 	int		i;
 	int		j;
 
-	parse->nb_rdir = 0;
+	parse->n_ip = 0;
+	parse->n_op = 0;
 	i = -1;
 	while (s[++i])
 	{
-		//count_redirections(parse, s[i]);
+		count_redirections(parse, s[i]);
+		data_struct(parse, bridge, i);
 		j = -1;
 		while (s[i][++j])
 		{
@@ -35,66 +37,49 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 				parse->start_rdir = j;
 				j = malloc_redirect(parse, s, i, j) - 1;
 				s = out_redirect(parse, s, i, j);
-				//redirect_struct(parse, bridge, i);
+				redirect_struct(parse, bridge, i);
 			}
 		}
 	}
-	(void) bridge;
 	return (s);
 }
-/*
+
+static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
+{
+	if (parse->n_ip)
+	{
+		bridge->redirect[i].inred = (t_red *)malloc(sizeof(t_red));
+		bridge->redirect[i].inred->file = malloc (sizeof(char *) * parse->n_ip + 1);
+		bridge->redirect[i].inred->type = malloc (sizeof(int) * parse->n_ip);
+		bridge->redirect[i].inred->num = parse->n_ip;
+	}
+	if (parse->n_op)
+	{
+		bridge->redirect[i].outred = (t_red *)malloc(sizeof(t_red));
+		bridge->redirect[i].outred->file = malloc (sizeof(char *) * parse->n_ip + 1);
+		bridge->redirect[i].outred->type = malloc (sizeof(int) * parse->n_ip);
+		bridge->redirect[i].outred->num = parse->n_ip;
+	}
+}
+
 static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i)
 {
 	parse->rdirect = remove_quotes(parse->rdirect);
 	if (parse->rdirect[0] == '<')
 	{
-		bridge->redirect[i].inred = (t_red *)malloc(sizeof(t_red));
-		bridge->redirect[i].inred->num = 1;
-		bridge->redirect[i].inred->file = malloc (sizeof(char *) * );
 		bridge->redirect[i].inred->file[0] = parse->rdirect;
-		bridge->redirect[i].inred->type = (int *)malloc(1 * sizeof(int));
 		if (parse->rdirect[1] != '<')
 			bridge->redirect[i].inred->type[0] = NORMAL;
 		else
 			bridge->redirect[i].inred->type[0] = HEREDOC;
-		bridge->redirect[i].outred = NULL;
-		bridge->redirect->inred->num++;
 	}
 	else if (parse->rdirect[0] == '>')
-	printf("NUM-> %d\n", bridge->redirect->inred.num);
-	free (parse->rdirect);
-}
-
-static void	count_redirections(t_parse *parse, char *s)
-{
-}*/
-
-static int	malloc_redirect(t_parse *parse, char **s, int i, int j)
-{
-
-	if (s[i][j + 1] == '<' || s[i][j + 1] == '>')
-		j += 2;
-	else
-		j++;
-	while (s[i][j] == ' ' || s[i][j] == '\t')
-		j++;
-	while (s[i][j] && s[i][j] != ' ' && s[i][j] != '\t' && s[i][j] != '<'
-				&& s[i][j] != '>')
-		j++;
-	parse->rdirect = ft_substr(s[i], parse->start_rdir, j - parse->start_rdir);
-	printf("%d REDIRECT->%s\n", i, parse->rdirect);
-	return (j);
-}
-
-static char	**out_redirect(t_parse *parse, char **s, int i, int j)
-{
-	int	m;
-
-	m = parse->start_rdir;
-	while (s[i][m] && m <= j)
 	{
-		s[i][m] = ' ';
-		m++;
+		bridge->redirect[i].outred->file[0] = parse->rdirect;
+		if (parse->rdirect[1] != '>')
+			bridge->redirect[i].outred->type[0] = NORMAL;
+		else
+			bridge->redirect[i].outred->type[0] = APPEND;
 	}
-	return (s);
+	free (parse->rdirect);
 }
