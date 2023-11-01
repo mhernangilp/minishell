@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_rdir.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/01 13:29:43 by gfernand          #+#    #+#             */
+/*   Updated: 2023/11/01 13:56:08 by gfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../../minishell.h"
 
@@ -12,12 +23,14 @@ void	count_redirections(t_parse *parse, char *s)
 			i = quote(s, i);
 		if (s[i] == '<')
 		{
-			i++;
+			if (s[i + 1] == '<' || s[i + 1] == '>')
+				i++;
 			parse->n_ip++;
 		}
 		if (s[i] == '>')
 		{
-			i++;
+			if (s[i + 1] == '>')
+				i++;
 			parse->n_op++;
 		}
 	}
@@ -25,7 +38,6 @@ void	count_redirections(t_parse *parse, char *s)
 
 int	malloc_redirect(t_parse *parse, char **s, int i, int j)
 {
-
 	if (s[i][j + 1] == '<' || s[i][j + 1] == '>')
 		j += 2;
 	else
@@ -36,7 +48,6 @@ int	malloc_redirect(t_parse *parse, char **s, int i, int j)
 				&& s[i][j] != '>')
 		j++;
 	parse->rdirect = ft_substr(s[i], parse->start_rdir, j - parse->start_rdir);
-	printf("%d REDIRECT->%s\n", i, parse->rdirect);
 	return (j);
 }
 
