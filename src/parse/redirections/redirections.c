@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:12:02 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/01 14:07:00 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:24:57 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	data_struct(t_parse *parse, t_bridge *bridge, int i);
 static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i);
+static void	start_variables(t_parse *parse, t_bridge *bridge, char **s, int i);
 
 char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 {
@@ -23,12 +24,7 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 	i = -1;
 	while (s[++i])
 	{
-		parse->n_ip = 0;
-		parse->n_op = 0;
-		count_redirections(parse, s[i]);
-		data_struct(parse, bridge, i);
-		parse->locate_ip_dir = -1;
-		parse->locate_op_dir = -1;
+		start_variables(parse, bridge, s, i);
 		j = -1;
 		while (s[i][++j])
 		{
@@ -47,9 +43,17 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 			}
 		}
 	}
-//	printf("REDIR-> %s\n", bridge->redirect[0].inred->file[1]);
-//	printf("REDIR-> %s\n", bridge->redirect[1].inred->file[0]);
 	return (s);
+}
+
+static void	start_variables(t_parse *parse, t_bridge *bridge, char **s, int i)
+{
+		parse->n_ip = 0;
+		parse->n_op = 0;
+		count_redirections(parse, s[i]);
+		data_struct(parse, bridge, i);
+		parse->locate_ip_dir = -1;
+		parse->locate_op_dir = -1;
 }
 
 static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
@@ -81,25 +85,26 @@ static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i)
 
 	ip = parse->locate_ip_dir;
 	op = parse->locate_op_dir;
-	printf("IP=%d\tOP=%d\n", ip, op);
 	parse->rdirect = remove_quotes(parse->rdirect);
 	if (parse->rdirect[0] == '<')
 	{
-		bridge->redirect[i].inred->file[ip] = parse->rdirect;
-		printf("REDIR INPUT-> %s\n", bridge->redirect[i].inred->file[ip]);
 		if (parse->rdirect[1] != '<')
 			bridge->redirect[i].inred->type[ip] = NORMAL;
 		else
 			bridge->redirect[i].inred->type[ip] = HEREDOC;
+		parse->rdirect = remove_redirection(parse->rdirect);
+		bridge->redirect[i].inred->file[ip] = parse->rdirect;
+		printf("REDIR INPUT-%s-\n", bridge->redirect[i].inred->file[ip]);
 	}
 	else if (parse->rdirect[0] == '>')
 	{
-		bridge->redirect[i].outred->file[op] = parse->rdirect;
-		printf("REDIR OUTPUT-> %s\n", bridge->redirect[i].inred->file[op]);
 		if (parse->rdirect[1] != '>')
 			bridge->redirect[i].outred->type[op] = NORMAL;
 		else
 			bridge->redirect[i].outred->type[op] = APPEND;
+		parse->rdirect = remove_redirection(parse->rdirect);
+		bridge->redirect[i].outred->file[op] = parse->rdirect;
+		printf("REDIR OUTPUT-%s-\n", bridge->redirect[i].inred->file[op]);
 	}
 	free (parse->rdirect);
 }

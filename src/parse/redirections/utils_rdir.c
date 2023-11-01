@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:29:43 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/01 13:56:08 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:22:59 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,28 @@ char	**out_redirect(t_parse *parse, char **s, int i, int j)
 		m++;
 	}
 	return (s);
+}
+
+char	*remove_redirection(char *s)
+{
+	char	*result;
+	int		i;
+	int		start;
+
+	result = NULL;
+	i = -1;
+	if (s[++i])
+	{
+		i++;
+		if (s[i] == '<' || s[i] == '>')
+			i++;
+		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+				i++;
+		start = i;
+		while (s[i] && (s[i] != ' ' || s[i] != '\t'))
+			i++;
+		result = ft_substr(s, start, i - start);
+	}
+	free (s);
+	return (result);
 }

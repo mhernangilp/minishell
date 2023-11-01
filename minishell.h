@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/30 13:40:01 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:19:42 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s);
 void	count_redirections(t_parse *parse, char *s);
 int		malloc_redirect(t_parse *parse, char **s, int i, int j);
 char	**out_redirect(t_parse *parse, char **s, int i, int j);
+char	*remove_redirection(char *s);
 
 ///// EXECUTION /////
 
