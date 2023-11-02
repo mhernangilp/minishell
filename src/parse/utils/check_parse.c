@@ -37,7 +37,7 @@ int	check_rps(char *input, char c)
 		{
 			if (input[i + 2] == c && input[i + 3] == c)
 				return (putreturn(c, 2));
-			else if (input[i + 2] == c || input[0] == c)
+			else if (input[i + 2] == c || c == '|')
 				return (putreturn(c, 1));
 		}
 	}

@@ -55,8 +55,8 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
+		printf("%d PIPE->%s<-\n", i, str_pipe[i]);
 		bridge->commands[i] = split_quote(str_pipe[i], ' ');
-		printf("%d PIPE-> %s\n", i, str_pipe[i]);
 		j = -1;
 		while (bridge->commands[i][++j] && bridge->commands[i][j][0])
 		{

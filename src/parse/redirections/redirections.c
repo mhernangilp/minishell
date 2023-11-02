@@ -87,7 +87,6 @@ static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i)
 {
 	int	p;
 
-	parse->rdirect = remove_quotes(parse->rdirect);
 	if (parse->rdirect[0] == '<')
 	{
 		p = ++parse->locate_ip_dir;
@@ -95,7 +94,8 @@ static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i)
 			bridge->redirect[i].inred->type[p] = NORMAL;
 		else
 			bridge->redirect[i].inred->type[p] = HEREDOC;
-		parse->rdirect = remove_redirection(parse->rdirect);
+		parse->rdirect = worth_part(parse->rdirect);
+		parse->rdirect = remove_quotes(parse->rdirect);
 		bridge->redirect[i].inred->file[p] = parse->rdirect;
 		//bridge->redirect[i].inred->file[p + 1] = NULL;
 		printf("REDIR INPUT-%s-\n", bridge->redirect[i].inred->file[p]);
@@ -107,7 +107,8 @@ static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i)
 			bridge->redirect[i].outred->type[p] = NORMAL;
 		else
 			bridge->redirect[i].outred->type[p] = APPEND;
-		parse->rdirect = remove_redirection(parse->rdirect);
+		parse->rdirect = worth_part(parse->rdirect);
+		parse->rdirect = remove_quotes(parse->rdirect);
 		bridge->redirect[i].outred->file[p] = parse->rdirect;
 		//bridge->redirect[i].outred->file[op + 1] = NULL;
 		printf("REDIR OUTPUT-%s-\n", bridge->redirect[i].outred->file[p]);

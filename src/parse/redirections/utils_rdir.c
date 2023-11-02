@@ -68,7 +68,7 @@ char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j)
 	return (s);
 }
 
-char	*remove_redirection(char *s)
+char	*worth_part(char *s)
 {
 	char	*result;
 	int		i;
@@ -84,8 +84,7 @@ char	*remove_redirection(char *s)
 		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 				i++;
 		start = i;
-		while (s[i] && (s[i] != ' ' || s[i] != '\t'))
-			i++;
+		i = ft_strlen(s);
 		result = ft_substr(s, start, i - start);
 	}
 	free (s);
