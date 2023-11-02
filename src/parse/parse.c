@@ -21,14 +21,18 @@ void	start_parse(char *input)
 	t_bridge	*bridge;
 	char		**str_pipe;
 
-	if (!check_rps(input, '|') || !check_rps(input, '<')
-		|| !check_rps(input, '>'))
+	if (!check_rps(input, '|'))
 		return ;
 	bridge = malloc (sizeof (t_bridge));
 	init_bridge_struct(bridge);
 	str_pipe = split_quote(input, '|');
 	while (str_pipe[bridge->n_cmds])
+	{
+		if (!check_rps(str_pipe[bridge->n_cmds], '<')
+			|| !check_rps(str_pipe[bridge->n_cmds], '>'))
+			return ;
 		bridge->n_cmds++;
+	}
 	bridge->commands = malloc (sizeof (char **) * (bridge->n_cmds + 1));
 	bridge->redirect = malloc (sizeof (t_cmdred) * (bridge->n_cmds + 1));
 	if (!bridge->commands)
@@ -40,8 +44,8 @@ void	start_parse(char *input)
 
 static void	do_bridge(t_bridge *bridge, char **str_pipe)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_parse	*parse;
 
 	parse = malloc (sizeof (t_parse));
@@ -58,7 +62,7 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 		{
 			bridge->commands[i][j] = environments(parse, bridge->commands[i][j]);
 			bridge->commands[i][j] = remove_quotes(bridge->commands[i][j]);
-			printf("\t %dCOMMAND-> %s\n", j, bridge->commands[i][j]);
+			printf("\t %dCOMMAND->%s<-\n", j, bridge->commands[i][j]);
 		}
 	}
 }

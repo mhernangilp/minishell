@@ -36,7 +36,7 @@ void	count_redirections(t_parse *parse, char *s)
 	}
 }
 
-int	malloc_redirect(t_parse *parse, char **s, int i, int j)
+int	take_redirection(t_parse *parse, char **s, int i, int j)
 {
 	if (s[i][j + 1] == '<' || s[i][j + 1] == '>')
 		j += 2;
@@ -46,12 +46,16 @@ int	malloc_redirect(t_parse *parse, char **s, int i, int j)
 		j++;
 	while (s[i][j] && s[i][j] != ' ' && s[i][j] != '\t' && s[i][j] != '<'
 				&& s[i][j] != '>')
+	{
+		if (s[i][j] == '\'' || s[i][j] == '"')
+			j = quote(s[i], j);
 		j++;
+	}
 	parse->rdirect = ft_substr(s[i], parse->start_rdir, j - parse->start_rdir);
 	return (j);
 }
 
-char	**out_redirect(t_parse *parse, char **s, int i, int j)
+char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j)
 {
 	int	m;
 

@@ -96,8 +96,8 @@ int		type_of_quote(char *str, int i, int quote);
 /* REDIRECTIONS */
 char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s);
 void	count_redirections(t_parse *parse, char *s);
-int		malloc_redirect(t_parse *parse, char **s, int i, int j);
-char	**out_redirect(t_parse *parse, char **s, int i, int j);
+int		take_redirection(t_parse *parse, char **s, int i, int j);
+char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j);
 char	*remove_redirection(char *s);
 
 ///// EXECUTION /////

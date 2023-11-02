@@ -33,7 +33,7 @@ int	check_rps(char *input, char c)
 			else if (i == -2)
 				return (putreturn('"', 1));
 		}
-		if ((input[i] == c && input[i + 1] == c) || (input[0] == c && c != '<'))
+		if ((input[i] == c && input[i + 1] == c) || (input[0] == c && c == '|'))
 		{
 			if (input[i + 2] == c && input[i + 3] == c)
 				return (putreturn(c, 2));
@@ -46,8 +46,18 @@ int	check_rps(char *input, char c)
 
 static int	special_caracter(char *input, int i)
 {
-	if (input[i] == '>' && input[i + 1] == '<')
-		return (putreturn('<', 1));
+	if (input[i] == '<' || input[i] == '>')
+	{
+		if (input[i] == '>' && input[i + 1] == '<')
+			return (putreturn('<', 1));
+		if (input[i + 1] == '<' || input[i + 1] == '>')
+		{
+			if (input[i + 2] && input[i + 2] == '<')
+				return (putreturn('<', 1));
+			if (input[i + 2] && input[i + 2] == '>')
+				return (putreturn('>', 1));
+		}
+	}
 	if (input[i] == ';')
 		return (putreturn(';', 1));
 	else if (input[i] == '\\')

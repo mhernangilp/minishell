@@ -13,7 +13,7 @@
 #include "../../../minishell.h"
 
 static void	data_struct(t_parse *parse, t_bridge *bridge, int i);
-static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i);
+static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i);
 static void	start_variables(t_parse *parse, t_bridge *bridge, char **s, int i);
 
 char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
@@ -32,18 +32,15 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 				j = quote(s[i], j);
 			if (s[i][j] == '<' || s[i][j] == '>')
 			{
-				if (s[i][j] == '<')
-					parse->locate_ip_dir++;
-				else
-					parse->locate_op_dir++;
 				parse->start_rdir = j;
-				j = malloc_redirect(parse, s, i, j) - 1;
-				s = out_redirect(parse, s, i, j);
-				redirect_struct(parse, bridge, i);
+				j = take_redirection(parse, s, i, j) - 1;
+				s = cut_rdir_in_cmds(parse, s, i, j);
+				select_file_and_type(parse, bridge, i);
+				//printf("REDIR INPUT-%s-\n", bridge->redirect[i].inred->file[parse->locate_ip_dir]);
 			}
 		}
 	}
-	printf("TEEEE-%s-\n", bridge->redirect[0].inred->file[0]);
+	//printf("TEEEE-%s-\n", bridge->redirect[0].inred->file[0]);
 	/*i = -1;
 	while (bridge->redirect[++i].inred)
 	{
@@ -72,7 +69,6 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 		bridge->redirect[i].inred->file = malloc (sizeof(char *) * parse->n_ip + 1);
 		bridge->redirect[i].inred->type = malloc (sizeof(int) * parse->n_ip);
 		bridge->redirect[i].inred->num = parse->n_ip;
-		printf("KJN%d\n", parse->n_ip);
 	}
 	else
 		bridge->redirect[i].inred = NULL;
@@ -87,36 +83,34 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 		bridge->redirect[i].outred = NULL;
 }
 
-static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i)
+static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i)
 {
-	int	ip;
-	int	op;
+	int	p;
 
-	ip = parse->locate_ip_dir;
-	op = parse->locate_op_dir;
 	parse->rdirect = remove_quotes(parse->rdirect);
 	if (parse->rdirect[0] == '<')
 	{
+		p = ++parse->locate_ip_dir;
 		if (parse->rdirect[1] != '<')
-			bridge->redirect[i].inred->type[ip] = NORMAL;
+			bridge->redirect[i].inred->type[p] = NORMAL;
 		else
-			bridge->redirect[i].inred->type[ip] = HEREDOC;
+			bridge->redirect[i].inred->type[p] = HEREDOC;
 		parse->rdirect = remove_redirection(parse->rdirect);
-		bridge->redirect[i].inred->file[ip] = parse->rdirect;
-		printf("%d-%i\n", i, ip);
-		//bridge->redirect[i].inred->file[ip + 1] = NULL;
-		printf("REDIR INPUT-%s-\n", bridge->redirect[i].inred->file[ip]);
+		bridge->redirect[i].inred->file[p] = parse->rdirect;
+		//bridge->redirect[i].inred->file[p + 1] = NULL;
+		printf("REDIR INPUT-%s-\n", bridge->redirect[i].inred->file[p]);
 	}
 	else if (parse->rdirect[0] == '>')
 	{
+		p = ++parse->locate_op_dir;
 		if (parse->rdirect[1] != '>')
-			bridge->redirect[i].outred->type[op] = NORMAL;
+			bridge->redirect[i].outred->type[p] = NORMAL;
 		else
-			bridge->redirect[i].outred->type[op] = APPEND;
+			bridge->redirect[i].outred->type[p] = APPEND;
 		parse->rdirect = remove_redirection(parse->rdirect);
-		bridge->redirect[i].outred->file[op] = parse->rdirect;
+		bridge->redirect[i].outred->file[p] = parse->rdirect;
 		//bridge->redirect[i].outred->file[op + 1] = NULL;
-		printf("REDIR OUTPUT-%s-\n", bridge->redirect[i].outred->file[op]);
+		printf("REDIR OUTPUT-%s-\n", bridge->redirect[i].outred->file[p]);
 	}
 	free (parse->rdirect);
 }
