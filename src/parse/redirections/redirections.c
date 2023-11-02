@@ -43,6 +43,14 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 			}
 		}
 	}
+	printf("TEEEE-%s-\n", bridge->redirect[0].inred->file[0]);
+	/*i = -1;
+	while (bridge->redirect[++i].inred)
+	{
+		j = -1;
+		while (bridge->redirect[i].inred->file[++j])
+			printf("PRUEBA-%s-\n", bridge->redirect[i].inred->file[j]);
+	}*/
 	return (s);
 }
 
@@ -64,6 +72,7 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 		bridge->redirect[i].inred->file = malloc (sizeof(char *) * parse->n_ip + 1);
 		bridge->redirect[i].inred->type = malloc (sizeof(int) * parse->n_ip);
 		bridge->redirect[i].inred->num = parse->n_ip;
+		printf("KJN%d\n", parse->n_ip);
 	}
 	else
 		bridge->redirect[i].inred = NULL;
@@ -94,6 +103,8 @@ static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i)
 			bridge->redirect[i].inred->type[ip] = HEREDOC;
 		parse->rdirect = remove_redirection(parse->rdirect);
 		bridge->redirect[i].inred->file[ip] = parse->rdirect;
+		printf("%d-%i\n", i, ip);
+		//bridge->redirect[i].inred->file[ip + 1] = NULL;
 		printf("REDIR INPUT-%s-\n", bridge->redirect[i].inred->file[ip]);
 	}
 	else if (parse->rdirect[0] == '>')
@@ -104,7 +115,8 @@ static void	redirect_struct(t_parse *parse, t_bridge *bridge, int i)
 			bridge->redirect[i].outred->type[op] = APPEND;
 		parse->rdirect = remove_redirection(parse->rdirect);
 		bridge->redirect[i].outred->file[op] = parse->rdirect;
-		printf("REDIR OUTPUT-%s-\n", bridge->redirect[i].inred->file[op]);
+		//bridge->redirect[i].outred->file[op + 1] = NULL;
+		printf("REDIR OUTPUT-%s-\n", bridge->redirect[i].outred->file[op]);
 	}
 	free (parse->rdirect);
 }
