@@ -39,13 +39,8 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 			}
 		}
 	}
-	/*i = -1;
-	while (bridge->redirect[++i].inred)
-	{
-		j = -1;
-		while (bridge->redirect[i].inred->file[++j])
-			printf("PRUEBA-%s-\n", bridge->redirect[i].inred->file[j]);
-	}*/
+	bridge->redirect[i].inred = NULL;
+	bridge->redirect[i].outred = NULL;
 	return (s);
 }
 
@@ -69,7 +64,7 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 	if (parse->n_ip)
 	{
 		bridge->redirect[i].inred = (t_red *)malloc(sizeof(t_red));
-		bridge->redirect[i].inred->file = malloc (sizeof(char *) * ip + 1);
+		bridge->redirect[i].inred->file = ft_calloc(sizeof( char* ), ip + 1 );
 		bridge->redirect[i].inred->type = malloc (sizeof(int) * ip);
 		bridge->redirect[i].inred->num = ip;
 	}
@@ -78,7 +73,7 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 	if (parse->n_op)
 	{
 		bridge->redirect[i].outred = (t_red *)malloc(sizeof(t_red));
-		bridge->redirect[i].outred->file = malloc (sizeof(char *) * op + 1);
+		bridge->redirect[i].outred->file = ft_calloc(sizeof( char* ), op + 1 );
 		bridge->redirect[i].outred->type = malloc (sizeof(int) * op);
 		bridge->redirect[i].outred->num = op;
 	}
@@ -101,8 +96,6 @@ static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i)
 		parse->rdirect = worth_part(parse->rdirect);
 		parse->rdirect = remove_quotes(parse->rdirect);
 		bridge->redirect[i].inred->file[p] = parse->rdirect;
-		//bridge->redirect[i].inred->file[p + 1] = NULL;
-		printf("REDIR INPUT%d%d-%s-\n", i, p, bridge->redirect[i].inred->file[p]);
 	}
 	else if (parse->rdirect[0] == '>')
 	{
@@ -114,8 +107,5 @@ static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i)
 		parse->rdirect = worth_part(parse->rdirect);
 		parse->rdirect = remove_quotes(parse->rdirect);
 		bridge->redirect[i].outred->file[p] = parse->rdirect;
-		//bridge->redirect[i].outred->file[op + 1] = NULL;
-		printf("REDIR OUTPUT%d%d-%s-\n", i, p, bridge->redirect[i].outred->file[p]);
 	}
-	free (parse->rdirect);
 }

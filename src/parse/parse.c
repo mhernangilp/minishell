@@ -65,6 +65,20 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 			printf("\t %dCOMMAND->%s<-\n", j, bridge->commands[i][j]);
 		}
 	}
+	i = -1;
+	while (bridge->redirect[++i].inred)
+	{
+		j = -1;
+		while (bridge->redirect[i].inred->file[++j])
+			printf("INPUT %d%d-%s-\t TYPE= %d\n", i, j, bridge->redirect[i].inred->file[j], bridge->redirect[i].inred->type[j]);
+	}
+	i = -1;
+	while (bridge->redirect[++i].outred)
+	{
+		j = -1;
+		while (bridge->redirect[i].outred->file[++j])
+			printf("OUTPUT %d%d -%s-\t TYPE= %d\n", i, j, bridge->redirect[i].outred->file[j], bridge->redirect[i].outred->type[j]);
+	}
 }
 
 static void	free_commands(t_bridge *bridge, char **str_pipe)
