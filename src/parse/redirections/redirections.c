@@ -64,7 +64,7 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 	if (parse->n_ip)
 	{
 		bridge->redirect[i].inred = (t_red *)malloc(sizeof(t_red));
-		bridge->redirect[i].inred->file = ft_calloc(sizeof( char* ), ip + 1 );
+		bridge->redirect[i].inred->file = ft_calloc(sizeof(char *), ip + 1);
 		bridge->redirect[i].inred->type = malloc (sizeof(int) * ip);
 		bridge->redirect[i].inred->num = ip;
 	}
@@ -73,7 +73,7 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 	if (parse->n_op)
 	{
 		bridge->redirect[i].outred = (t_red *)malloc(sizeof(t_red));
-		bridge->redirect[i].outred->file = ft_calloc(sizeof( char* ), op + 1 );
+		bridge->redirect[i].outred->file = ft_calloc(sizeof(char *), op + 1);
 		bridge->redirect[i].outred->type = malloc (sizeof(int) * op);
 		bridge->redirect[i].outred->num = op;
 	}

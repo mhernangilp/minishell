@@ -66,17 +66,17 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 		}
 	}
 	i = -1;
-	while (bridge->redirect[++i].inred)
+	while (++i < bridge->n_cmds)
 	{
 		j = -1;
-		while (bridge->redirect[i].inred->file[++j])
+		while (bridge->redirect[i].inred && bridge->redirect[i].inred->file[++j])
 			printf("INPUT %d%d-%s-\t TYPE= %d\n", i, j, bridge->redirect[i].inred->file[j], bridge->redirect[i].inred->type[j]);
 	}
 	i = -1;
-	while (bridge->redirect[++i].outred)
+	while (++i < bridge->n_cmds)
 	{
 		j = -1;
-		while (bridge->redirect[i].outred->file[++j])
+		while (bridge->redirect[i].outred && bridge->redirect[i].outred->file[++j])
 			printf("OUTPUT %d%d -%s-\t TYPE= %d\n", i, j, bridge->redirect[i].outred->file[j], bridge->redirect[i].outred->type[j]);
 	}
 }
