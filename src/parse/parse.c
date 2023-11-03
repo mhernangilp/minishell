@@ -55,14 +55,13 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])
 	{
-		printf("%d PIPE->%s<-\n", i, str_pipe[i]);
 		bridge->commands[i] = split_quote(str_pipe[i], ' ');
 		j = -1;
 		while (bridge->commands[i][++j] && bridge->commands[i][j][0])
 		{
 			bridge->commands[i][j] = environments(parse, bridge->commands[i][j]);
 			bridge->commands[i][j] = remove_quotes(bridge->commands[i][j]);
-			printf("\t %dCOMMAND->%s<-\n", j, bridge->commands[i][j]);
+			printf("COMMAND %d %d -%s-\n", i, j, bridge->commands[i][j]);
 		}
 	}
 	i = -1;
@@ -70,14 +69,20 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 	{
 		j = -1;
 		while (bridge->redirect[i].inred && bridge->redirect[i].inred->file[++j])
-			printf("INPUT %d%d-%s-\t TYPE= %d\n", i, j, bridge->redirect[i].inred->file[j], bridge->redirect[i].inred->type[j]);
+		{
+			printf("INput %d %d -%s- ", i, j, bridge->redirect[i].inred->file[j]);
+			printf("Type= %d\n", bridge->redirect[i].inred->type[j]);
+		}
 	}
 	i = -1;
 	while (++i < bridge->n_cmds)
 	{
 		j = -1;
 		while (bridge->redirect[i].outred && bridge->redirect[i].outred->file[++j])
-			printf("OUTPUT %d%d -%s-\t TYPE= %d\n", i, j, bridge->redirect[i].outred->file[j], bridge->redirect[i].outred->type[j]);
+		{
+			printf("OUTput %d %d -%s- ", i, j, bridge->redirect[i].outred->file[j]);
+			printf("Type= %d\n", bridge->redirect[i].outred->type[j]);
+		}
 	}
 }
 
