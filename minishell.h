@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/29 18:50:28 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:06:59 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ void	error_msg(char *msg);
 //// LIBFT /////
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+
+//// HERE_DOC ////
+void	load_heredoc(t_exec *exec, char *arg, int num);
 
 ///// TEST EXECUTION /////
 //test_execution.c

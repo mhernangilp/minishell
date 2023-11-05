@@ -5,6 +5,7 @@ SRC =	src/main.c \
 		src/parse/environment/environment.c src/parse/environment/utils_env.c \
 		src/parse/utils/split_quote.c src/parse/utils/remove_quotes.c src/parse/utils/check_parse.c \
 		src/execution/execution.c src/execution/errors.c src/execution/child_process.c src/execution/set_redirections.c src/execution/test_execution.c \
+		src/execution/here_doc.c
 
 CC = gcc
 RM = rm -f
