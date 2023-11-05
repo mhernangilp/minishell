@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/29 18:50:21 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:48:14 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 {
 	system("leaks minishell");
 }*/
+
+static void	free_commands(t_bridge *bridge);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -35,11 +37,13 @@ int	main(int argc, char **argv, char **envp)
 			exit(1);
 		}
 		add_history(input);
-		start_parse(input);
-		bridge = test_execution4();
-		execution(bridge, envp);
+		bridge = start_parse(input);
+		if (bridge != NULL)
+			execution(bridge, envp);
+	//	bridge = test_execution();
 		free(input);
 	}
+	free_commands(bridge);
 	return (0);
 }
 
@@ -47,4 +51,18 @@ void	putexit(char *s)
 {
 	printf("%s", s);
 	exit(0);
+}
+
+static void	free_commands(t_bridge *bridge)
+{
+	int	i;
+
+	i = -1;
+	while (bridge->commands[++i])
+	{
+		ft_splitfree(bridge->commands[i]);
+		//free (bridge->redirect);
+	}
+	free(bridge->commands);
+	free(bridge);
 }
