@@ -120,6 +120,9 @@ void	error_msg(char *msg);
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 
+//// HERE_DOC ////
+void	load_heredoc(t_exec *exec, char *arg, int num);
+
 ///// TEST EXECUTION /////
 //test_execution.c
 t_bridge		*test_execution();

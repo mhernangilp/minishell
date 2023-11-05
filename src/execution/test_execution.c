@@ -138,7 +138,7 @@ t_bridge	*test_execution4()
 	bridge -> redirect[0].outred -> type[0] = APPEND;
 	//Initialize second command redirects
 	bridge -> redirect[1].inred = (t_red *)malloc(sizeof(t_red));
-	bridge -> redirect[1].inred -> num = 0;
+	bridge -> redirect[1].inred -> num = 1;
 	bridge -> redirect[1].inred -> file = (char **)malloc(1 * sizeof(char *));
 	bridge -> redirect[1].inred -> file[0] = strdup("dos.txt");
 	bridge -> redirect[1].inred -> type = (int *)malloc(1 * sizeof(int));

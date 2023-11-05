@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:10:56 by mhernang          #+#    #+#             */
-/*   Updated: 2023/10/29 18:50:24 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:40:11 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static void	in_red(t_exec *exec, int num)
 		exec -> in_out[num][0] = open(exec -> bridge -> redirect[num].inred
 				-> file[i], O_RDONLY);
 		else if (exec -> bridge -> redirect[num].inred -> type[i] == HEREDOC)
-			printf("Hago heredoc\n");
+			load_heredoc(exec, exec -> bridge -> redirect[num].inred
+						-> file[i], num);
 		else
 			error_msg("Error with infile redirection mode");
-		//eliminar .heredoc?
 		if (exec -> in_out[num][0] < 0)
 			error_msg("Error infile");
 	}
