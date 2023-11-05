@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/01 17:19:42 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:07:11 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 void	putexit(char *s);
 
 /* PARSE */
-void	start_parse(char *input);
+t_bridge	*start_parse(char *input);
 int		check_rps(char *input, char c);
 int		check_rps(char *input, char c);
 char	**split_quote(const char *s, char c);

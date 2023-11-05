@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:29:43 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/01 17:22:59 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:37:06 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void	count_redirections(t_parse *parse, char *s)
 	{
 		if (s[i] == '"' || s[i] == '\'')
 			i = quote(s, i);
-		if (s[i] == '<')
-		{
-			if (s[i + 1] == '<' || s[i + 1] == '>')
-				i++;
-			parse->n_ip++;
-		}
 		if (s[i] == '>')
 		{
 			if (s[i + 1] == '>')
 				i++;
 			parse->n_op++;
+		}
+		if (s[i] == '<')
+		{
+			if (s[i + 1] == '<' || s[i + 1] == '>')
+				i++;
+			parse->n_ip++;
 		}
 	}
 }

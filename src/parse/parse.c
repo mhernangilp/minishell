@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/30 11:03:41 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:49:06 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 static void	init_bridge_struct(t_bridge *bridge);
 static void	do_bridge(t_bridge *bridge, char **str_pipe);
-static void	free_commands(t_bridge *bridge, char **str_pipe);
 
-void	start_parse(char *input)
+t_bridge	*start_parse(char *input)
 {
 	t_bridge	*bridge;
 	char		**str_pipe;
 
-	if (!check_rps(input, '|'))
-		return ;
 	bridge = malloc (sizeof (t_bridge));
+	if (!check_rps(input, '|'))
+		return (NULL);
 	init_bridge_struct(bridge);
 	str_pipe = split_quote(input, '|');
 	while (str_pipe[bridge->n_cmds])
 	{
 		if (!check_rps(str_pipe[bridge->n_cmds], '<')
 			|| !check_rps(str_pipe[bridge->n_cmds], '>'))
-			return ;
+			return (NULL);
 		bridge->n_cmds++;
 	}
 	bridge->commands = malloc (sizeof (char **) * (bridge->n_cmds + 1));
@@ -39,7 +38,8 @@ void	start_parse(char *input)
 		putexit("Malloc error\n");
 	bridge->commands[bridge->n_cmds] = NULL;
 	do_bridge(bridge, str_pipe);
-	free_commands(bridge, str_pipe);
+	ft_splitfree(str_pipe);
+	return (bridge);
 }
 
 static void	do_bridge(t_bridge *bridge, char **str_pipe)
@@ -61,44 +61,8 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 		{
 			bridge->commands[i][j] = environments(parse, bridge->commands[i][j]);
 			bridge->commands[i][j] = remove_quotes(bridge->commands[i][j]);
-			printf("COMMAND %d %d -%s-\n", i, j, bridge->commands[i][j]);
 		}
 	}
-	i = -1;
-	while (++i < bridge->n_cmds)
-	{
-		j = -1;
-		while (bridge->redirect[i].inred && bridge->redirect[i].inred->file[++j])
-		{
-			printf("INput %d %d -%s- ", i, j, bridge->redirect[i].inred->file[j]);
-			printf("Type= %d\n", bridge->redirect[i].inred->type[j]);
-		}
-	}
-	i = -1;
-	while (++i < bridge->n_cmds)
-	{
-		j = -1;
-		while (bridge->redirect[i].outred && bridge->redirect[i].outred->file[++j])
-		{
-			printf("OUTput %d %d -%s- ", i, j, bridge->redirect[i].outred->file[j]);
-			printf("Type= %d\n", bridge->redirect[i].outred->type[j]);
-		}
-	}
-}
-
-static void	free_commands(t_bridge *bridge, char **str_pipe)
-{
-	int	i;
-
-	ft_splitfree(str_pipe);
-	i = -1;
-	while (bridge->commands[++i])
-	{
-		ft_splitfree(bridge->commands[i]);
-		//free (bridge->redirect);
-	}
-	free(bridge->commands);
-	free(bridge);
 }
 
 static void	init_bridge_struct(t_bridge *bridge)
