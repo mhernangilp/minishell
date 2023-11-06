@@ -19,6 +19,8 @@
 
 static void	free_commands(t_bridge *bridge);
 
+int	g_ret_val = 0;
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_bridge	*bridge;

@@ -33,6 +33,7 @@ void	execution(t_bridge *bridge, char **envp)
 	close_all(&exec);
 	wait_all(&exec);
 }
+
 void	close_all(t_exec *exec)
 {
 	int	i;
@@ -51,7 +52,7 @@ static void	wait_all(t_exec *exec)
 
 	i = -1;
 	while (++i < (exec -> bridge -> n_cmds))
-		waitpid(exec -> pid[i], NULL, 0);
+		waitpid(exec -> pid[i], &g_ret_val, 0);
 }
 
 static char	**get_paths()

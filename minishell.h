@@ -32,6 +32,8 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
+extern int	g_ret_val;
+
 typedef struct s_red
 {
 	int		num;
