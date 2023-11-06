@@ -85,7 +85,7 @@ void	putexit(char *s);
 /* PARSE */
 t_bridge	*start_parse(char *input);
 int		check_rps(char *input, char c);
-int		check_rps(char *input, char c);
+int		check_input(char *input);
 char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
 char	*remove_quotes(const char *s);

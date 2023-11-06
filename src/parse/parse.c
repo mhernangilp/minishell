@@ -20,6 +20,8 @@ t_bridge	*start_parse(char *input)
 	t_bridge	*bridge;
 	char		**str_pipe;
 
+	if (!check_input(input))
+		return (NULL);
 	bridge = malloc (sizeof (t_bridge));
 	if (!check_rps(input, '|'))
 		return (NULL);
@@ -34,7 +36,7 @@ t_bridge	*start_parse(char *input)
 	}
 	bridge->commands = malloc (sizeof (char **) * (bridge->n_cmds + 1));
 	bridge->redirect = malloc (sizeof (t_cmdred) * (bridge->n_cmds + 1));
-	if (!bridge->commands)
+	if (!bridge->commands || !bridge->redirect)
 		putexit("Malloc error\n");
 	bridge->commands[bridge->n_cmds] = NULL;
 	do_bridge(bridge, str_pipe);

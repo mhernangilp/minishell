@@ -44,8 +44,8 @@ int	main(int argc, char **argv, char **envp)
 			execution(bridge, envp);
 	//	bridge = test_execution();
 		free(input);
+		free_commands(bridge);
 	}
-	free_commands(bridge);
 	return (0);
 }
 
@@ -59,6 +59,8 @@ static void	free_commands(t_bridge *bridge)
 {
 	int	i;
 
+	if (!bridge)
+		return ;
 	i = -1;
 	while (bridge->commands[++i])
 	{

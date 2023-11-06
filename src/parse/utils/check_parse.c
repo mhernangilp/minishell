@@ -16,6 +16,22 @@ static int	special_caracter(char *input, int i);
 static int	spaces_inside(char *input, char c);
 static int	putreturn(char c, int nb_c);
 
+int	check_input(char *input)
+{
+	int	i;
+
+	if (!input || !input[0])
+		return (0);
+	i = 0;
+	while (input[i] && input[i] == ' ')
+	{
+		i++;
+		if (!input[i])
+			return (0);
+	}
+	return (1);
+}
+
 int	check_rps(char *input, char c)
 {
 	int	i;
