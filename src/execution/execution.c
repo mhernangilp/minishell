@@ -52,7 +52,7 @@ static void	wait_all(t_exec *exec)
 
 	i = -1;
 	while (++i < (exec -> bridge -> n_cmds))
-		waitpid(exec -> pid[i], &g_ret_val, 0);
+		waitpid(exec -> pid[i], &g_global.ret_val, 0);
 }
 
 static char	**get_paths()

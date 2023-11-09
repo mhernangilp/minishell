@@ -32,7 +32,13 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
-extern int	g_ret_val;
+typedef struct s_global
+{
+	int	ret_val;
+	char	**env;
+}	t_global;
+
+extern t_global	g_global;
 
 typedef struct s_red
 {
@@ -113,6 +119,15 @@ void	child_process(t_exec exec, int num);
 
 //set_redirections.c
 void	set_redirections(t_exec *exec, int num);
+
+///// BUILTINS /////
+//built_ins.c
+int	is_builtin(char *commands);
+void	builtins(char **commands);
+char	**dup_env(char **envp);
+
+//cd.c
+int	cd(char **commands);
 
 ///// ERRORS /////
 //errors.c

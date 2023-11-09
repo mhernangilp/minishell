@@ -19,7 +19,7 @@
 
 static void	free_commands(t_bridge *bridge);
 
-int	g_ret_val = 0;
+t_global	g_global;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (argc != 1)
 		putexit("Wrong parameters\n");
+	g_global.ret_val = 0;
+	g_global.env = dup_env(envp);
 	while (1)
 	{
 		input = readline(ENTRADA_MS);

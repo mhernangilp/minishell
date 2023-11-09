@@ -21,9 +21,11 @@ void	child_process(t_exec exec, int num)
 	set_redirections(&exec, num);
 	close_all(&exec);
 	command = get_command(exec.paths, exec.bridge->commands[num][0]);
+	if (is_builtin(exec.bridge -> commands[num][0]))
+		builtins(exec.bridge -> commands[num]);
 	if (!command)
 		error_msg("Error with command");
-	if (execve(command, exec.bridge->commands[num], exec.envp))
+	else if (execve(command, exec.bridge->commands[num], exec.envp))
 		error_msg("Error executing");
 }
 

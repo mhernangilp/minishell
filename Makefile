@@ -6,7 +6,7 @@ SRC =	src/main.c \
 		src/parse/redirections/redirections.c src/parse/redirections/utils_rdir.c \
 		src/parse/utils/split_quote.c src/parse/utils/remove_quotes.c src/parse/utils/check_parse.c \
 		src/execution/execution.c src/execution/errors.c src/execution/child_process.c src/execution/set_redirections.c src/execution/test_execution.c \
-		src/execution/here_doc.c
+		src/execution/here_doc.c src/execution/builtins.c src/execution/cd.c
 
 CC = gcc
 RM = rm -f
