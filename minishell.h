@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/05 18:07:11 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/12 20:49:33 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,7 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
-typedef struct s_global
-{
-	int	ret_val;
-	char	**env;
-}	t_global;
-
-extern t_global	g_global;
+extern char	**g_env;
 
 typedef struct s_red
 {
@@ -66,7 +60,6 @@ typedef struct s_exec
 	int			**pipe;
 	int			**in_out;
 	char		**paths;
-	char		**envp;
 	t_bridge	*bridge;
 }	t_exec;
 
@@ -111,7 +104,7 @@ char	*worth_part(char *s);
 ///// EXECUTION /////
 
 //execution.c
-void	execution(t_bridge *bridge, char **envp);
+void	execution(t_bridge *bridge);
 void	close_all(t_exec *exec);
 
 //child_process.c
@@ -122,12 +115,16 @@ void	set_redirections(t_exec *exec, int num);
 
 ///// BUILTINS /////
 //built_ins.c
+int	is_parent_builtin(char *commands);
 int	is_builtin(char *commands);
 void	builtins(char **commands);
 char	**dup_env(char **envp);
 
 //cd.c
 int	cd(char **commands);
+
+//pwd.c
+int	pwd(void);
 
 ///// ERRORS /////
 //errors.c

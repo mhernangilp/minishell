@@ -1,6 +1,17 @@
 #include "../../minishell.h"
 #include <string.h>
 
+int	is_parent_builtin(char *command)
+{
+	if (!strcmp(command, "cd"))
+		return (1);
+	if (!strcmp(command, "export"))
+		return (1);
+	if (!strcmp(command, "unset"))
+		return (1);
+	return (0);
+}
+
 int	is_builtin(char *command)
 {
 	if (!strcmp(command, "echo"))
@@ -23,7 +34,9 @@ int	is_builtin(char *command)
 void	builtins(char **commands)
 {
 	if (!strcmp(commands[0], "cd"))
-		g_global.ret_val = cd(commands);
+		cd(commands);
+	if (!strcmp(commands[0], "pwd"))
+		pwd();
 }
 
 char	**dup_env(char **envp)
