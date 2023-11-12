@@ -23,7 +23,7 @@ int	check_input(char *input)
 	if (!input || !input[0])
 		return (0);
 	i = 0;
-	while (input[i] && input[i] == ' ')
+	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
 	{
 		i++;
 		if (!input[i])
