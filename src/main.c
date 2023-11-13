@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		putexit("Wrong parameters\n");
 	while (1)
 	{
+		input_signals();
 		input = readline(ENTRADA_MS);
 		if (input == NULL)
 		{

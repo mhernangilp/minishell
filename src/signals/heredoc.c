@@ -15,7 +15,7 @@
 static void	sig_handler_heredoc(int signal)
 {
 	(void) signal;
-	ft_store_result_code(1, true);
+	//ft_store_result_code(1, true);
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 }
 
