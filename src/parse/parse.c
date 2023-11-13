@@ -6,13 +6,13 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/05 18:49:06 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:14:34 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	init_bridge_struct(t_bridge *bridge);
+static t_bridge	*init_bridge_struct(void);
 static void	do_bridge(t_bridge *bridge, char **str_pipe);
 
 t_bridge	*start_parse(char *input)
@@ -20,12 +20,9 @@ t_bridge	*start_parse(char *input)
 	t_bridge	*bridge;
 	char		**str_pipe;
 
-	if (!check_input(input))
+	if (!check_input(input) || !check_rps(input, '|'))
 		return (NULL);
-	bridge = malloc (sizeof (t_bridge));
-	if (!check_rps(input, '|'))
-		return (NULL);
-	init_bridge_struct(bridge);
+	bridge = init_bridge_struct();
 	str_pipe = split_quote(input, '|');
 	while (str_pipe[bridge->n_cmds])
 	{
@@ -61,15 +58,22 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 		j = -1;
 		while (bridge->commands[i][++j] && bridge->commands[i][j][0])
 		{
-			bridge->commands[i][j] = environments(parse, bridge->commands[i][j]);
+			bridge->commands[i][j] = environments(parse,
+					bridge->commands[i][j]);
 			bridge->commands[i][j] = remove_quotes(bridge->commands[i][j]);
 		}
 	}
 }
 
-static void	init_bridge_struct(t_bridge *bridge)
+static t_bridge	*init_bridge_struct(void)
 {
+	t_bridge	*bridge;
+
+	bridge = malloc (sizeof (t_bridge));
+	if (!bridge)
+		putexit("Malloc error\n");
 	bridge->n_cmds = 0;
 	bridge->commands = NULL;
 	bridge->redirect = NULL;
+	return (bridge);
 }

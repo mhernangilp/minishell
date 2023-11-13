@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/05 18:48:14 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:29:43 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	main(int argc, char **argv, char **envp)
 		input = readline(ENTRADA_MS);
 		if (input == NULL)
 		{
-			printf("exit\n");
+			printf("\033[F\33[2K\r");
+			printf("%sexit\n", ENTRADA_MS);
 			exit(1);
 		}
 		add_history(input);
