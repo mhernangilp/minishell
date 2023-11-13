@@ -6,14 +6,14 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/13 15:14:34 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:10:17 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 static t_bridge	*init_bridge_struct(void);
-static void	do_bridge(t_bridge *bridge, char **str_pipe);
+static void		do_bridge(t_bridge *bridge, char **str_pipe);
 
 t_bridge	*start_parse(char *input)
 {

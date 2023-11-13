@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/05 18:07:11 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:36:13 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s);
 void	count_redirections(t_parse *parse, char *s);
 int		take_redirection(t_parse *parse, char **s, int i, int j);
 char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j);
+/* SIGNALS */
+void	heredoc_signals(void);
+void	input_signals(void);
+void	process_signals(void);
+
 char	*worth_part(char *s);
 
 ///// EXECUTION /////
