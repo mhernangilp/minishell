@@ -12,15 +12,8 @@
 
 #include "../../minishell.h"
 
-static void	sig_handler_heredoc(int signal)
-{
-	(void) signal;
-	//ft_store_result_code(1, true);
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-}
-
 void	heredoc_signals(void)
 {
-	signal(SIGINT, sig_handler_heredoc);
+	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 }

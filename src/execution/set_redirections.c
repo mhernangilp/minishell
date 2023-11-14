@@ -39,6 +39,7 @@ static void	in_red(t_exec *exec, int num)
 {
 	int	i;
 
+	heredoc_signals();
 	i = -1;
 	while (++i < exec -> bridge -> redirect[num].inred -> num)
 	{

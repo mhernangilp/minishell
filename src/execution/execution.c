@@ -26,10 +26,12 @@ void	execution(t_bridge *bridge, char **envp)
 	i = -1;
 	while (++i < exec.bridge -> n_cmds)
 	{
-		process_signals();
 		exec.pid[i] = fork();
 		if (exec.pid[i] == 0)
+		{
+				process_signals();
 				child_process(exec, i);
+		}
 	}
 	close_all(&exec);
 	wait_all(&exec);
