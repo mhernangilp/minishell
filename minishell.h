@@ -27,6 +27,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <termios.h>
 # include <sys/wait.h>
 # include "libft.h"
 

@@ -12,8 +12,14 @@
 
 #include "../../minishell.h"
 
+static void	sig_handler_heredoc(int signal)
+{
+	(void) signal;
+	exit(EXIT_SUCCESS);
+}
+
 void	heredoc_signals(void)
 {
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, sig_handler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }

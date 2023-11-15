@@ -17,6 +17,7 @@
 	system("leaks minishell");
 }*/
 
+static void	ctr_c(void);
 static void	free_commands(t_bridge *bridge);
 
 int	g_ret_val = 0;
@@ -30,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (argc != 1)
 		putexit("Wrong parameters\n");
+	ctr_c();
 	while (1)
 	{
 		input_signals();
@@ -71,4 +73,24 @@ static void	free_commands(t_bridge *bridge)
 	}
 	free(bridge->commands);
 	free(bridge);
+}
+
+static void	ctr_c(void)
+{
+	int				x;
+	struct termios	termios;
+
+	x = tcgetattr(0, &termios);
+	if (x)
+	{
+		perror("");
+		exit(1);
+	}
+	termios.c_lflag &= ~ECHOCTL;
+	x = tcsetattr(0, 0, &termios);
+	if (x)
+	{
+		perror("");
+		exit(1);
+	}
 }
