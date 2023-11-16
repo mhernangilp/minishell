@@ -130,6 +130,7 @@ int	unset(char *key);
 
 ///// ENVIROMENT /////
 //enviroment.c
+void	env();
 char	**dup_env(char **envp);
 char	*getenv_value(char *key);
 int	env_len(char **env);

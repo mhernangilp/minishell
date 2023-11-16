@@ -6,7 +6,7 @@ int	unset(char *key)
 	int	i;
 	int	j;
 
-	if (!getenv_value(key))
+	if (!key || !getenv_value(key))
 		return (0);
 	new_env = (char **)malloc((env_len(g_env)) * sizeof(char *));
 	if (!new_env)

@@ -1,6 +1,15 @@
 
 #include "../../minishell.h"
 
+void	env()
+{
+	int	i;
+
+	i = -1;
+	while (g_env[++i])
+		printf("%s\n", g_env[i]);
+}
+
 char	**dup_env(char **envp)
 {
 	char	**env;

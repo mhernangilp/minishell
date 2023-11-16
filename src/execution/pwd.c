@@ -11,15 +11,18 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <unistd.h>
 
 int	pwd(void)
 {
-	char	*pwd;
+	char	pwd[4096];
 
-	pwd = NULL;
-	if (!pwd)
+	printf("HOLA\n");
+	if(!getcwd(pwd, sizeof(pwd)))
+	{
+		printf("Error\n");
 		return (1);
+	}
 	printf("%s", pwd);
-	free (pwd);
 	return (0);
 }

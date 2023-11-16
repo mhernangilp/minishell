@@ -37,4 +37,8 @@ void	builtins(char **commands)
 		cd(commands);
 	if (!strcmp(commands[0], "pwd"))
 		pwd();
+	if (!strcmp(commands[0], "env"))
+		env();
+	if (!strcmp(commands[0], "unset"))
+		unset(commands[1]);
 }
