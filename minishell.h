@@ -118,13 +118,22 @@ void	set_redirections(t_exec *exec, int num);
 int	is_parent_builtin(char *commands);
 int	is_builtin(char *commands);
 void	builtins(char **commands);
-char	**dup_env(char **envp);
 
 //cd.c
 int	cd(char **commands);
 
 //pwd.c
 int	pwd(void);
+
+//unset.c
+int	unset(char *key);
+
+///// ENVIROMENT /////
+//enviroment.c
+char	**dup_env(char **envp);
+char	*getenv_value(char *key);
+int	env_len(char **env);
+void	free_env(char **env);
 
 ///// ERRORS /////
 //errors.c
@@ -133,6 +142,9 @@ void	error_msg(char *msg);
 //// LIBFT /////
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+int	ft_strncmp(char const *s1, char const *s2, size_t n);
+size_t	ft_strlen(char const *str);
+char	*ft_strdup(const char *src);
 
 //// HERE_DOC ////
 void	load_heredoc(t_exec *exec, char *arg, int num);

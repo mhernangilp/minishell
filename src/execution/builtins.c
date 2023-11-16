@@ -38,25 +38,3 @@ void	builtins(char **commands)
 	if (!strcmp(commands[0], "pwd"))
 		pwd();
 }
-
-char	**dup_env(char **envp)
-{
-	char	**env;
-	int	i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	env = (char **)malloc((i + 1) * sizeof(char *));
-	if (!env)
-		error_msg("Error malloc envp");
-	i = -1;
-	while (envp[++i])
-	{
-		env[i] = strdup(envp[i]);
-		if (!env[i])
-			error_msg("Error strdup envp");
-	}
-	env[i] = NULL;
-	return (env);
-}

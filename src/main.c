@@ -39,6 +39,9 @@ int	main(int argc, char **argv, char **envp)
 			printf("exit\n");
 			exit(1);
 		}
+		printf("RETURN: '%s', %d\n", getenv_value("HOME"), env_len(g_env));
+		unset("HOME");
+		printf("RETURN: '%s', %d\n", getenv_value("HOME"), env_len(g_env));
 		if (*input)
 		{
 			add_history(input);

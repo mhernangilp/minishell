@@ -17,7 +17,6 @@ int	pwd(void)
 	char	*pwd;
 
 	pwd = NULL;
-	getcwd(pwd);
 	if (!pwd)
 		return (1);
 	printf("%s", pwd);
