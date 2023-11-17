@@ -11,18 +11,15 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <linux/limits.h>
 #include <unistd.h>
 
-int	pwd(void)
+int	pwd()
 {
-	char	pwd[4096];
+	char	pwd[PATH_MAX];
 
-	printf("HOLA\n");
-	if(!getcwd(pwd, sizeof(pwd)))
-	{
-		printf("Error\n");
+	if(!getcwd(pwd, PATH_MAX))
 		return (1);
-	}
-	printf("%s", pwd);
+	printf("%s\n", pwd);
 	return (0);
 }

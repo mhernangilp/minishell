@@ -123,7 +123,7 @@ void	builtins(char **commands);
 int	cd(char **commands);
 
 //pwd.c
-int	pwd(void);
+int	pwd();
 
 //unset.c
 int	unset(char **commands);
