@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		if (input == NULL || !strcmp(input, "exit"))
 		{
 			printf("exit\n");
-			exit(1);
+			exit(0);
 		}
 		if (*input)
 		{
