@@ -13,14 +13,15 @@ void	load_heredoc(t_exec *exec, char *arg, int num)
 	{
 		close(fd[0]);
 		buf = readline("heredoc> ");
-		while (buf)
+		while (buf && !g_ret_val)
 		{
 			if (!ft_strncmp(arg, buf, ft_strlen(arg) + 1))
 				break ;
 			write(fd[1], buf, ft_strlen(buf));
 			write(fd[1], "\n", 1);
 			free(buf);
-			buf = readline("heredoc> ");
+			if (!g_ret_val)
+				buf = readline("heredoc> ");
 		}
 		close(fd[1]);
 		free(buf);
