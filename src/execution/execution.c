@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:17:09 by mhernang          #+#    #+#             */
-/*   Updated: 2023/10/22 19:07:51 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/12 20:43:33 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 
 static void	wait_all(t_exec *exec);
 static char	**get_paths();
-static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp);
+static void	initialize_exec(t_exec *exec, t_bridge *bridge);
 
-void	execution(t_bridge *bridge, char **envp)
+void	execution(t_bridge *bridge)
 {
 	t_exec	exec;
 	int		i;
 
-	initialize_exec(&exec, bridge, envp);
+	initialize_exec(&exec, bridge);
 	exec.paths = get_paths();
-	i = -1;
-	while (++i < exec.bridge -> n_cmds)
+	if (bridge -> n_cmds == 1 && is_parent_builtin(bridge -> commands[0][0]))
+		builtins(bridge -> commands[0]);
+	else
 	{
-		exec.pid[i] = fork();
-		if (exec.pid[i] == 0)
-				child_process(exec, i);
+		i = -1;
+		while (++i < exec.bridge -> n_cmds)
+		{
+			exec.pid[i] = fork();
+			if (exec.pid[i] == 0)
+					child_process(exec, i);
+		}
+		close_all(&exec);
+		wait_all(&exec);
 	}
-	close_all(&exec);
-	wait_all(&exec);
 }
 
 void	close_all(t_exec *exec)
@@ -52,7 +57,7 @@ static void	wait_all(t_exec *exec)
 
 	i = -1;
 	while (++i < (exec -> bridge -> n_cmds))
-		waitpid(exec -> pid[i], &g_ret_val, 0);
+		waitpid(exec -> pid[i], NULL, 0);
 }
 
 static char	**get_paths()
@@ -69,7 +74,7 @@ static char	**get_paths()
 	return (paths);
 }
 
-static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp)
+static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 {
 	int	i;
 
@@ -85,7 +90,6 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge, char **envp)
 		if (pipe(exec -> pipe[i]) < 0)
 			error_msg("Error creating pipe\n");
 	}
-	exec -> envp = envp;
 	exec -> pid = malloc((bridge -> n_cmds) * sizeof(pid_t));
 	if (!(exec -> pid))
 		error_msg("Error allocating memory\n");

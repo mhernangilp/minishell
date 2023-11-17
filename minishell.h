@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/05 18:07:11 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/12 20:49:33 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
-extern int	g_ret_val;
+extern char	**g_env;
 
 typedef struct s_red
 {
@@ -60,7 +60,6 @@ typedef struct s_exec
 	int			**pipe;
 	int			**in_out;
 	char		**paths;
-	char		**envp;
 	t_bridge	*bridge;
 }	t_exec;
 
@@ -105,7 +104,7 @@ char	*worth_part(char *s);
 ///// EXECUTION /////
 
 //execution.c
-void	execution(t_bridge *bridge, char **envp);
+void	execution(t_bridge *bridge);
 void	close_all(t_exec *exec);
 
 //child_process.c
@@ -114,6 +113,33 @@ void	child_process(t_exec exec, int num);
 //set_redirections.c
 void	set_redirections(t_exec *exec, int num);
 
+///// BUILTINS /////
+//built_ins.c
+int	is_parent_builtin(char *commands);
+int	is_builtin(char *commands);
+void	builtins(char **commands);
+
+//cd.c
+int	cd(char **commands);
+
+//pwd.c
+int	pwd(void);
+
+//unset.c
+int	unset(char **commands);
+void	b_delete(char *key);
+
+//export.c
+int	b_export(char **commands);
+
+///// ENVIROMENT /////
+//enviroment.c
+void	env();
+char	**dup_env(char **envp);
+char	*getenv_value(char *key);
+int	env_len(char **env);
+void	free_env(char **env);
+
 ///// ERRORS /////
 //errors.c
 void	error_msg(char *msg);
@@ -121,6 +147,11 @@ void	error_msg(char *msg);
 //// LIBFT /////
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+int	ft_strncmp(char const *s1, char const *s2, size_t n);
+size_t	ft_strlen(char const *str);
+char	*ft_strdup(const char *src);
+int	ft_isalpha(int c);
+void	ft_putstr_fd(char *s, int fd);
 
 //// HERE_DOC ////
 void	load_heredoc(t_exec *exec, char *arg, int num);

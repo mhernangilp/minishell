@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 16:50:22 by mhernang          #+#    #+#             */
-/*   Updated: 2023/10/22 17:50:49 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/12 20:52:56 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ void	child_process(t_exec exec, int num)
 	set_redirections(&exec, num);
 	close_all(&exec);
 	command = get_command(exec.paths, exec.bridge->commands[num][0]);
+	if (is_builtin(exec.bridge -> commands[num][0]))
+	{
+		builtins(exec.bridge -> commands[num]);
+		exit(1);
+	}
 	if (!command)
 		error_msg("Error with command");
-	if (execve(command, exec.bridge->commands[num], exec.envp))
+	else if (execve(command, exec.bridge->commands[num], g_env))
 		error_msg("Error executing");
 }
 
