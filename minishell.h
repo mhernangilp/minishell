@@ -126,7 +126,11 @@ int	cd(char **commands);
 int	pwd(void);
 
 //unset.c
-int	unset(char *key);
+int	unset(char **commands);
+void	b_delete(char *key);
+
+//export.c
+int	b_export(char **commands);
 
 ///// ENVIROMENT /////
 //enviroment.c
@@ -146,6 +150,8 @@ char	*ft_strjoin(char const *s1, char const *s2);
 int	ft_strncmp(char const *s1, char const *s2, size_t n);
 size_t	ft_strlen(char const *str);
 char	*ft_strdup(const char *src);
+int	ft_isalpha(int c);
+void	ft_putstr_fd(char *s, int fd);
 
 //// HERE_DOC ////
 void	load_heredoc(t_exec *exec, char *arg, int num);

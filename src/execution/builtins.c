@@ -40,5 +40,7 @@ void	builtins(char **commands)
 	if (!strcmp(commands[0], "env"))
 		env();
 	if (!strcmp(commands[0], "unset"))
-		unset(commands[1]);
+		unset(commands);
+	if (!strcmp(commands[0], "export"))
+		b_export(commands);
 }
