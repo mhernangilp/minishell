@@ -1,6 +1,5 @@
 #include "../../minishell.h"
 
-static void	add(char *key);
 static int	parse_export(char *str);
 static char	*get_key(char *str);
 
@@ -14,7 +13,7 @@ int	b_export(char **commands)
 	return (0);
 }
 
-static void	add(char *str)
+void	add(char *str)
 {
 	char	**new_env;
 	char	*key;

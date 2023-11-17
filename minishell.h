@@ -131,6 +131,7 @@ void	b_delete(char *key);
 
 //export.c
 int	b_export(char **commands);
+void	add(char *str);
 
 ///// ENVIROMENT /////
 //enviroment.c
