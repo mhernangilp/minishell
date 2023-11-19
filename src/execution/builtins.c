@@ -9,6 +9,8 @@ int	is_parent_builtin(char *command)
 		return (1);
 	if (!strcmp(command, "unset"))
 		return (1);
+	if (!strcmp(command, "exit"))
+		return (1);
 	return (0);
 }
 
@@ -45,4 +47,6 @@ void	builtins(char **commands)
 		b_export(commands);
 	if (!strcmp(commands[0], "echo"))
 		echo(commands);
+	if (!strcmp(commands[0], "exit"))
+		b_exit(commands);
 }

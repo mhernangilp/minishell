@@ -136,6 +136,9 @@ void	add(char *str);
 //echo.c
 int	echo(char **commands);
 
+//exit.c
+int	b_exit(char **commands);
+
 ///// ENVIROMENT /////
 //enviroment.c
 void	env();
@@ -149,6 +152,7 @@ void	free_env(char **env);
 void	error_msg(char *msg);
 
 //// LIBFT /////
+int	ft_atoi(const char *str);
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	ft_strncmp(char const *s1, char const *s2, size_t n);
