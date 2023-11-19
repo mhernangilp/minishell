@@ -123,7 +123,7 @@ void	builtins(char **commands);
 int	cd(char **commands);
 
 //pwd.c
-int	pwd(void);
+int	pwd();
 
 //unset.c
 int	unset(char **commands);
@@ -131,6 +131,10 @@ void	b_delete(char *key);
 
 //export.c
 int	b_export(char **commands);
+void	add(char *str);
+
+//echo.c
+int	echo(char **commands);
 
 ///// ENVIROMENT /////
 //enviroment.c

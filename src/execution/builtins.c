@@ -43,4 +43,6 @@ void	builtins(char **commands)
 		unset(commands);
 	if (!strcmp(commands[0], "export"))
 		b_export(commands);
+	if (!strcmp(commands[0], "echo"))
+		echo(commands);
 }
