@@ -16,7 +16,7 @@ static void	sig_handler_heredoc(int signal)
 {
 	(void) signal;
 	g_ret_val = 1;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	exit(EXIT_SUCCESS);
 }
 
 void	heredoc_signals(void)
