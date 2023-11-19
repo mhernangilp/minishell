@@ -11,7 +11,7 @@ int	echo(char **commands)
 		return (0);
 	}
 	start = 0;
-	if (!ft_strncmp(commands[1], "-n", 2))
+	if (!ft_strncmp(commands[1], "-n", ft_strlen(commands[1])))
 		start = 1;
 	while (commands[++start])
 	{
