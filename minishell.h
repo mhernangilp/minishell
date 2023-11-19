@@ -133,6 +133,9 @@ void	b_delete(char *key);
 int	b_export(char **commands);
 void	add(char *str);
 
+//echo.c
+int	echo(char **commands);
+
 ///// ENVIROMENT /////
 //enviroment.c
 void	env();
