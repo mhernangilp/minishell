@@ -33,7 +33,7 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-void	builtins(char **commands)
+void	builtins(char **commands, int type)
 {
 	if (!strcmp(commands[0], "cd"))
 		cd(commands);
@@ -48,5 +48,5 @@ void	builtins(char **commands)
 	if (!strcmp(commands[0], "echo"))
 		echo(commands);
 	if (!strcmp(commands[0], "exit"))
-		b_exit(commands);
+		b_exit(commands, type);
 }

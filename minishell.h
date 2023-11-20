@@ -16,6 +16,8 @@
 # define NORMAL 0
 # define HEREDOC 1
 # define APPEND 1
+# define PARENT 0
+# define CHILD 1
 
 # include <dirent.h>
 # include <string.h>
@@ -117,7 +119,7 @@ void	set_redirections(t_exec *exec, int num);
 //built_ins.c
 int	is_parent_builtin(char *commands);
 int	is_builtin(char *commands);
-void	builtins(char **commands);
+void	builtins(char **commands, int type);
 
 //cd.c
 int	cd(char **commands);
@@ -137,7 +139,7 @@ void	add(char *str);
 int	echo(char **commands);
 
 //exit.c
-int	b_exit(char **commands);
+int	b_exit(char **commands, int type);
 
 ///// ENVIROMENT /////
 //enviroment.c

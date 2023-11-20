@@ -23,7 +23,7 @@ void	child_process(t_exec exec, int num)
 	command = get_command(exec.paths, exec.bridge->commands[num][0]);
 	if (is_builtin(exec.bridge -> commands[num][0]))
 	{
-		builtins(exec.bridge -> commands[num]);
+		builtins(exec.bridge -> commands[num], CHILD);
 		exit(1);
 	}
 	if (!command)
