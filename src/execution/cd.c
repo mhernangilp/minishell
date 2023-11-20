@@ -13,7 +13,7 @@ int	cd(char **commands)
 
 	if (commands[1] && commands[2])
 	{
-		ft_putstr_fd("too many arguments\n", 2);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
 	if (!commands[1])
@@ -21,7 +21,7 @@ int	cd(char **commands)
 		chdirectory = getenv_value("HOME");
 		if (!chdirectory)
 		{
-			ft_putstr_fd("HOME not set\n", 2);
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 			return (1);
 		}
 	}
@@ -30,12 +30,14 @@ int	cd(char **commands)
 	dir = opendir(chdirectory);
 	if (!dir)
 	{
+		ft_putstr_fd("minishell: cd: ", 2);
 		perror(chdirectory);
 		return (1);
 	}
 	closedir(dir);
 	if (chdir(chdirectory) == -1)
 	{
+		ft_putstr_fd("minishell: cd: ", 2);
 		perror(chdirectory);
 		return (1);
 	}
