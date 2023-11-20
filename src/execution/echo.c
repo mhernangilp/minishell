@@ -1,6 +1,8 @@
 #include "../../minishell.h"
 #include <stdio.h>
 
+static int	is_n(char *str);
+
 int	echo(char **commands)
 {
 	int	start;
@@ -11,7 +13,7 @@ int	echo(char **commands)
 		return (0);
 	}
 	start = 0;
-	if (!ft_strncmp(commands[1], "-n", ft_strlen(commands[1])))
+	if (is_n(commands[1]))
 		start = 1;
 	while (commands[++start])
 	{
@@ -22,4 +24,17 @@ int	echo(char **commands)
 	if (ft_strncmp(commands[1], "-n", 2))
 		write(1, "\n", 1);
 	return (0);
+}
+
+static int	is_n(char *str)
+{
+	int	i;
+
+	if (!*str || *str != '-')
+		return (0);
+	i = 0;
+	while (str[++i])
+		if (str[i] != 'n')
+			return (0);
+	return (1);
 }
