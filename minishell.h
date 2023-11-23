@@ -18,6 +18,7 @@
 # define APPEND 1
 # define PARENT 0
 # define CHILD 1
+# define RETVAL 1
 
 # include <dirent.h>
 # include <string.h>
@@ -133,7 +134,7 @@ void	b_delete(char *key);
 
 //export.c
 int	b_export(char **commands);
-void	add(char *str);
+void	add(char *str, int type);
 
 //echo.c
 int	echo(char **commands);
@@ -149,12 +150,17 @@ char	*getenv_value(char *key);
 int	env_len(char **env);
 void	free_env(char **env);
 
+//return_val.c
+void	set_ret_val(int val);
+int	get_ret_val();
+
 ///// ERRORS /////
 //errors.c
 void	error_msg(char *msg);
 
 //// LIBFT /////
 int	ft_atoi(const char *str);
+char	*ft_itoa(int n);
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	ft_strncmp(char const *s1, char const *s2, size_t n);
