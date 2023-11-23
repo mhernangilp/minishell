@@ -57,7 +57,7 @@ static int	chpwd()
 	pwd_env = ft_strjoin("PWD=", pwd);
 	if (!pwd_env)
 		return (1);
-	add(pwd_env);
+	add(pwd_env, NORMAL);
 	free(pwd);
 	free(pwd_env);
 	return (0);

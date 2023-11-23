@@ -26,7 +26,7 @@ void	add(char *str, int type)
 		b_delete(key);
 	new_env = (char **)malloc((env_len(g_env) + 2) * sizeof(char *));
 	if (!new_env)
-		error_msg("Error memory export");
+		error_msg(ERR_MEMORY, 1);
 	i = -1;
 	while (g_env[++i])
 		new_env[i] = ft_strdup(g_env[i]);

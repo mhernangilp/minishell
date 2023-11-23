@@ -36,17 +36,17 @@ int	is_builtin(char *command)
 void	builtins(char **commands, int type)
 {
 	if (!strcmp(commands[0], "cd"))
-		cd(commands);
+		set_ret_val(cd(commands));
 	if (!strcmp(commands[0], "pwd"))
-		pwd();
+		set_ret_val(pwd());
 	if (!strcmp(commands[0], "env"))
-		env();
+		set_ret_val(env());
 	if (!strcmp(commands[0], "unset"))
-		unset(commands);
+		set_ret_val(unset(commands));
 	if (!strcmp(commands[0], "export"))
-		b_export(commands);
+		set_ret_val(b_export(commands));
 	if (!strcmp(commands[0], "echo"))
-		echo(commands);
+		set_ret_val(echo(commands));
 	if (!strcmp(commands[0], "exit"))
-		b_exit(commands, type);
+		set_ret_val(b_exit(commands, type));
 }

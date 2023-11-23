@@ -12,8 +12,8 @@
 
 #include "../../minishell.h"
 
-void	error_msg(char *msg)
+void	error_msg(char *msg, int val)
 {
 	perror(msg);
-	exit(1);
+	exit(val);
 }

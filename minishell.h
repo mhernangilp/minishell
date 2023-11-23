@@ -19,6 +19,7 @@
 # define PARENT 0
 # define CHILD 1
 # define RETVAL 1
+# define ERR_MEMORY "Error allocating memory"
 
 # include <dirent.h>
 # include <string.h>
@@ -144,7 +145,7 @@ int	b_exit(char **commands, int type);
 
 ///// ENVIROMENT /////
 //enviroment.c
-void	env();
+int	env();
 char	**dup_env(char **envp);
 char	*getenv_value(char *key);
 int	env_len(char **env);
@@ -156,7 +157,7 @@ int	get_ret_val();
 
 ///// ERRORS /////
 //errors.c
-void	error_msg(char *msg);
+void	error_msg(char *msg, int val);
 
 //// LIBFT /////
 int	ft_atoi(const char *str);

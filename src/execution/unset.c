@@ -20,7 +20,7 @@ void	b_delete(char *key)
 		return ;
 	new_env = (char **)malloc(env_len(g_env) * sizeof(char *));
 	if (!new_env)
-		error_msg("Error memory unset");
+		error_msg(ERR_MEMORY, 1);
 	i = -1;
 	j = 0;
 	while (g_env[++i])
