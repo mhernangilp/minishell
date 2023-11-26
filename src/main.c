@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = readline(ENTRADA_MS);
-		if (input == NULL || !strcmp(input, "exit"))
+		if (input == NULL)
 		{
 			printf("exit\n");
 			exit(0);

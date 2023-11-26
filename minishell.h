@@ -22,7 +22,6 @@
 # define ERR_MEMORY "Error allocating memory"
 
 # include <dirent.h>
-# include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -31,6 +30,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 # include <sys/wait.h>
 # include "libft.h"
 
