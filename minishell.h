@@ -83,7 +83,6 @@ typedef struct s_parse
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
-void	putexit(char *s);
 
 /* PARSE */
 t_bridge	*start_parse(char *input);
@@ -158,6 +157,7 @@ int	get_ret_val();
 ///// ERRORS /////
 //errors.c
 void	error_msg(char *msg, int val);
+void	exit_msg(char *msg, int val);
 
 //// LIBFT /////
 int	ft_atoi(const char *str);

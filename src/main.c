@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	//atexit(leaks);
 	(void) argv;
 	if (argc != 1)
-		putexit("Wrong parameters\n");
+		exit_msg("Wrong parameters\n", 1);
 	g_env = dup_env(envp);
 	add("?=0", RETVAL);
 	while (1)
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		input = readline(ENTRADA_MS);
 		if (input == NULL)
 		{
-			printf("exit\n");
+			ft_putstr_fd("exit\n", 1);
 			exit(0);
 		}
 		if (*input)
@@ -52,12 +52,6 @@ int	main(int argc, char **argv, char **envp)
 		free_commands(bridge);
 	}
 	return (0);
-}
-
-void	putexit(char *s)
-{
-	printf("%s", s);
-	exit(0);
 }
 
 static void	free_commands(t_bridge *bridge)

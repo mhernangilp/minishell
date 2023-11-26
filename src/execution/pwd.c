@@ -18,6 +18,6 @@ int	pwd()
 
 	if(!getcwd(pwd, PATH_MAX))
 		return (1);
-	printf("%s\n", pwd);
+	ft_putstr_fd(pwd, 1);
 	return (0);
 }

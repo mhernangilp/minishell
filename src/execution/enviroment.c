@@ -18,7 +18,7 @@ int	env()
 
 	i = -1;
 	while (g_env[++i])
-		printf("%s\n", g_env[i]);
+		ft_putstr_fd(g_env[i], 1);
 	return (0);
 }
 
