@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdlib.h>
 
 static char	*get_command(char **paths, char *file);
 

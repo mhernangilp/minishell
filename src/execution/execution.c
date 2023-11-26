@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <stdlib.h>
 
 static void	wait_all(t_exec *exec);
 static char	**get_paths();
