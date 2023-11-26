@@ -20,6 +20,7 @@
 # define CHILD 1
 # define RETVAL 1
 # define ERR_MEMORY "Error allocating memory"
+# define ERR_PIPES "Error creating pipe"
 
 # include <dirent.h>
 # include <fcntl.h>
@@ -83,7 +84,6 @@ typedef struct s_parse
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
-void	putexit(char *s);
 
 /* PARSE */
 t_bridge	*start_parse(char *input);
@@ -158,6 +158,7 @@ int	get_ret_val();
 ///// ERRORS /////
 //errors.c
 void	error_msg(char *msg, int val);
+void	exit_msg(char *msg, int val);
 
 //// LIBFT /////
 int	ft_atoi(const char *str);
@@ -169,15 +170,9 @@ size_t	ft_strlen(char const *str);
 char	*ft_strdup(const char *src);
 int	ft_isalpha(int c);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_putchar_fd(char c, int fd);
 
 //// HERE_DOC ////
 void	load_heredoc(t_exec *exec, char *arg, int num);
-
-///// TEST EXECUTION /////
-//test_execution.c
-t_bridge		*test_execution();
-t_bridge		*test_execution2();
-t_bridge		*test_execution3();
-t_bridge		*test_execution4();
 
 #endif
