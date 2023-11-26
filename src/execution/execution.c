@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <stdlib.h>
 
 static void	wait_all(t_exec *exec);
 static char	**get_paths();
@@ -59,7 +60,10 @@ static void	wait_all(t_exec *exec)
 	i = -1;
 	while (++i < (exec -> bridge -> n_cmds))
 		waitpid(exec -> pid[i], &ret_val, 0);
-	set_ret_val(ret_val);
+	if (WIFEXITED(ret_val))
+		set_ret_val(WEXITSTATUS(ret_val));
+	else
+		set_ret_val(255);
 }
 
 static char	**get_paths()
