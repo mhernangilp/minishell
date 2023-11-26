@@ -19,7 +19,7 @@ void	load_heredoc(t_exec *exec, char *arg, int num)
 	int	fd[2];
 
 	if (pipe(fd) < 0)
-		error_msg("Error creating pipe", 1);
+		error_msg("ERR_PIPES", 1);
 	pid = fork();
 	if (pid == 0)
 	{

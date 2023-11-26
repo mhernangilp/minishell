@@ -93,7 +93,7 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 		if (!(exec -> pipe[i]))
 			error_msg(ERR_MEMORY, 1);
 		if (pipe(exec -> pipe[i]) < 0)
-			error_msg("Error creating pipe", 1);
+			error_msg("ERR_PIPES", 1);
 	}
 	exec -> pid = malloc((bridge -> n_cmds) * sizeof(pid_t));
 	if (!(exec -> pid))

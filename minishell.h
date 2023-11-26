@@ -20,6 +20,7 @@
 # define CHILD 1
 # define RETVAL 1
 # define ERR_MEMORY "Error allocating memory"
+# define ERR_PIPES "Error creating pipe"
 
 # include <dirent.h>
 # include <fcntl.h>
