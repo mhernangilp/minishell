@@ -24,12 +24,12 @@ void	child_process(t_exec exec, int num)
 	if (is_builtin(exec.bridge -> commands[num][0]))
 	{
 		builtins(exec.bridge -> commands[num], CHILD);
-		exit(1);
+		exit(get_ret_val());
 	}
 	if (!command)
-		error_msg("Error with command");
+		error_msg(exec.bridge->commands[num][0], 127);
 	else if (execve(command, exec.bridge->commands[num], g_env))
-		error_msg("Error executing");
+		error_msg("Error execution", 1);
 }
 
 static char	*get_command(char **paths, char *file)
@@ -37,8 +37,13 @@ static char	*get_command(char **paths, char *file)
 	char	*command;
 	char	*temp;
 
-	if (access(file, F_OK | X_OK) == 0)
-		return (file);
+	if (!ft_strncmp("./", file, 2))
+	{
+		if (access(file, F_OK | X_OK) == 0)
+			return (file);
+		ft_putstr_fd("minishell: ", 2);
+		error_msg(file, 126);
+	}
 	if (paths)
 	{
 		while (*paths)

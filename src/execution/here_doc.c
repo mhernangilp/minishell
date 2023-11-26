@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/26 18:37:28 by mhernang          #+#    #+#             */
+/*   Updated: 2023/11/26 18:37:31 by mhernang         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	load_heredoc(t_exec *exec, char *arg, int num)
@@ -7,7 +19,7 @@ void	load_heredoc(t_exec *exec, char *arg, int num)
 	int	fd[2];
 
 	if (pipe(fd) < 0)
-		error_msg("Error creating pipe");
+		error_msg("Error creating pipe", 1);
 	pid = fork();
 	if (pid == 0)
 	{

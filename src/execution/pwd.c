@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include <linux/limits.h>
-#include <unistd.h>
 
 int	pwd()
 {

@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enviroment.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/26 18:36:50 by mhernang          #+#    #+#             */
+/*   Updated: 2023/11/26 18:36:54 by mhernang         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	env()
+int	env()
 {
 	int	i;
 
 	i = -1;
 	while (g_env[++i])
 		printf("%s\n", g_env[i]);
+	return (0);
 }
 
 char	**dup_env(char **envp)
@@ -20,13 +32,13 @@ char	**dup_env(char **envp)
 		i++;
 	env = (char **)malloc((i + 1) * sizeof(char *));
 	if (!env)
-		error_msg("Error malloc envp");
+		error_msg(ERR_MEMORY, 1);
 	i = -1;
 	while (envp[++i])
 	{
 		env[i] = ft_strdup(envp[i]);
 		if (!env[i])
-			error_msg("Error strdup envp");
+			error_msg(ERR_MEMORY, 1);
 	}
 	env[i] = NULL;
 	return (env);

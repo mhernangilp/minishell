@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/26 18:37:08 by mhernang          #+#    #+#             */
+/*   Updated: 2023/11/26 18:37:10 by mhernang         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 static void	finish(int ret, int type);
@@ -11,7 +23,7 @@ int	b_exit(char **commands, int type)
 	{
 		if (ft_atoi(commands[1]) > 0 || is_zero(commands[1]))
 			finish(ft_atoi(commands[1]), type);
-		if (ft_atoi(commands[1]) < 0)
+		if (ft_atoi(commands[1]) < 0 || ft_atoi(commands[1]) > 255)
 			finish((ft_atoi(commands[1]) % 256 + 256) % 256,
 				type);
 		if (type == PARENT)

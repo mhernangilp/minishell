@@ -18,9 +18,10 @@
 # define APPEND 1
 # define PARENT 0
 # define CHILD 1
+# define RETVAL 1
+# define ERR_MEMORY "Error allocating memory"
 
 # include <dirent.h>
-# include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -29,6 +30,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 # include <sys/wait.h>
 # include "libft.h"
 
@@ -133,7 +135,7 @@ void	b_delete(char *key);
 
 //export.c
 int	b_export(char **commands);
-void	add(char *str);
+void	add(char *str, int type);
 
 //echo.c
 int	echo(char **commands);
@@ -143,18 +145,23 @@ int	b_exit(char **commands, int type);
 
 ///// ENVIROMENT /////
 //enviroment.c
-void	env();
+int	env();
 char	**dup_env(char **envp);
 char	*getenv_value(char *key);
 int	env_len(char **env);
 void	free_env(char **env);
 
+//return_val.c
+void	set_ret_val(int val);
+int	get_ret_val();
+
 ///// ERRORS /////
 //errors.c
-void	error_msg(char *msg);
+void	error_msg(char *msg, int val);
 
 //// LIBFT /////
 int	ft_atoi(const char *str);
+char	*ft_itoa(int n);
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	ft_strncmp(char const *s1, char const *s2, size_t n);

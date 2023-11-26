@@ -31,10 +31,11 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		putexit("Wrong parameters\n");
 	g_env = dup_env(envp);
+	add("?=0", RETVAL);
 	while (1)
 	{
 		input = readline(ENTRADA_MS);
-		if (input == NULL || !strcmp(input, "exit"))
+		if (input == NULL)
 		{
 			printf("exit\n");
 			exit(0);

@@ -1,7 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/26 18:36:21 by mhernang          #+#    #+#             */
+/*   Updated: 2023/11/26 18:36:23 by mhernang         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
-#include <dirent.h>
-#include <linux/limits.h>
-#include <stdio.h>
 
 static char	*get_pwd();
 static int	chpwd();
@@ -57,7 +66,7 @@ static int	chpwd()
 	pwd_env = ft_strjoin("PWD=", pwd);
 	if (!pwd_env)
 		return (1);
-	add(pwd_env);
+	add(pwd_env, NORMAL);
 	free(pwd);
 	free(pwd_env);
 	return (0);
