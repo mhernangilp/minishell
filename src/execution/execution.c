@@ -75,7 +75,7 @@ static char	**get_paths()
 		return (NULL);
 	paths = ft_split(path, ':');
 	if (!paths)
-		error_msg(ERR_MEMORY, 1);
+		exit_msg(ERR_MEMORY, 1);
 	return (paths);
 }
 
@@ -85,29 +85,29 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 
 	exec -> pipe = malloc((bridge -> n_cmds - 1) * sizeof(int *));
 	if (!(exec -> pipe))
-		error_msg(ERR_MEMORY, 1);
+		exit_msg(ERR_MEMORY, 1);
 	i = -1;
 	while (++i < (bridge -> n_cmds - 1))
 	{
 		exec -> pipe[i] = malloc(2 * sizeof(int));
 		if (!(exec -> pipe[i]))
-			error_msg(ERR_MEMORY, 1);
+			exit_msg(ERR_MEMORY, 1);
 		if (pipe(exec -> pipe[i]) < 0)
 			error_msg("ERR_PIPES", 1);
 	}
 	exec -> pid = malloc((bridge -> n_cmds) * sizeof(pid_t));
 	if (!(exec -> pid))
-		error_msg(ERR_MEMORY, 1);
+		exit_msg(ERR_MEMORY, 1);
 	exec -> bridge = bridge;
 	exec -> in_out = malloc(bridge -> n_cmds * sizeof(int *));
 	if (!(exec -> in_out))
-		error_msg(ERR_MEMORY, 1);
+		exit_msg(ERR_MEMORY, 1);
 	i = -1;
 	while (++i < (bridge -> n_cmds))
 	{
 		exec -> in_out[i] = malloc(2 * sizeof(int));
 		if (!(exec -> in_out[i]))
-			error_msg(ERR_MEMORY, 1);
+			exit_msg(ERR_MEMORY, 1);
 		exec -> in_out[i][0] = -1;
 		exec -> in_out[i][1] = -1;
 	}

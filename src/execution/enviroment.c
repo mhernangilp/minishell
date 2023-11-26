@@ -32,13 +32,13 @@ char	**dup_env(char **envp)
 		i++;
 	env = (char **)malloc((i + 1) * sizeof(char *));
 	if (!env)
-		error_msg(ERR_MEMORY, 1);
+		exit_msg(ERR_MEMORY, 1);
 	i = -1;
 	while (envp[++i])
 	{
 		env[i] = ft_strdup(envp[i]);
 		if (!env[i])
-			error_msg(ERR_MEMORY, 1);
+			exit_msg(ERR_MEMORY, 1);
 	}
 	env[i] = NULL;
 	return (env);
