@@ -170,15 +170,9 @@ size_t	ft_strlen(char const *str);
 char	*ft_strdup(const char *src);
 int	ft_isalpha(int c);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_putchar_fd(char c, int fd);
 
 //// HERE_DOC ////
 void	load_heredoc(t_exec *exec, char *arg, int num);
-
-///// TEST EXECUTION /////
-//test_execution.c
-t_bridge		*test_execution();
-t_bridge		*test_execution2();
-t_bridge		*test_execution3();
-t_bridge		*test_execution4();
 
 #endif
