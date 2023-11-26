@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 #include <dirent.h>
-#include <linux/limits.h>
+#include <limits.h>
 #include <stdio.h>
 
 static char	*get_pwd();
