@@ -19,8 +19,8 @@
 # define PARENT 0
 # define CHILD 1
 # define RETVAL 1
-# define ERR_MEMORY "Error allocating memory"
-# define ERR_PIPES "Error creating pipe"
+# define ERR_MEMORY "Error allocating memory\n"
+# define ERR_PIPES "Error creating pipe\n"
 
 # include <dirent.h>
 # include <fcntl.h>

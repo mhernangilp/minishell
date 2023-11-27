@@ -11,8 +11,12 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include <dirent.h>
 
 static char	*get_command(char **paths, char *file);
+static char	*has_paths(char **paths, char *file);
+static int	is_here(char *file);
+static void	check_directories(char *file);
 
 void	child_process(t_exec exec, int num)
 {
@@ -35,9 +39,9 @@ void	child_process(t_exec exec, int num)
 static char	*get_command(char **paths, char *file)
 {
 	char	*command;
-	char	*temp;
 
-	if (!ft_strncmp("./", file, 2))
+	check_directories(file);
+	if (!ft_strncmp("/", file, 1))
 	{
 		if (access(file, F_OK | X_OK) == 0)
 			return (file);
@@ -46,16 +50,74 @@ static char	*get_command(char **paths, char *file)
 	}
 	if (paths)
 	{
-		while (*paths)
-		{
-			temp = ft_strjoin(*paths, "/");
-			command = ft_strjoin(temp, file);
-			free(temp);
-			if (access(command, F_OK | X_OK) == 0)
-				return (command);
-			free(command);
-			paths++;
-		}
+		command = has_paths(paths, file);
+		if (command)
+			return (command);
+	}
+	else
+	{
+		if (access(file, F_OK | X_OK) == 0)
+			return (file);
+		ft_putstr_fd("minishell: ", 2);
+		error_msg(file, 126);
 	}
 	return (NULL);
+}
+
+static char	*has_paths(char **paths, char *file)
+{
+	char	*command;
+	char	*temp;
+
+	if (!ft_strncmp("./", file, 2) || !is_here(file))
+	{
+		if (access(file, F_OK | X_OK) == 0)
+			return (file);
+		ft_putstr_fd("minishell: ", 2);
+		error_msg(file, 126);
+	}
+	while (*paths)
+	{
+		temp = ft_strjoin(*paths, "/");
+		command = ft_strjoin(temp, file);
+		free(temp);
+		if (access(command, F_OK | X_OK) == 0)
+			return (command);
+		free(command);
+		paths++;
+	}
+	return (NULL);
+}
+
+static int	is_here(char *file)
+{
+	int	i;
+
+	i = -1;
+	while (file[++i])
+		if (file[i] == '/')
+			return (0);
+	return (1);
+}
+
+static void	check_directories(char *file)
+{
+	DIR	*dir;
+
+	if (!ft_strncmp(".", file, ft_strlen(file)))
+	{
+		ft_putstr_fd("minishell: .: filename argument required\n", 2);
+		exit_msg(".: usage: . filename [arguments]", 2);
+	}
+	if (!ft_strncmp("..", file, ft_strlen(file)))
+		exit_msg("..: command not found\n", 127);
+	dir = opendir(file);
+	if (dir)
+	{
+		closedir(dir);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(file, 2);
+		exit_msg(": Is a directory\n", 2);
+	}
+	closedir(dir);
 }

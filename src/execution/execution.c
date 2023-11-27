@@ -70,7 +70,7 @@ static char	**get_paths()
 	char	*path;
 	char	**paths;
 
-	path = getenv("PATH");
+	path = getenv_value("PATH");
 	if (!path)
 		return (NULL);
 	paths = ft_split(path, ':');
