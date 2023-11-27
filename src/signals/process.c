@@ -18,6 +18,7 @@ static void	sig_handler_process(int signal)
 	printf("Quit: 3\n");
 	rl_redisplay();
 }
+
 static void	sig_handler_int(int signal)
 {
 	(void) signal;

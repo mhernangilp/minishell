@@ -33,7 +33,7 @@ char	**split_quote(const char *s, char c)
 				return (NULL);
 		}
 		if (s[i] && s[i + 1] && s[i] == c && s[i + 1] != c)
-				count++;
+			count++;
 	}
 	if (s[0] == c || s[0] == '\0')
 		count--;
