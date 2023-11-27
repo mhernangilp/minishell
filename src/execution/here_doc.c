@@ -16,7 +16,7 @@ void	load_heredoc(t_exec *exec, char *arg, int num)
 {
 	char	*buf;
 	pid_t	pid;
-	int	fd[2];
+	int		fd[2];
 
 	if (pipe(fd) < 0)
 		error_msg("ERR_PIPES", 1);

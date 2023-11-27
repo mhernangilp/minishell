@@ -13,7 +13,7 @@
 #include "../../minishell.h"
 
 static void	wait_all(t_exec *exec);
-static char	**get_paths();
+static char	**get_paths(void);
 static void	initialize_exec(t_exec *exec, t_bridge *bridge);
 
 void	execution(t_bridge *bridge)
@@ -32,7 +32,7 @@ void	execution(t_bridge *bridge)
 		{
 			exec.pid[i] = fork();
 			if (exec.pid[i] == 0)
-					child_process(exec, i);
+				child_process(exec, i);
 		}
 		close_all(&exec);
 		wait_all(&exec);
@@ -65,7 +65,7 @@ static void	wait_all(t_exec *exec)
 		set_ret_val(255);
 }
 
-static char	**get_paths()
+static char	**get_paths(void)
 {
 	char	*path;
 	char	**paths;

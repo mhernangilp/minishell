@@ -12,38 +12,27 @@
 
 #include "../../minishell.h"
 
-static char	*get_pwd();
-static int	chpwd();
+static char	*set_chdir(char **commands);
+static int	check_dir(char *chdirectory);
+static char	*get_pwd(void);
+static int	chpwd(void);
 
 int	cd(char **commands)
 {
 	char	*chdirectory;
-	DIR	*dir;
 
 	if (commands[1] && commands[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
-	if (!commands[1])
-	{
-		chdirectory = getenv_value("HOME");
-		if (!chdirectory)
-		{
-			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-			return (1);
-		}
-	}
-	else
-		chdirectory = commands[1];
-	dir = opendir(chdirectory);
-	if (!dir)
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		perror(chdirectory);
+	if (!commands[1][0])
+		return (0);
+	chdirectory = set_chdir(commands);
+	if (!chdirectory)
 		return (1);
-	}
-	closedir(dir);
+	if (check_dir(chdirectory))
+		return (1);
 	if (chdir(chdirectory) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
@@ -55,7 +44,40 @@ int	cd(char **commands)
 	return (0);
 }
 
-static int	chpwd()
+static char	*set_chdir(char **commands)
+{
+	char	*chdirectory;
+
+	if (!commands[1])
+	{
+		chdirectory = getenv_value("HOME");
+		if (!chdirectory)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			return (NULL);
+		}
+	}
+	else
+		chdirectory = commands[1];
+	return (chdirectory);
+}
+
+static int	check_dir(char *chdirectory)
+{
+	DIR		*dir;
+
+	dir = opendir(chdirectory);
+	if (!dir)
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		perror(chdirectory);
+		return (1);
+	}
+	closedir(dir);
+	return (0);
+}
+
+static int	chpwd(void)
 {
 	char	*pwd;
 	char	*pwd_env;
@@ -72,11 +94,11 @@ static int	chpwd()
 	return (0);
 }
 
-static char	*get_pwd()
+static char	*get_pwd(void)
 {
 	char	pwd[PATH_MAX];
 
 	if (!getcwd(pwd, PATH_MAX))
 		return (NULL);
-	return(ft_strdup(pwd));
+	return (ft_strdup(pwd));
 }

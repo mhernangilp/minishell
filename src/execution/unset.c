@@ -25,8 +25,8 @@ int	unset(char **commands)
 void	b_delete(char *key)
 {
 	char	**new_env;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	if (!getenv_value(key))
 		return ;
@@ -38,7 +38,7 @@ void	b_delete(char *key)
 	while (g_env[++i])
 	{
 		if (!(!ft_strncmp(key, g_env[i], ft_strlen(key))
-			&& g_env[i][ft_strlen(key)] == '='))
+				&& g_env[i][ft_strlen(key)] == '='))
 		{
 			new_env[j] = ft_strdup(g_env[i]);
 			j++;

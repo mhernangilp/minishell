@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-void	set_ret_val(int	val)
+void	set_ret_val(int val)
 {
 	char	*new_env;
 	char	*value;
@@ -24,7 +24,7 @@ void	set_ret_val(int	val)
 	free(new_env);
 }
 
-int	get_ret_val()
+int	get_ret_val(void)
 {
 	int	i;
 

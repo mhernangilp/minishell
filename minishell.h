@@ -127,7 +127,7 @@ void	builtins(char **commands, int type);
 int	cd(char **commands);
 
 //pwd.c
-int	pwd();
+int	pwd(void);
 
 //unset.c
 int	unset(char **commands);
@@ -145,7 +145,7 @@ int	b_exit(char **commands, int type);
 
 ///// ENVIROMENT /////
 //enviroment.c
-int	env();
+int	env(void);
 char	**dup_env(char **envp);
 char	*getenv_value(char *key);
 int	env_len(char **env);
@@ -153,7 +153,7 @@ void	free_env(char **env);
 
 //return_val.c
 void	set_ret_val(int val);
-int	get_ret_val();
+int	get_ret_val(void);
 
 ///// ERRORS /////
 //errors.c

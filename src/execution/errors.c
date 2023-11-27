@@ -15,11 +15,11 @@
 void	error_msg(char *msg, int val)
 {
 	perror(msg);
-	exit(val);
+	exit (val);
 }
 
 void	exit_msg(char *msg, int val)
 {
 	ft_putstr_fd(msg, 2);
-	exit(val);
+	exit (val);
 }

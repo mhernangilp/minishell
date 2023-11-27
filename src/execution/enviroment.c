@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-int	env()
+int	env(void)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ int	env()
 char	**dup_env(char **envp)
 {
 	char	**env;
-	int	i;
+	int		i;
 
 	i = 0;
 	while (envp[i])

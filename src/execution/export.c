@@ -29,7 +29,7 @@ void	add(char *str, int type)
 {
 	char	**new_env;
 	char	*key;
-	int	i;
+	int		i;
 
 	if (parse_export(str, type))
 		return ;
@@ -51,7 +51,7 @@ void	add(char *str, int type)
 
 static char	*get_key(char *str)
 {
-	int	i;
+	int		i;
 	char	*key;
 
 	i = 0;

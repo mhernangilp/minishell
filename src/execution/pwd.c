@@ -12,11 +12,11 @@
 
 #include "../../minishell.h"
 
-int	pwd()
+int	pwd(void)
 {
 	char	pwd[PATH_MAX];
 
-	if(!getcwd(pwd, PATH_MAX))
+	if (!getcwd(pwd, PATH_MAX))
 		return (1);
 	ft_putstr_fd(pwd, 1);
 	return (0);
