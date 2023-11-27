@@ -29,7 +29,7 @@ void	execution(t_bridge *bridge, char **envp)
 		exec.pid[i] = fork();
 		process_signals();
 		if (exec.pid[i] == 0)
-				child_process(exec, i);
+			child_process(exec, i);
 	}
 	close_all(&exec);
 	wait_all(&exec);
