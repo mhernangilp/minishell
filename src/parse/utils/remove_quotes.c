@@ -68,6 +68,6 @@ static char	*malloc_quotes(const char *s)
 	}
 	result = (char *)malloc(ft_strlen(s) + 1 - nb_quotes);
 	if (result == NULL)
-		putexit("Error de memoria\n");
+		exit_msg(ERR_MEMORY, 1);
 	return (result);
 }

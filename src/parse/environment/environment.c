@@ -23,7 +23,7 @@ char	*environments(t_parse *parse, char *s)
 		return (s);
 	parse->env = (char **)malloc (sizeof (char *) * (parse->nb_env + 1));
 	if (!parse->env)
-		putexit("Malloc error\n");
+		exit_msg(ERR_MEMORY, 1);
 	get_env(parse, s);
 	expand_variable(parse, s);
 	free(parse->env);
@@ -43,7 +43,7 @@ static	void	expand_variable(t_parse *parse, char *s)
 	e_len = e_len - parse->l_d + 1;
 	parse->r_env = malloc (sizeof (char *) * (ft_strlen(s) + e_len));
 	if (!parse->r_env)
-		putexit("Malloc error\n");
+		exit_msg(ERR_MEMORY, 1);
 	parse_env(parse, s);
 }
 

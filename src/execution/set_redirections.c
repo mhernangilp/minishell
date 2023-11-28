@@ -44,14 +44,17 @@ static void	in_red(t_exec *exec, int num)
 	{
 		if (exec -> bridge -> redirect[num].inred -> type[i] == NORMAL)
 		exec -> in_out[num][0] = open(exec -> bridge -> redirect[num].inred
-				-> file[i], O_RDONLY);
+					-> file[i], O_RDONLY);
 		else if (exec -> bridge -> redirect[num].inred -> type[i] == HEREDOC)
 			load_heredoc(exec, exec -> bridge -> redirect[num].inred
-						-> file[i], num);
+				-> file[i], num);
 		else
-			error_msg("Error with infile redirection mode");
+			error_msg("Error with infile redirection mode", 1);
 		if (exec -> in_out[num][0] < 0)
-			error_msg("Error infile");
+		{
+			ft_putstr_fd("minishell: ", 2);
+			error_msg(exec->bridge->redirect[num].inred->file[i], 1);
+		}
 	}
 	dup2(exec -> in_out[num][0], 0);
 }
@@ -69,10 +72,13 @@ static void	out_red(t_exec *exec, int num)
 		else if (exec -> bridge -> redirect[num].outred -> type[i] == APPEND)
 			exec -> in_out[num][1] = open(exec -> bridge -> redirect[num].outred
 					-> file[i], O_CREAT | O_WRONLY | O_APPEND, 0666);
-		else 
-			error_msg("Error with outfile redirection mode");
+		else
+			error_msg("Error with outfile redirection mode", 1);
 		if (exec -> in_out[num][1] < 0)
-			error_msg("Error outfile");
+		{
+			ft_putstr_fd("minishell: ", 2);
+			error_msg(exec->bridge->redirect[num].outred->file[i], 1);
+		}
 	}
 	dup2(exec -> in_out[num][1], 1);
 }

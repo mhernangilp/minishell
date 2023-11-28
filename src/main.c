@@ -20,7 +20,7 @@
 static void	ctr(void);
 static void	free_commands(t_bridge *bridge);
 
-int	g_ret_val = 0;
+char	**g_env;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -30,33 +30,30 @@ int	main(int argc, char **argv, char **envp)
 	//atexit(leaks);
 	(void) argv;
 	if (argc != 1)
-		putexit("Wrong parameters\n");
-	ctr();
+		exit_msg("Wrong parameters\n", 1);
+	g_env = dup_env(envp);
+	add("?=0", RETVAL);
+  ctr();
 	while (1)
 	{
 		input_signals();
 		input = readline(ENTRADA_MS);
 		if (input == NULL)
 		{
-			printf("\033[F\33[2K\r");
-			printf("%sexit\n", ENTRADA_MS);
-			exit(1);
+			ft_putstr_fd("exit\n", 1);
+			exit(0);
 		}
-		add_history(input);
-		bridge = start_parse(input);
-		if (bridge != NULL)
-			execution(bridge, envp);
-	//	bridge = test_execution();
+		if (*input)
+		{
+			add_history(input);
+			bridge = start_parse(input);
+			if (bridge != NULL)
+				execution(bridge);
+		}
 		free(input);
 		free_commands(bridge);
 	}
 	return (0);
-}
-
-void	putexit(char *s)
-{
-	printf("%s", s);
-	exit(0);
 }
 
 static void	free_commands(t_bridge *bridge)
