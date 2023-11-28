@@ -21,6 +21,7 @@ void	load_heredoc(t_exec *exec, char *arg, int num)
 	if (pipe(fd) < 0)
 		error_msg("ERR_PIPES", 1);
 	pid = fork();
+	heredoc_signals();
 	if (pid == 0)
 	{
 		close(fd[0]);

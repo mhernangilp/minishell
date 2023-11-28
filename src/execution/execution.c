@@ -31,6 +31,8 @@ void	execution(t_bridge *bridge)
 		while (++i < exec.bridge -> n_cmds)
 		{
 			exec.pid[i] = fork();
+      if (!bridge->redirect[i].inred)
+			  process_signals();
 			if (exec.pid[i] == 0)
 				child_process(exec, i);
 		}

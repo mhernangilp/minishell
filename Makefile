@@ -5,6 +5,7 @@ SRC =	src/main.c \
 		src/parse/environment/environment.c src/parse/environment/utils_env.c \
 		src/parse/redirections/redirections.c src/parse/redirections/utils_rdir.c \
 		src/parse/utils/split_quote.c src/parse/utils/remove_quotes.c src/parse/utils/check_parse.c \
+		src/signals/heredoc.c src/signals/input.c src/signals/process.c \
 		src/execution/execution.c src/execution/errors.c src/execution/child_process.c src/execution/set_redirections.c \
 		src/execution/here_doc.c src/execution/builtins.c src/execution/cd.c src/execution/return_val.c \
 		src/execution/pwd.c src/execution/enviroment.c src/execution/unset.c src/execution/export.c src/execution/echo.c src/execution/exit.c

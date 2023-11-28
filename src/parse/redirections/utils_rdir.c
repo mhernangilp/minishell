@@ -82,7 +82,7 @@ char	*worth_part(char *s)
 		if (s[i] == '<' || s[i] == '>')
 			i++;
 		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
-				i++;
+			i++;
 		start = i;
 		i = ft_strlen(s);
 		result = ft_substr(s, start, i - start);

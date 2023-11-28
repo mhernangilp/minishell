@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/12 20:34:07 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:29:43 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 	system("leaks minishell");
 }*/
 
+static void	ctr(void);
 static void	free_commands(t_bridge *bridge);
 
 char	**g_env;
@@ -32,8 +33,10 @@ int	main(int argc, char **argv, char **envp)
 		exit_msg("Wrong parameters\n", 1);
 	g_env = dup_env(envp);
 	add("?=0", RETVAL);
+  ctr();
 	while (1)
 	{
+		input_signals();
 		input = readline(ENTRADA_MS);
 		if (input == NULL)
 		{
@@ -47,7 +50,6 @@ int	main(int argc, char **argv, char **envp)
 			if (bridge != NULL)
 				execution(bridge);
 		}
-	//	bridge = test_execution();
 		free(input);
 		free_commands(bridge);
 	}
@@ -68,4 +70,24 @@ static void	free_commands(t_bridge *bridge)
 	}
 	free(bridge->commands);
 	free(bridge);
+}
+
+static void	ctr(void)
+{
+	int				x;
+	struct termios	termios;
+
+	x = tcgetattr(0, &termios);
+	if (x)
+	{
+		perror("");
+		exit(1);
+	}
+	termios.c_lflag &= ~ECHOCTL;
+	x = tcsetattr(0, 0, &termios);
+	if (x)
+	{
+		perror("");
+		exit(1);
+	}
 }
