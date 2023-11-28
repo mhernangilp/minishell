@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/13 16:36:13 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:24:49 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,41 +125,41 @@ void	set_redirections(t_exec *exec, int num);
 
 ///// BUILTINS /////
 //built_ins.c
-int	is_parent_builtin(char *commands);
-int	is_builtin(char *commands);
+int		is_parent_builtin(char *commands);
+int		is_builtin(char *commands);
 void	builtins(char **commands, int type);
 
 //cd.c
-int	cd(char **commands);
+int		cd(char **commands);
 
 //pwd.c
-int	pwd(void);
+int		pwd(void);
 
 //unset.c
-int	unset(char **commands);
+int		unset(char **commands);
 void	b_delete(char *key);
 
 //export.c
-int	b_export(char **commands);
+int		b_export(char **commands);
 void	add(char *str, int type);
 
 //echo.c
-int	echo(char **commands);
+int		echo(char **commands);
 
 //exit.c
-int	b_exit(char **commands, int type);
+int		b_exit(char **commands, int type);
 
 ///// ENVIROMENT /////
 //enviroment.c
-int	env(void);
+int		env(void);
 char	**dup_env(char **envp);
 char	*getenv_value(char *key);
-int	env_len(char **env);
+int		env_len(char **env);
 void	free_env(char **env);
 
 //return_val.c
 void	set_ret_val(int val);
-int	get_ret_val(void);
+int		get_ret_val(void);
 
 ///// ERRORS /////
 //errors.c
@@ -167,14 +167,14 @@ void	error_msg(char *msg, int val);
 void	exit_msg(char *msg, int val);
 
 //// LIBFT /////
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 char	**ft_split(const char *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
-int	ft_strncmp(char const *s1, char const *s2, size_t n);
+int		ft_strncmp(char const *s1, char const *s2, size_t n);
 size_t	ft_strlen(char const *str);
 char	*ft_strdup(const char *src);
-int	ft_isalpha(int c);
+int		ft_isalpha(int c);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 

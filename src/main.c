@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/13 12:29:43 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:36:00 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,16 @@ int	main(int argc, char **argv, char **envp)
 		exit_msg("Wrong parameters\n", 1);
 	g_env = dup_env(envp);
 	add("?=0", RETVAL);
-  ctr();
+	ctr();
 	while (1)
 	{
 		input_signals();
 		input = readline(ENTRADA_MS);
 		if (input == NULL)
 		{
-			ft_putstr_fd("exit\n", 1);
+			ft_putstr_fd("\033[1A\033[2K", 1);
+			ft_putstr_fd(ENTRADA_MS, 1);
+		   	ft_putstr_fd("exit\n", 1);
 			exit(0);
 		}
 		if (*input)

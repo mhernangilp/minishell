@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/13 16:10:17 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:19:57 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_bridge	*init_bridge_struct(void)
 
 	bridge = malloc (sizeof (t_bridge));
 	if (!bridge)
-		putexit("Malloc error\n");
+		exit_msg(ERR_MEMORY, 1);
 	bridge->n_cmds = 0;
 	bridge->commands = NULL;
 	bridge->redirect = NULL;
