@@ -27,7 +27,8 @@ void	execution(t_bridge *bridge, char **envp)
 	while (++i < exec.bridge -> n_cmds)
 	{
 		exec.pid[i] = fork();
-		process_signals();
+		if (!bridge->redirect[i].inred)
+			process_signals();
 		if (exec.pid[i] == 0)
 			child_process(exec, i);
 	}

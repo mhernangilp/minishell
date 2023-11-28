@@ -15,6 +15,7 @@
 static void	sig_handler_heredoc(int signal)
 {
 	(void) signal;
+	printf("\033[2K\r");
 	exit(EXIT_SUCCESS);
 }
 
