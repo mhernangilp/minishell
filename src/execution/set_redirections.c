@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:10:56 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/30 14:31:17 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:06:05 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	in_red(t_exec *exec, int num)
 	while (++i < exec -> bridge -> redirect[num].inred -> num)
 	{
 		if (exec -> bridge -> redirect[num].inred -> type[i] == NORMAL)
-		exec -> in_out[num][0] = open(exec -> bridge -> redirect[num].inred
+			exec -> in_out[num][0] = open(exec -> bridge -> redirect[num].inred
 					-> file[i], O_RDONLY);
 		else if (exec -> bridge -> redirect[num].inred -> type[i] == HEREDOC)
 			exec -> in_out[num][0] = exec -> here[num].here_pipe[0];

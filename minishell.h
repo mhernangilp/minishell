@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/30 14:34:58 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:21:29 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,10 @@ void	child_process(t_exec exec, int num);
 
 //set_redirections.c
 void	set_redirections(t_exec *exec, int num);
+
+//init_utils.c
+void	init_heredoc(t_exec *exec, t_bridge *bridge);
+void	init_in_out(t_exec *exec, t_bridge *bridge);
 
 ///// BUILTINS /////
 //built_ins.c

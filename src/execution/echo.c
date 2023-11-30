@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:36:33 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/26 18:36:45 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:05:56 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	echo(char **commands)
 	int	start;
 
 	if (!commands[1])
-	{	
+	{
 		write(1, "\n", 1);
 		return (0);
 	}
