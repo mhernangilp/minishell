@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 16:50:22 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/30 12:41:05 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:31:08 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,12 @@ static char	*get_command(char **paths, char *file)
 	}
 	if (paths)
 	{
+		printf("Si\n");
 		command = has_paths(paths, file);
 		if (command)
 			return (command);
 	}
-	else
+	else if (!is_builtin(file))
 	{
 		if (access(file, F_OK | X_OK) == 0)
 			return (file);
