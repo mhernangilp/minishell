@@ -6,43 +6,77 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:37:28 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/26 18:37:31 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:13:45 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	load_heredoc(t_exec *exec, char *arg, int num)
-{
-	char	*buf;
-	pid_t	pid;
-	int		fd[2];
+static void	read_heredoc(t_exec *exec, int num);
+static char	*get_here_arg(t_red *red, int number);
 
-	if (pipe(fd) < 0)
-		error_msg("ERR_PIPES", 1);
-	pid = fork();
-	heredoc_signals();
-	if (pid == 0)
+void	load_heredoc(t_exec *exec)
+{
+	int	i;
+
+	i = -1;
+	while (++i < exec -> bridge -> n_cmds)
+		if (exec -> here[i].count)
+			read_heredoc(exec, i);
+}
+
+int	count_heredocs(t_red *red)
+{
+	int	count;
+	int	i;
+
+	if (!red)
+		return (0);
+	i = -1;
+	count = 0;
+	while (++i < red -> num)
+		if (red -> type[i] == HEREDOC)
+			count++;
+	return (count);
+}
+
+static void	read_heredoc(t_exec *exec, int num)
+{
+	int		i;
+	char	*buf;
+	char	*arg;
+
+	i = -1;
+	while (++i < exec -> here[num].count)
 	{
-		close(fd[0]);
+		arg = get_here_arg(exec -> bridge -> redirect[num].inred, i + 1);
 		buf = readline("heredoc> ");
 		while (buf)
 		{
 			if (!ft_strncmp(arg, buf, ft_strlen(arg) + 1))
 				break ;
-			write(fd[1], buf, ft_strlen(buf));
-			write(fd[1], "\n", 1);
+			if (i == exec -> here[num].count - 1)
+			{
+				write(exec -> here[num].here_pipe[1], buf, ft_strlen(buf));
+				write(exec -> here[num].here_pipe[1], "\n", 1);
+			}
 			free(buf);
 			buf = readline("heredoc> ");
 		}
-		close(fd[1]);
 		free(buf);
-		exit(0);
 	}
-	else
+	close(exec -> here[num].here_pipe[1]);
+}
+
+static char	*get_here_arg(t_red *red, int number)
+{
+	int	i;
+
+	i = -1;
+	while (number && ++i < red -> num)
 	{
-		close(fd[1]);
-		exec -> in_out[num][0] = fd[0];
-		waitpid(pid, NULL, 0);
+		if (red -> type[i] == HEREDOC)
+			number--;
 	}
+	return (red -> file[i]);
 }

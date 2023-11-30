@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/28 17:24:49 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:34:58 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,18 @@ typedef struct s_bridge
 	int			n_cmds;
 }	t_bridge;
 
+typedef struct s_here
+{
+	int		count;
+	int		here_pipe[2];
+}	t_here;
+
 typedef struct s_exec
 {
 	pid_t		*pid;
 	int			**pipe;
 	int			**in_out;
+	t_here		*here;
 	char		**paths;
 	t_bridge	*bridge;
 }	t_exec;
@@ -179,6 +186,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 
 //// HERE_DOC ////
-void	load_heredoc(t_exec *exec, char *arg, int num);
+void	load_heredoc(t_exec *exec);
+int		count_heredocs(t_red *red);
 
 #endif
