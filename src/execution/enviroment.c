@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:36:50 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/26 18:36:54 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:22:53 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ int	env(void)
 
 	i = -1;
 	while (g_env[++i])
-		ft_putstr_fd(g_env[i], 1);
+	{
+		if (ft_strncmp("?=", g_env[i], 2))
+		{
+			ft_putstr_fd(g_env[i], 1);
+			ft_putchar_fd('\n', 1);
+		}
+	}
 	return (0);
 }
 

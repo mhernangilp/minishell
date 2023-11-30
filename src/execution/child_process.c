@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 16:50:22 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/12 20:52:56 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:41:05 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ void	child_process(t_exec exec, int num)
 		exit(get_ret_val());
 	}
 	if (!command)
-		error_msg(exec.bridge->commands[num][0], 127);
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(exec.bridge->commands[num][0], 2);
+		exit_msg(": command not found\n", 127);
+	}
 	else if (execve(command, exec.bridge->commands[num], g_env))
 		error_msg("Error execution", 1);
 }
@@ -119,5 +123,4 @@ static void	check_directories(char *file)
 		ft_putstr_fd(file, 2);
 		exit_msg(": Is a directory\n", 2);
 	}
-	closedir(dir);
 }

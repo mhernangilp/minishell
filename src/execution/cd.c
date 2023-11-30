@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:36:21 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/26 18:36:23 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:48:13 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	cd(char **commands)
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
-	if (!commands[1][0])
+	if (commands[1] && !commands[1][0])
 		return (0);
 	chdirectory = set_chdir(commands);
 	if (!chdirectory)
