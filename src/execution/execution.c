@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:17:09 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/12 20:43:33 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:14:01 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ void	execution(t_bridge *bridge)
 		builtins(bridge -> commands[0], PARENT);
 	else
 	{
+		load_heredoc(&exec);
 		i = -1;
 		while (++i < exec.bridge -> n_cmds)
 		{
 			exec.pid[i] = fork();
-      if (!bridge->redirect[i].inred)
+   			if (!bridge->redirect[i].inred)
 			  process_signals();
 			if (exec.pid[i] == 0)
 				child_process(exec, i);
@@ -112,5 +113,14 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 			exit_msg(ERR_MEMORY, 1);
 		exec -> in_out[i][0] = -1;
 		exec -> in_out[i][1] = -1;
+	}
+	exec -> here = malloc(bridge -> n_cmds * sizeof(t_here));
+	i = -1;
+	while (++i < (bridge -> n_cmds))
+	{
+		exec -> here[i].count = count_heredocs(bridge -> redirect[i].inred);
+		if (exec -> here[i].count)
+			if (pipe(exec -> here[i].here_pipe) < 0)
+				error_msg("ERR_PIPES", 1);
 	}
 }
