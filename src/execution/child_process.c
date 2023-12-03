@@ -24,6 +24,8 @@ void	child_process(t_exec exec, int num)
 
 	set_redirections(&exec, num);
 	close_all(&exec);
+	if (!exec.bridge -> commands[num][0])
+		exit_msg("", 0);
 	command = get_command(exec.paths, exec.bridge->commands[num][0]);
 	if (is_builtin(exec.bridge -> commands[num][0]))
 	{

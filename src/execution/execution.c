@@ -23,7 +23,8 @@ void	execution(t_bridge *bridge)
 
 	initialize_exec(&exec, bridge);
 	exec.paths = get_paths();
-	if (bridge -> n_cmds == 1 && is_parent_builtin(bridge -> commands[0][0]))
+	if (bridge -> n_cmds == 1 && bridge -> commands[0][0]
+		&& is_parent_builtin(bridge -> commands[0][0]))
 		builtins(bridge -> commands[0], PARENT);
 	else
 	{
