@@ -56,7 +56,6 @@ static char	*get_command(char **paths, char *file)
 	}
 	if (paths)
 	{
-		printf("Si\n");
 		command = has_paths(paths, file);
 		if (command)
 			return (command);

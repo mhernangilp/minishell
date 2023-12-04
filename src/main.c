@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/28 17:36:00 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:00:33 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@
 }*/
 
 static void	ctr(void);
-static void	free_commands(t_bridge *bridge);
+static void	minishell();
+//static void	free_commands(t_bridge *bridge);
 
 char	**g_env;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_bridge	*bridge;
-	char		*input;
-
 	//atexit(leaks);
 	(void) argv;
 	if (argc != 1)
@@ -35,30 +33,36 @@ int	main(int argc, char **argv, char **envp)
 	add("?=0", RETVAL);
 	ctr();
 	while (1)
-	{
-		input_signals();
-		input = readline(ENTRADA_MS);
-		if (input == NULL)
-		{
-			ft_putstr_fd("\033[1A\033[2K", 1);
-			ft_putstr_fd(ENTRADA_MS, 1);
-		   	ft_putstr_fd("exit\n", 1);
-			exit(0);
-		}
-		if (*input)
-		{
-			add_history(input);
-			bridge = start_parse(input);
-			if (bridge != NULL)
-				execution(bridge);
-		}
-		free(input);
-		free_commands(bridge);
-	}
+		minishell();
 	return (0);
 }
 
-static void	free_commands(t_bridge *bridge)
+static void	minishell()
+{
+	t_bridge	*bridge;
+	char		*input;
+
+	input_signals();
+	input = readline(ENTRADA_MS);
+	if (input == NULL)
+	{
+		ft_putstr_fd("\033[1A\033[2K", 1);
+		ft_putstr_fd(ENTRADA_MS, 1);
+		ft_putstr_fd("exit\n", 1);
+		exit(0);
+	}
+	if (*input)
+	{
+		add_history(input);
+		bridge = start_parse(input);
+		if (bridge != NULL)
+			execution(bridge);
+	}
+	free(input);
+	//free_commands(bridge);
+}
+
+/*static void	free_commands(t_bridge *bridge)
 {
 	int	i;
 
@@ -72,7 +76,7 @@ static void	free_commands(t_bridge *bridge)
 	}
 	free(bridge->commands);
 	free(bridge);
-}
+}*/
 
 static void	ctr(void)
 {
