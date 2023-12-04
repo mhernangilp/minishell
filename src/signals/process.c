@@ -17,7 +17,7 @@ static void	sig_handler_process(int signal)
 	(void) signal;
 	printf("Quit: 3\n");
 	rl_redisplay();
-	add("?=131", RETVAL);
+	set_ret_val(131);
 }
 
 static void	sig_handler_int(int signal)
@@ -25,7 +25,7 @@ static void	sig_handler_int(int signal)
 	(void) signal;
 	printf("\n");
 	rl_redisplay();
-	add("?=130", RETVAL);
+	set_ret_val(130);
 }
 
 void	process_signals(void)

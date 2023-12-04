@@ -66,7 +66,9 @@ static void	wait_all(t_exec *exec)
 	if (WIFEXITED(ret_val))
 		set_ret_val(WEXITSTATUS(ret_val));
 	else
-		set_ret_val(255);
+		if (ft_atoi(getenv_value("?")) != 130
+			&& ft_atoi(getenv_value("?")) != 131)
+			set_ret_val(255);
 }
 
 static char	**get_paths(void)

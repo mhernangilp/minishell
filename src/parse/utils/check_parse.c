@@ -120,6 +120,6 @@ static int	putreturn(char c, int nb_c)
 		ft_putchar_fd(c, 2);
 		ft_putstr_fd("'\n", 2);
 	}
-	add("?=258", RETVAL);
+	set_ret_val(258);
 	return (0);
 }
