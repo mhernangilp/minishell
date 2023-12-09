@@ -19,7 +19,7 @@
 
 static void	ctr(void);
 static void	minishell();
-//static void	free_commands(t_bridge *bridge);
+static void	free_commands(t_bridge *bridge);
 
 char	**g_env;
 
@@ -42,6 +42,7 @@ static void	minishell()
 	t_bridge	*bridge;
 	char		*input;
 
+	bridge = NULL;
 	input_signals();
 	input = readline(ENTRADA_MS);
 	if (input == NULL)
@@ -59,10 +60,10 @@ static void	minishell()
 			execution(bridge);
 	}
 	free(input);
-	//free_commands(bridge);
+	free_commands(bridge);
 }
 
-/*static void	free_commands(t_bridge *bridge)
+static void	free_commands(t_bridge *bridge)
 {
 	int	i;
 
@@ -70,13 +71,27 @@ static void	minishell()
 		return ;
 	i = -1;
 	while (bridge->commands[++i])
-	{
 		ft_splitfree(bridge->commands[i]);
-		//free (bridge->redirect);
-	}
 	free(bridge->commands);
+	i = -1;
+	while (bridge->redirect && (bridge->redirect[++i].inred
+		|| bridge->redirect[i].outred))
+	{
+		if (bridge->redirect[i].inred)
+		{
+			ft_splitfree(bridge->redirect[i].inred->file);
+			free (bridge->redirect[i].inred);
+		}
+		if (bridge->redirect[i].outred)
+		{
+			ft_splitfree(bridge->redirect[i].outred->file);
+			free (bridge->redirect[i].outred);
+		}
+	}
+	if (bridge->redirect)
+		free (bridge->redirect);
 	free(bridge);
-}*/
+}
 
 static void	ctr(void)
 {
