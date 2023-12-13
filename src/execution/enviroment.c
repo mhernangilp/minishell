@@ -17,11 +17,11 @@ int	env(void)
 	int	i;
 
 	i = -1;
-	while (g_env[++i])
+	while (global.env[++i])
 	{
-		if (ft_strncmp("?=", g_env[i], 2))
+		if (ft_strncmp("?=", global.env[i], 2))
 		{
-			ft_putstr_fd(g_env[i], 1);
+			ft_putstr_fd(global.env[i], 1);
 			ft_putchar_fd('\n', 1);
 		}
 	}
@@ -55,11 +55,11 @@ char	*getenv_value(char *key)
 	int	i;
 
 	i = -1;
-	while (g_env[++i])
+	while (global.env[++i])
 	{
-		if (!ft_strncmp(key, g_env[i], ft_strlen(key))
-			&& g_env[i][ft_strlen(key)] == '=')
-			return (g_env[i] + ft_strlen(key) + 1);
+		if (!ft_strncmp(key, global.env[i], ft_strlen(key))
+			&& global.env[i][ft_strlen(key)] == '=')
+			return (global.env[i] + ft_strlen(key) + 1);
 	}
 	return (NULL);
 }

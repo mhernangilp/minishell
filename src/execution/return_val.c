@@ -29,7 +29,7 @@ int	get_ret_val(void)
 	int	i;
 
 	i = 0;
-	while (g_env[i] && g_env[i][0] != '?')
+	while (global.env[i] && global.env[i][0] != '?')
 		i++;
-	return (ft_atoi(g_env[i] + 2));
+	return (ft_atoi(global.env[i] + 2));
 }

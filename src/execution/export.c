@@ -36,16 +36,16 @@ void	add(char *str, int type)
 	key = get_key(str);
 	if (getenv_value(key))
 		b_delete(key);
-	new_env = (char **)malloc((env_len(g_env) + 2) * sizeof(char *));
+	new_env = (char **)malloc((env_len(global.env) + 2) * sizeof(char *));
 	if (!new_env)
 		exit_msg(ERR_MEMORY, 1);
 	i = -1;
-	while (g_env[++i])
-		new_env[i] = ft_strdup(g_env[i]);
+	while (global.env[++i])
+		new_env[i] = ft_strdup(global.env[i]);
 	new_env[i++] = ft_strdup(str);
 	new_env[i] = NULL;
-	free_env(g_env);
-	g_env = new_env;
+	free_env(global.env);
+	global.env = new_env;
 	free(key);
 }
 

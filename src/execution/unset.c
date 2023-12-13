@@ -30,21 +30,21 @@ void	b_delete(char *key)
 
 	if (!getenv_value(key))
 		return ;
-	new_env = (char **)malloc(env_len(g_env) * sizeof(char *));
+	new_env = (char **)malloc(env_len(global.env) * sizeof(char *));
 	if (!new_env)
 		exit_msg(ERR_MEMORY, 1);
 	i = -1;
 	j = 0;
-	while (g_env[++i])
+	while (global.env[++i])
 	{
-		if (!(!ft_strncmp(key, g_env[i], ft_strlen(key))
-				&& g_env[i][ft_strlen(key)] == '='))
+		if (!(!ft_strncmp(key, global.env[i], ft_strlen(key))
+				&& global.env[i][ft_strlen(key)] == '='))
 		{
-			new_env[j] = ft_strdup(g_env[i]);
+			new_env[j] = ft_strdup(global.env[i]);
 			j++;
 		}
 	}
 	new_env[j] = NULL;
-	free_env(g_env);
-	g_env = new_env;
+	free_env(global.env);
+	global.env = new_env;
 }

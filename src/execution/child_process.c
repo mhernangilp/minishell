@@ -38,7 +38,7 @@ void	child_process(t_exec exec, int num)
 		ft_putstr_fd(exec.bridge->commands[num][0], 2);
 		exit_msg(": command not found\n", 127);
 	}
-	else if (execve(command, exec.bridge->commands[num], g_env))
+	else if (execve(command, exec.bridge->commands[num], global.env))
 		error_msg("Error execution", 1);
 }
 

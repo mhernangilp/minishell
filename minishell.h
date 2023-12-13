@@ -38,7 +38,13 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
-extern char	**g_env;
+typedef struct s_global
+{
+	int		signal;
+	char	**env;
+} t_global;
+
+extern t_global	global;
 
 typedef struct s_red
 {

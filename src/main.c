@@ -21,7 +21,7 @@ static void	ctr(void);
 static void	minishell();
 static void	free_commands(t_bridge *bridge);
 
-char	**g_env;
+t_global	global;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (argc != 1)
 		exit_msg("Wrong parameters\n", 1);
-	g_env = dup_env(envp);
+	global.env = dup_env(envp);
 	add("?=0", RETVAL);
 	ctr();
 	while (1)
