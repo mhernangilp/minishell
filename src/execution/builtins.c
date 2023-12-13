@@ -44,20 +44,20 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-void	builtins(char **commands, int type)
+void	builtins(char **m_env, char **commands, int type)
 {
 	if (!ft_strncmp(commands[0], "cd", ft_strlen(commands[0])))
-		set_ret_val(cd(commands));
+		set_ret_val(m_env, cd(m_env, commands));
 	if (!ft_strncmp(commands[0], "pwd", ft_strlen(commands[0])))
-		set_ret_val(pwd());
+		set_ret_val(m_env, pwd());
 	if (!ft_strncmp(commands[0], "env", ft_strlen(commands[0])))
-		set_ret_val(env());
+		set_ret_val(m_env, env(m_env));
 	if (!ft_strncmp(commands[0], "unset", ft_strlen(commands[0])))
-		set_ret_val(unset(commands));
+		set_ret_val(m_env, unset(m_env, commands));
 	if (!ft_strncmp(commands[0], "export", ft_strlen(commands[0])))
-		set_ret_val(b_export(commands));
+		set_ret_val(m_env, b_export(m_env, commands));
 	if (!ft_strncmp(commands[0], "echo", ft_strlen(commands[0])))
-		set_ret_val(echo(commands));
+		set_ret_val(m_env, echo(commands));
 	if (!ft_strncmp(commands[0], "exit", ft_strlen(commands[0])))
-		set_ret_val(b_exit(commands, type));
+		set_ret_val(m_env, b_exit(commands, type));
 }

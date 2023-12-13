@@ -12,12 +12,12 @@
 
 #include "../../minishell.h"
 
-static char	*set_chdir(char **commands);
+static char	*set_chdir(char **m_env, char **commands);
 static int	check_dir(char *chdirectory);
 static char	*get_pwd(void);
-static int	chpwd(void);
+static int	chpwd(char **m_env);
 
-int	cd(char **commands)
+int	cd(char **m_env, char **commands)
 {
 	char	*chdirectory;
 
@@ -28,7 +28,7 @@ int	cd(char **commands)
 	}
 	if (commands[1] && !commands[1][0])
 		return (0);
-	chdirectory = set_chdir(commands);
+	chdirectory = set_chdir(m_env, commands);
 	if (!chdirectory)
 		return (1);
 	if (check_dir(chdirectory))
@@ -39,18 +39,18 @@ int	cd(char **commands)
 		perror(chdirectory);
 		return (1);
 	}
-	if (chpwd())
+	if (chpwd(m_env))
 		return (1);
 	return (0);
 }
 
-static char	*set_chdir(char **commands)
+static char	*set_chdir(char **m_env, char **commands)
 {
 	char	*chdirectory;
 
 	if (!commands[1])
 	{
-		chdirectory = getenv_value("HOME");
+		chdirectory = getenv_value(m_env, "HOME");
 		if (!chdirectory)
 		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
@@ -77,7 +77,7 @@ static int	check_dir(char *chdirectory)
 	return (0);
 }
 
-static int	chpwd(void)
+static int	chpwd(char **m_env)
 {
 	char	*pwd;
 	char	*pwd_env;
@@ -88,7 +88,7 @@ static int	chpwd(void)
 	pwd_env = ft_strjoin("PWD=", pwd);
 	if (!pwd_env)
 		return (1);
-	add(pwd_env, NORMAL);
+	add(m_env, pwd_env, NORMAL);
 	free(pwd);
 	free(pwd_env);
 	return (0);

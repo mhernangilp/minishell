@@ -38,13 +38,7 @@
 
 # define ENTRADA_MS "\033[93mminishell > \033[0;0m"
 
-typedef struct s_global
-{
-	int		signal;
-	char	**env;
-} t_global;
-
-extern t_global	global;
+extern int	g_signal;
 
 typedef struct s_red
 {
@@ -64,6 +58,7 @@ typedef struct s_bridge
 	t_cmdred	*redirect;
 	char		***commands;
 	int			n_cmds;
+	char		**m_env;
 }	t_bridge;
 
 typedef struct s_here
@@ -84,24 +79,25 @@ typedef struct s_exec
 
 typedef struct s_parse
 {
-	char	**env;
-	char	*r_env;
-	int		nb_env;
-	int		l_d;
-	int		a;
-	char	*rdirect;
-	int		start_rdir;
-	int		n_ip;
-	int		n_op;
-	int		locate_ip_dir;
-	int		locate_op_dir;
+	char		**env;
+	char		*r_env;
+	int			nb_env;
+	int			l_d;
+	int			a;
+	char		*rdirect;
+	int			start_rdir;
+	int			n_ip;
+	int			n_op;
+	int			locate_ip_dir;
+	int			locate_op_dir;
+	t_bridge	*bridge;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
 
 /* PARSE */
-t_bridge	*start_parse(char *input);
-int		check_rps(char *input, char c);
+t_bridge	*start_parse(char *input, char **m_env);
+int		check_rps(char **m_env, char *input, char c);
 int		check_input(char *input);
 char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
@@ -120,7 +116,7 @@ char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j);
 /* SIGNALS */
 void	heredoc_signals(void);
 void	input_signals(void);
-void	process_signals(void);
+void	process_signals(char **m_env);
 
 char	*worth_part(char *s);
 
@@ -144,21 +140,21 @@ void	init_in_out(t_exec *exec, t_bridge *bridge);
 //built_ins.c
 int		is_parent_builtin(char *commands);
 int		is_builtin(char *commands);
-void	builtins(char **commands, int type);
+void	builtins(char **m_env, char **commands, int type);
 
 //cd.c
-int		cd(char **commands);
+int		cd(char **m_env, char **commands);
 
 //pwd.c
 int		pwd(void);
 
 //unset.c
-int		unset(char **commands);
-void	b_delete(char *key);
+int		unset(char **m_env, char **commands);
+void	b_delete(char **m_env, char *key);
 
 //export.c
-int		b_export(char **commands);
-void	add(char *str, int type);
+int		b_export(char **m_env, char **commands);
+void	add(char **m_env, char *str, int type);
 
 //echo.c
 int		echo(char **commands);
@@ -168,15 +164,15 @@ int		b_exit(char **commands, int type);
 
 ///// ENVIROMENT /////
 //enviroment.c
-int		env(void);
+int		env(char **m_env);
 char	**dup_env(char **envp);
-char	*getenv_value(char *key);
+char	*getenv_value(char **m_env, char *key);
 int		env_len(char **env);
 void	free_env(char **env);
 
 //return_val.c
-void	set_ret_val(int val);
-int		get_ret_val(void);
+void	set_ret_val(char **m_env, int val);
+int		get_ret_val(char **m_env);
 
 ///// ERRORS /////
 //errors.c
