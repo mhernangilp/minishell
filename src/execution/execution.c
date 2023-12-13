@@ -24,6 +24,8 @@ void	execution(t_bridge *bridge)
 	initialize_exec(&exec, bridge);
 	exec.paths = get_paths();
 	load_heredoc(&exec);
+	if (global.signal != 0)
+		return ;
 	if (bridge -> n_cmds == 1 && bridge -> commands[0][0]
 		&& is_parent_builtin(bridge -> commands[0][0]))
 		builtins(bridge -> commands[0], PARENT);

@@ -46,14 +46,13 @@ static void	read_heredoc(t_exec *exec, int num)
 	char	*buf;
 	char	*arg;
 
-	add("signal=1", NORMAL);
 	heredoc_signals();
 	i = -1;
 	while (++i < exec -> here[num].count)
 	{
 		arg = get_here_arg(exec -> bridge -> redirect[num].inred, i + 1);
 		buf = readline("heredoc> ");
-		while (buf && ft_atoi(getenv_value("signal")) == 1)
+		while (buf && global.signal == 0)
 		{
 			if (!ft_strncmp(arg, buf, ft_strlen(arg) + 1))
 				break ;
@@ -67,7 +66,6 @@ static void	read_heredoc(t_exec *exec, int num)
 		}
 		free(buf);
 	}
-	b_delete("signal");
 	close(exec -> here[num].here_pipe[1]);
 }
 

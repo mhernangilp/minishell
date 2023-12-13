@@ -15,7 +15,7 @@
 static void	sig_handler_heredoc(int signal)
 {
 	(void) signal;
-	add("signal=2", NORMAL);
+	global.signal = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	printf("\033[2K\r");
 }

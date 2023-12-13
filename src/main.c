@@ -42,6 +42,7 @@ static void	minishell()
 	t_bridge	*bridge;
 	char		*input;
 
+	global.signal = 0;
 	bridge = NULL;
 	input_signals();
 	input = readline(ENTRADA_MS);
