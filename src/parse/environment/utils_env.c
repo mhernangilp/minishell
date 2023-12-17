@@ -58,7 +58,7 @@ char	*cut_and_get_env(t_parse *parse, char *s, int i)
 		i++;
 	parse->l_d += i - start + 1;
 	aux = ft_substr(s, start, i - start);
-	env = getenv_value(aux);
+	env = getenv_value(parse -> bridge -> m_env, aux);
 	free (aux);
 	return (env);
 }

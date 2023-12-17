@@ -15,17 +15,17 @@
 static int	parse_export(char *str, int type);
 static char	*get_key(char *str);
 
-int	b_export(char **commands)
+int	b_export(t_bridge *bridge, char **commands)
 {
 	int	i;
 
 	i = 0;
 	while (commands[++i])
-		add(commands[i], NORMAL);
+		add(&bridge -> m_env, commands[i], NORMAL);
 	return (0);
 }
 
-void	add(char *str, int type)
+void	add(char ***m_env, char *str, int type)
 {
 	char	**new_env;
 	char	*key;
@@ -34,18 +34,18 @@ void	add(char *str, int type)
 	if (parse_export(str, type))
 		return ;
 	key = get_key(str);
-	if (getenv_value(key))
-		b_delete(key);
-	new_env = (char **)malloc((env_len(global.env) + 2) * sizeof(char *));
+	if (getenv_value(*m_env, key))
+		b_delete(m_env, key);
+	new_env = (char **)malloc((env_len(*m_env) + 2) * sizeof(char *));
 	if (!new_env)
 		exit_msg(ERR_MEMORY, 1);
 	i = -1;
-	while (global.env[++i])
-		new_env[i] = ft_strdup(global.env[i]);
+	while ((*m_env)[++i])
+		new_env[i] = ft_strdup((*m_env)[i]);
 	new_env[i++] = ft_strdup(str);
 	new_env[i] = NULL;
-	free_env(global.env);
-	global.env = new_env;
+	free_env(*m_env);
+	*m_env = new_env;
 	free(key);
 }
 

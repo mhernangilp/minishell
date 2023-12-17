@@ -52,7 +52,7 @@ static void	read_heredoc(t_exec *exec, int num)
 	{
 		arg = get_here_arg(exec -> bridge -> redirect[num].inred, i + 1);
 		buf = readline("heredoc> ");
-		while (buf && global.signal == 0)
+		while (buf && g_signal == 0)
 		{
 			if (!ft_strncmp(arg, buf, ft_strlen(arg) + 1))
 				break ;

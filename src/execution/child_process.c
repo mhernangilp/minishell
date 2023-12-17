@@ -29,8 +29,8 @@ void	child_process(t_exec exec, int num)
 	command = get_command(exec.paths, exec.bridge->commands[num][0]);
 	if (is_builtin(exec.bridge -> commands[num][0]))
 	{
-		builtins(exec.bridge -> commands[num], CHILD);
-		exit(get_ret_val());
+		builtins(exec.bridge, exec.bridge -> commands[num], CHILD);
+		exit(get_ret_val(exec.bridge -> m_env));
 	}
 	if (!command)
 	{
@@ -38,7 +38,7 @@ void	child_process(t_exec exec, int num)
 		ft_putstr_fd(exec.bridge->commands[num][0], 2);
 		exit_msg(": command not found\n", 127);
 	}
-	else if (execve(command, exec.bridge->commands[num], global.env))
+	else if (execve(command, exec.bridge->commands[num], exec.bridge -> m_env))
 		error_msg("Error execution", 1);
 }
 

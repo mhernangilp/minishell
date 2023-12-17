@@ -13,7 +13,7 @@
 #include "../../minishell.h"
 
 static void	wait_all(t_exec *exec);
-static char	**get_paths(void);
+static char	**get_paths(char **m_env);
 static void	initialize_exec(t_exec *exec, t_bridge *bridge);
 
 void	execution(t_bridge *bridge)
@@ -22,13 +22,13 @@ void	execution(t_bridge *bridge)
 	int		i;
 
 	initialize_exec(&exec, bridge);
-	exec.paths = get_paths();
+	exec.paths = get_paths(bridge -> m_env);
 	load_heredoc(&exec);
-	if (global.signal != 0)
+	if (g_signal == 1)
 		return ;
 	if (bridge -> n_cmds == 1 && bridge -> commands[0][0]
 		&& is_parent_builtin(bridge -> commands[0][0]))
-		builtins(bridge -> commands[0], PARENT);
+		builtins(bridge, bridge -> commands[0], PARENT);
 	else
 	{
 		i = -1;
@@ -36,7 +36,7 @@ void	execution(t_bridge *bridge)
 		{
 			exec.pid[i] = fork();
 			if (!bridge->redirect[i].inred)
-				process_signals();
+				process_signals(bridge);
 			if (exec.pid[i] == 0)
 				child_process(exec, i);
 		}
@@ -66,19 +66,23 @@ static void	wait_all(t_exec *exec)
 	while (++i < (exec -> bridge -> n_cmds))
 		waitpid(exec -> pid[i], &ret_val, 0);
 	if (WIFEXITED(ret_val))
-		set_ret_val(WEXITSTATUS(ret_val));
+		set_ret_val(exec -> bridge, WEXITSTATUS(ret_val));
 	else
-		if (ft_atoi(getenv_value("?")) != 130
-			&& ft_atoi(getenv_value("?")) != 131)
-			set_ret_val(255);
+	{
+		set_ret_val(exec -> bridge, 255);
+		if (g_signal == 2)
+			set_ret_val(exec -> bridge, 130);
+		if (g_signal == 3)
+			set_ret_val(exec -> bridge, 131);
+	}
 }
 
-static char	**get_paths(void)
+static char	**get_paths(char **m_env)
 {
 	char	*path;
 	char	**paths;
 
-	path = getenv_value("PATH");
+	path = getenv_value(m_env, "PATH");
 	if (!path)
 		return (NULL);
 	paths = ft_split(path, ':');

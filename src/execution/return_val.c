@@ -12,24 +12,24 @@
 
 #include "../../minishell.h"
 
-void	set_ret_val(int val)
+void	set_ret_val(t_bridge *bridge, int val)
 {
 	char	*new_env;
 	char	*value;
 
 	value = ft_itoa(val);
 	new_env = ft_strjoin("?=", value);
-	add(new_env, RETVAL);
+	add(&bridge -> m_env, new_env, RETVAL);
 	free(value);
 	free(new_env);
 }
 
-int	get_ret_val(void)
+int	get_ret_val(char **m_env)
 {
 	int	i;
 
 	i = 0;
-	while (global.env[i] && global.env[i][0] != '?')
+	while (m_env[i] && m_env[i][0] != '?')
 		i++;
-	return (ft_atoi(global.env[i] + 2));
+	return (ft_atoi(m_env[i] + 2));
 }

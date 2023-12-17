@@ -15,20 +15,27 @@
 static t_bridge	*init_bridge_struct(void);
 static void		do_bridge(t_bridge *bridge, char **str_pipe);
 
-t_bridge	*start_parse(char *input)
+t_bridge	*start_parse(char *input, char **m_env)
 {
 	t_bridge	*bridge;
 	char		**str_pipe;
-
-	if (!check_input(input) || !check_rps(input, '|'))
-		return (NULL);
+	
 	bridge = init_bridge_struct();
+	bridge->m_env = m_env;
+	if (!check_input(input) || !check_rps(bridge, input, '|'))
+	{
+		free(bridge);
+		return (NULL);
+	}
 	str_pipe = split_quote(input, '|');
 	while (str_pipe[bridge->n_cmds])
 	{
-		if (!check_rps(str_pipe[bridge->n_cmds], '<')
-			|| !check_rps(str_pipe[bridge->n_cmds], '>'))
-			return (NULL);
+		if (!check_rps(bridge, str_pipe[bridge->n_cmds], '<')
+			|| !check_rps(bridge, str_pipe[bridge->n_cmds], '>'))
+			{
+				free(bridge);
+				return (NULL);
+			}
 		bridge->n_cmds++;
 	}
 	bridge->commands = malloc (sizeof (char **) * (bridge->n_cmds + 1));
@@ -50,6 +57,7 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 	parse = malloc (sizeof (t_parse));
 	if (!parse)
 		exit_msg(ERR_MEMORY, 1);
+	parse -> bridge = bridge;
 	str_pipe = fill_redirections(parse, bridge, str_pipe);
 	i = -1;
 	while (str_pipe[++i] && str_pipe[i][0])

@@ -44,20 +44,20 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-void	builtins(char **commands, int type)
+void	builtins(t_bridge *bridge, char **commands, int type)
 {
 	if (!ft_strncmp(commands[0], "cd", ft_strlen(commands[0])))
-		set_ret_val(cd(commands));
+		set_ret_val(bridge, cd(bridge, commands));
 	if (!ft_strncmp(commands[0], "pwd", ft_strlen(commands[0])))
-		set_ret_val(pwd());
+		set_ret_val(bridge, pwd());
 	if (!ft_strncmp(commands[0], "env", ft_strlen(commands[0])))
-		set_ret_val(env());
+		set_ret_val(bridge, env(bridge -> m_env));
 	if (!ft_strncmp(commands[0], "unset", ft_strlen(commands[0])))
-		set_ret_val(unset(commands));
+		set_ret_val(bridge, unset(bridge, commands));
 	if (!ft_strncmp(commands[0], "export", ft_strlen(commands[0])))
-		set_ret_val(b_export(commands));
+		set_ret_val(bridge, b_export(bridge, commands));
 	if (!ft_strncmp(commands[0], "echo", ft_strlen(commands[0])))
-		set_ret_val(echo(commands));
+		set_ret_val(bridge, echo(commands));
 	if (!ft_strncmp(commands[0], "exit", ft_strlen(commands[0])))
-		set_ret_val(b_exit(commands, type));
+		set_ret_val(bridge, b_exit(commands, type));
 }

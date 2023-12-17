@@ -17,7 +17,7 @@ static void	sig_handler_process(int signal)
 	(void) signal;
 	printf("Quit: 3\n");
 	rl_redisplay();
-	set_ret_val(131);
+	g_signal = 3;
 }
 
 static void	sig_handler_int(int signal)
@@ -25,11 +25,18 @@ static void	sig_handler_int(int signal)
 	(void) signal;
 	printf("\n");
 	rl_redisplay();
-	set_ret_val(130);
+	g_signal = 2;
 }
 
-void	process_signals(void)
+void	process_signals(t_bridge *bridge)
 {
 	signal(SIGINT, sig_handler_int);
 	signal(SIGQUIT, sig_handler_process);
+	if (g_signal == 3)
+	{
+		printf("SEÑAAAAAAAALLL\n");
+		set_ret_val(bridge, 131);
+	}
+	else if (g_signal == 2)
+		set_ret_val(bridge, 130);
 }
