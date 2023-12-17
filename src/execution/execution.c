@@ -15,6 +15,7 @@
 static void	wait_all(t_exec *exec);
 static char	**get_paths(char **m_env);
 static void	initialize_exec(t_exec *exec, t_bridge *bridge);
+static void	free_exec(t_exec *exec);
 
 void	execution(t_bridge *bridge)
 {
@@ -43,6 +44,7 @@ void	execution(t_bridge *bridge)
 		close_all(&exec);
 		wait_all(&exec);
 	}
+	free_exec(&exec);
 }
 
 void	close_all(t_exec *exec)
@@ -113,4 +115,23 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 	exec -> bridge = bridge;
 	init_in_out(exec, bridge);
 	init_heredoc(exec, bridge);
+}
+static void	free_exec(t_exec *exec)
+{
+	int	i;
+
+	free(exec -> pid);
+	i = -1;
+	while (++i < (exec -> bridge -> n_cmds - 1))
+		free(exec -> pipe[i]);
+	free(exec -> pipe);
+	i = -1;
+	while (++i < (exec -> bridge -> n_cmds))
+		free(exec -> in_out[i]);
+	free(exec -> in_out);
+	free(exec -> here);
+	i = -1;
+	while (exec -> paths[++i])
+		free(exec -> paths[i]);
+	free(exec -> paths);
 }

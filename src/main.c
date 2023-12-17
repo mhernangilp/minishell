@@ -12,10 +12,10 @@
 
 #include "../minishell.h"
 
-/*void	leaks(void)
+void	leaks(void)
 {
-	system("leaks minishell");
-}*/
+	system("leaks -q minishell");
+}
 
 static void	ctr(void);
 static char	**minishell(char **m_env);
@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	**m_env;
 
+	//printf("PID: %d\n", getpid());
 	//atexit(leaks);
 	(void) argv;
 	if (argc != 1)
@@ -62,7 +63,8 @@ static char	**minishell(char **m_env)
 		if (bridge != NULL)
 			execution(bridge);
 	}
-	m_env = bridge -> m_env;
+	if (bridge)
+		m_env = bridge -> m_env;
 	free(input);
 	free_commands(bridge);
 	return (m_env);
