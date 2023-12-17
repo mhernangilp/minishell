@@ -12,14 +12,14 @@
 
 #include "../../minishell.h"
 
-void	set_ret_val(char **m_env, int val)
+void	set_ret_val(t_bridge *bridge, int val)
 {
 	char	*new_env;
 	char	*value;
 
 	value = ft_itoa(val);
 	new_env = ft_strjoin("?=", value);
-	add(m_env, new_env, RETVAL);
+	add(&bridge -> m_env, new_env, RETVAL);
 	free(value);
 	free(new_env);
 }

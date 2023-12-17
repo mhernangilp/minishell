@@ -28,7 +28,7 @@ void	execution(t_bridge *bridge)
 		return ;
 	if (bridge -> n_cmds == 1 && bridge -> commands[0][0]
 		&& is_parent_builtin(bridge -> commands[0][0]))
-		builtins(bridge -> m_env, bridge -> commands[0], PARENT);
+		builtins(bridge, bridge -> commands[0], PARENT);
 	else
 	{
 		i = -1;
@@ -36,7 +36,7 @@ void	execution(t_bridge *bridge)
 		{
 			exec.pid[i] = fork();
 			if (!bridge->redirect[i].inred)
-				process_signals(bridge -> m_env);
+				process_signals(bridge);
 			if (exec.pid[i] == 0)
 				child_process(exec, i);
 		}
@@ -66,14 +66,14 @@ static void	wait_all(t_exec *exec)
 	while (++i < (exec -> bridge -> n_cmds))
 		waitpid(exec -> pid[i], &ret_val, 0);
 	if (WIFEXITED(ret_val))
-		set_ret_val(exec -> bridge -> m_env, WEXITSTATUS(ret_val));
+		set_ret_val(exec -> bridge, WEXITSTATUS(ret_val));
 	else
 	{
-		set_ret_val(exec -> bridge -> m_env, 255);
+		set_ret_val(exec -> bridge, 255);
 		if (g_signal == 2)
-			set_ret_val(exec -> bridge -> m_env, 130);
+			set_ret_val(exec -> bridge, 130);
 		if (g_signal == 3)
-			set_ret_val(exec -> bridge -> m_env, 131);
+			set_ret_val(exec -> bridge, 131);
 	}
 }
 

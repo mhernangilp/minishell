@@ -97,7 +97,7 @@ void	rl_replace_line(const char *text, int clear_undo);
 
 /* PARSE */
 t_bridge	*start_parse(char *input, char **m_env);
-int		check_rps(char **m_env, char *input, char c);
+int		check_rps(t_bridge *bridge, char *input, char c);
 int		check_input(char *input);
 char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
@@ -116,7 +116,7 @@ char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j);
 /* SIGNALS */
 void	heredoc_signals(void);
 void	input_signals(void);
-void	process_signals(char **m_env);
+void	process_signals(t_bridge *bridge);
 
 char	*worth_part(char *s);
 
@@ -140,21 +140,21 @@ void	init_in_out(t_exec *exec, t_bridge *bridge);
 //built_ins.c
 int		is_parent_builtin(char *commands);
 int		is_builtin(char *commands);
-void	builtins(char **m_env, char **commands, int type);
+void	builtins(t_bridge *bridge, char **commands, int type);
 
 //cd.c
-int		cd(char **m_env, char **commands);
+int		cd(t_bridge *bridge, char **commands);
 
 //pwd.c
 int		pwd(void);
 
 //unset.c
-int		unset(char **m_env, char **commands);
-void	b_delete(char **m_env, char *key);
+int		unset(t_bridge *bridge, char **commands);
+void	b_delete(char ***m_env, char *key);
 
 //export.c
-int		b_export(char **m_env, char **commands);
-void	add(char **m_env, char *str, int type);
+int		b_export(t_bridge *bridge, char **commands);
+void	add(char ***m_env, char *str, int type);
 
 //echo.c
 int		echo(char **commands);
@@ -171,7 +171,7 @@ int		env_len(char **env);
 void	free_env(char **env);
 
 //return_val.c
-void	set_ret_val(char **m_env, int val);
+void	set_ret_val(t_bridge *bridge, int val);
 int		get_ret_val(char **m_env);
 
 ///// ERRORS /////

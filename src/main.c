@@ -18,7 +18,7 @@
 }*/
 
 static void	ctr(void);
-static void	minishell(char **m_env);
+static char	**minishell(char **m_env);
 static void	free_commands(t_bridge *bridge);
 
 int	g_signal;
@@ -32,14 +32,14 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		exit_msg("Wrong parameters\n", 1);
 	m_env = dup_env(envp);
-	add(m_env, "?=0", RETVAL);
+	add(&m_env, "?=0", RETVAL);
 	ctr();
 	while (1)
-		minishell(m_env);
+		m_env = minishell(m_env);
 	return (0);
 }
 
-static void	minishell(char **m_env)
+static char	**minishell(char **m_env)
 {
 	t_bridge	*bridge;
 	char		*input;
@@ -62,8 +62,10 @@ static void	minishell(char **m_env)
 		if (bridge != NULL)
 			execution(bridge);
 	}
+	m_env = bridge -> m_env;
 	free(input);
 	free_commands(bridge);
+	return (m_env);
 }
 
 static void	free_commands(t_bridge *bridge)

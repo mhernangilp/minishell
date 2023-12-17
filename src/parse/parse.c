@@ -19,16 +19,23 @@ t_bridge	*start_parse(char *input, char **m_env)
 {
 	t_bridge	*bridge;
 	char		**str_pipe;
-
-	if (!check_input(input) || !check_rps(m_env, input, '|'))
-		return (NULL);
+	
 	bridge = init_bridge_struct();
+	bridge->m_env = m_env;
+	if (!check_input(input) || !check_rps(bridge, input, '|'))
+	{
+		free(bridge);
+		return (NULL);
+	}
 	str_pipe = split_quote(input, '|');
 	while (str_pipe[bridge->n_cmds])
 	{
-		if (!check_rps(m_env, str_pipe[bridge->n_cmds], '<')
-			|| !check_rps(m_env, str_pipe[bridge->n_cmds], '>'))
-			return (NULL);
+		if (!check_rps(bridge, str_pipe[bridge->n_cmds], '<')
+			|| !check_rps(bridge, str_pipe[bridge->n_cmds], '>'))
+			{
+				free(bridge);
+				return (NULL);
+			}
 		bridge->n_cmds++;
 	}
 	bridge->commands = malloc (sizeof (char **) * (bridge->n_cmds + 1));
@@ -36,7 +43,6 @@ t_bridge	*start_parse(char *input, char **m_env)
 	if (!bridge->commands || !bridge->redirect)
 		exit_msg(ERR_MEMORY, 1);
 	bridge->commands[bridge->n_cmds] = NULL;
-	bridge->m_env = m_env;
 	do_bridge(bridge, str_pipe);
 	ft_splitfree(str_pipe);
 	return (bridge);
