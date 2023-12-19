@@ -116,7 +116,7 @@ char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j);
 /* SIGNALS */
 void	heredoc_signals(void);
 void	input_signals(void);
-void	process_signals(t_bridge *bridge);
+void	process_signals(void);
 
 char	*worth_part(char *s);
 
