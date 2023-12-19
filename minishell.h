@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/11/30 16:21:29 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:27:04 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_bridge
 	char		***commands;
 	int			n_cmds;
 	char		**m_env;
+	int			ret;
 }	t_bridge;
 
 typedef struct s_here

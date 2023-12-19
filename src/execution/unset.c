@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:37:53 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/26 18:37:54 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:47:33 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	b_delete(char ***m_env, char *key)
 	while ((*m_env)[++i])
 	{
 		if (!(!ft_strncmp(key, (*m_env)[i], ft_strlen(key))
-				&& (*m_env)[i][ft_strlen(key)] == '='))
+			&& (*m_env)[i][ft_strlen(key)] == '='))
 		{
 			new_env[j] = ft_strdup((*m_env)[i]);
 			j++;

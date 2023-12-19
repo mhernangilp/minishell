@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/04 16:00:33 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:44:07 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	**m_env;
 
-	//printf("PID: %d\n", getpid());
 	//atexit(leaks);
 	(void) argv;
 	if (argc != 1)
@@ -60,7 +59,7 @@ static char	**minishell(char **m_env)
 	{
 		add_history(input);
 		bridge = start_parse(input, m_env);
-		if (bridge != NULL)
+		if (bridge != NULL && bridge->ret == 0)
 			execution(bridge);
 	}
 	if (bridge)
@@ -76,27 +75,30 @@ static void	free_commands(t_bridge *bridge)
 
 	if (!bridge)
 		return ;
-	i = -1;
-	while (bridge->commands[++i])
-		ft_splitfree(bridge->commands[i]);
-	free(bridge->commands);
-	i = -1;
-	while (bridge->redirect && (bridge->redirect[++i].inred
-		|| bridge->redirect[i].outred))
+	if (bridge->ret != -1)
 	{
-		if (bridge->redirect[i].inred)
+		i = -1;
+		while (bridge->commands[++i])
+			ft_splitfree(bridge->commands[i]);
+		free(bridge->commands);
+		i = -1;
+		while (bridge->redirect && (bridge->redirect[++i].inred
+				|| bridge->redirect[i].outred))
 		{
-			ft_splitfree(bridge->redirect[i].inred->file);
-			free (bridge->redirect[i].inred);
+			if (bridge->redirect[i].inred)
+			{
+				ft_splitfree(bridge->redirect[i].inred->file);
+				free (bridge->redirect[i].inred);
+			}
+			if (bridge->redirect[i].outred)
+			{
+				ft_splitfree(bridge->redirect[i].outred->file);
+				free (bridge->redirect[i].outred);
+			}
 		}
-		if (bridge->redirect[i].outred)
-		{
-			ft_splitfree(bridge->redirect[i].outred->file);
-			free (bridge->redirect[i].outred);
-		}
+		if (bridge->redirect)
+			free (bridge->redirect);
 	}
-	if (bridge->redirect)
-		free (bridge->redirect);
 	free(bridge);
 }
 

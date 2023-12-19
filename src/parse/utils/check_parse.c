@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:00:54 by gfernand          #+#    #+#             */
-/*   Updated: 2023/10/30 14:07:16 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:07:29 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	check_rps(t_bridge *bridge, char *input, char c)
 
 static int	special_caracter(t_bridge *bridge, char *input, int i)
 {
+	if (input[0] == '|' && input[1] == '\0')
+		return (putreturn(bridge, '|', 1));
 	if (input[i] == '<' || input[i] == '>')
 	{
 		if (input[i] == '>' && input[i + 1] == '<')
