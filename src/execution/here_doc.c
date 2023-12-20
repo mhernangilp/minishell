@@ -23,6 +23,8 @@ void	load_heredoc(t_exec *exec)
 	while (++i < exec -> bridge -> n_cmds)
 		if (exec -> here[i].count)
 			read_heredoc(exec, i);
+	if (g_signal == 1)
+		set_ret_val(exec -> bridge, 1);
 }
 
 int	count_heredocs(t_red *red)
