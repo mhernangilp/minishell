@@ -6,13 +6,13 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 18:56:39 by mhernang          #+#    #+#             */
-/*   Updated: 2023/12/26 12:43:38 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 14:44:44 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void sort_list(char **s_env);
+static void	sort_list(char **s_env);
 static void	print_declare(char **s_env);
 
 void	env_sorted(t_bridge *bridge)
@@ -44,7 +44,7 @@ static void	print_declare(char **s_env)
 	}
 }
 
-static void sort_list(char **s_env)
+static void	sort_list(char **s_env)
 {
 	int		i;
 	int		j;
@@ -54,15 +54,15 @@ static void sort_list(char **s_env)
 	while (++i < env_len(s_env) - 1)
 	{
 		j = 0;
-        while (s_env[j + 1])
+		while (s_env[j + 1])
 		{
-            if (ft_strncmp(s_env[j], s_env[j + 1], ft_strlen(s_env[j])) > 0)
+			if (ft_strncmp(s_env[j], s_env[j + 1], ft_strlen(s_env[j])) > 0)
 			{
-                temp = s_env[j];
+				temp = s_env[j];
 				s_env[j] = s_env[j + 1];
 				s_env[j + 1] = temp;
-            }
+			}
 			j++;
-        }
-    }
+		}
+	}
 }

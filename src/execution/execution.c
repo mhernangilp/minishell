@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:17:09 by mhernang          #+#    #+#             */
-/*   Updated: 2023/12/26 12:42:53 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 14:52:40 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	execution(t_bridge *bridge)
 	int		i;
 
 	initialize_exec(&exec, bridge);
-	exec.paths = get_paths(bridge -> m_env);
 	load_heredoc(&exec);
 	if (g_signal == 1)
 		return ;
@@ -45,18 +44,6 @@ void	execution(t_bridge *bridge)
 		wait_all(&exec);
 	}
 	free_exec(&exec);
-}
-
-void	close_all(t_exec *exec)
-{
-	int	i;
-
-	i = -1;
-	while (++i < (exec -> bridge -> n_cmds - 1))
-	{
-		close(exec -> pipe[i][0]);
-		close(exec -> pipe[i][1]);
-	}
 }
 
 static void	wait_all(t_exec *exec)
@@ -115,7 +102,9 @@ static void	initialize_exec(t_exec *exec, t_bridge *bridge)
 	exec -> bridge = bridge;
 	init_in_out(exec, bridge);
 	init_heredoc(exec, bridge);
+	exec -> paths = get_paths(bridge -> m_env);
 }
+
 static void	free_exec(t_exec *exec)
 {
 	int	i;
