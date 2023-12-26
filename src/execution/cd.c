@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:36:21 by mhernang          #+#    #+#             */
-/*   Updated: 2023/12/26 13:46:19 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 14:35:38 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,15 @@ static char	*last_pwd(char *arg, t_bridge *bridge)
 	char	*oldpwd;
 
 	oldpwd = getenv_value(bridge -> m_env, "OLDPWD");
-	if (!arg[1] || (arg[1] == '-' && !arg[2]))
+	if (!arg[1])
 	{
 		if (!oldpwd)
 		{
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 			return (NULL);
 		}
-		if (!arg[1])
-		{
-				ft_putstr_fd(oldpwd, 1);
-				ft_putchar_fd('\n', 1);
-		}
+		ft_putstr_fd(oldpwd, 1);
+		ft_putchar_fd('\n', 1);
 		return (ft_strdup(getenv_value(bridge -> m_env, "OLDPWD")));
 	}
 	return (ft_strdup(arg));
@@ -91,7 +88,8 @@ static char	*set_chdir(t_bridge *bridge, char **commands)
 {
 	char	*chdirectory;
 
-	if (!commands[1])
+	if (!commands[1] || (commands[1] && commands[1][0] && commands[1][1]
+				&& !commands[1][2] && commands[1][0] == '-' && commands[1][1] == '-'))
 	{
 		chdirectory = ft_strdup(getenv_value(bridge -> m_env, "HOME"));
 		if (!chdirectory)
