@@ -12,12 +12,12 @@
 
 #include "../../minishell.h"
 
-static char	*set_chdir(t_bridge *bridge, char **commands);
+static char	*set_chdir(t_bdg *bridge, char **commands);
 static int	chdir_err(char *chdirectory);
 static char	*get_pwd(void);
-static int	chpwd(t_bridge *bridge);
+static int	chpwd(t_bdg *bridge);
 
-int	cd(t_bridge *bridge, char **commands)
+int	cd(t_bdg *bridge, char **commands)
 {
 	char	*chdirectory;
 	char	*oldpwd;
@@ -53,7 +53,7 @@ static int	chdir_err(char *chdirectory)
 	return (1);
 }
 
-static char	*set_chdir(t_bridge *bridge, char **commands)
+static char	*set_chdir(t_bdg *bridge, char **commands)
 {
 	char	*chdirectory;
 
@@ -73,7 +73,7 @@ static char	*set_chdir(t_bridge *bridge, char **commands)
 	return (chdirectory);
 }
 
-static int	chpwd(t_bridge *bridge)
+static int	chpwd(t_bdg *bridge)
 {
 	char	*pwd;
 	char	*pwd_env;

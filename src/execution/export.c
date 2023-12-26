@@ -15,7 +15,7 @@
 static int	parse_export(char *str, int type);
 static char	*get_key(char *str);
 
-int	b_export(t_bridge *bridge, char **commands)
+int	b_export(t_bdg *bridge, char **commands)
 {
 	int	i;
 

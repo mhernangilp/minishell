@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-void	set_ret_val(t_bridge *bridge, int val)
+void	set_ret_val(t_bdg *bridge, int val)
 {
 	char	*new_env;
 	char	*value;

@@ -6,22 +6,22 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:59:05 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/19 16:37:26 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/26 17:35:16 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static t_bridge	*init_bridge_struct(void);
-static t_parse	*malloc_bridge_and_parse(t_bridge *bridge);
-static void		do_bridge(t_bridge *bridge, char **str_pipe);
+static t_bdg	*init_bdg_struct(void);
+static t_parse	*malloc_bridge_and_parse(t_bdg *bridge);
+static void		do_bridge(t_bdg *bridge, char **str_pipe);
 
-t_bridge	*start_parse(char *input, char **m_env)
+t_bdg	*start_parse(char *input, char **m_env)
 {
-	t_bridge	*bridge;
-	char		**str_pipe;
+	t_bdg	*bridge;
+	char	**str_pipe;
 
-	bridge = init_bridge_struct();
+	bridge = init_bdg_struct();
 	bridge->m_env = m_env;
 	if (!check_input(input) || !check_rps(bridge, input, '|'))
 	{
@@ -44,7 +44,7 @@ t_bridge	*start_parse(char *input, char **m_env)
 	return (bridge);
 }
 
-static void	do_bridge(t_bridge *bridge, char **str_pipe)
+static void	do_bridge(t_bdg *bridge, char **str_pipe)
 {
 	int		i;
 	int		j;
@@ -67,7 +67,7 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 	free(parse);
 }
 
-static t_parse	*malloc_bridge_and_parse(t_bridge *bridge)
+static t_parse	*malloc_bridge_and_parse(t_bdg *bridge)
 {
 	t_parse	*parse;
 
@@ -83,11 +83,11 @@ static t_parse	*malloc_bridge_and_parse(t_bridge *bridge)
 	return (parse);
 }
 
-static t_bridge	*init_bridge_struct(void)
+static t_bdg	*init_bdg_struct(void)
 {
-	t_bridge	*bridge;
+	t_bdg	*bridge;
 
-	bridge = malloc (sizeof (t_bridge));
+	bridge = malloc (sizeof (t_bdg));
 	if (!bridge)
 		exit_msg(ERR_MEMORY, 1);
 	bridge->ret = 0;

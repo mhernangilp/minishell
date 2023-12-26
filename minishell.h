@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/26 16:37:10 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 17:34:44 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_bridge
 	int			n_cmds;
 	char		**m_env;
 	int			ret;
-}	t_bridge;
+}	t_bdg;
 
 typedef struct s_here
 {
@@ -75,7 +75,7 @@ typedef struct s_exec
 	int			**in_out;
 	t_here		*here;
 	char		**paths;
-	t_bridge	*bridge;
+	t_bdg		*bridge;
 }	t_exec;
 
 typedef struct s_parse
@@ -91,14 +91,14 @@ typedef struct s_parse
 	int			n_op;
 	int			locate_ip_dir;
 	int			locate_op_dir;
-	t_bridge	*bridge;
+	t_bdg		*bridge;
 }	t_parse;
 
 void	rl_replace_line(const char *text, int clear_undo);
 
 /* PARSE */
-t_bridge	*start_parse(char *input, char **m_env);
-int		check_rps(t_bridge *bridge, char *input, char c);
+t_bdg	*start_parse(char *input, char **m_env);
+int		check_rps(t_bdg *bridge, char *input, char c);
 int		check_input(char *input);
 char	**split_quote(const char *s, char c);
 int		quote(const char *s, int i);
@@ -110,7 +110,7 @@ char	*cut_and_get_env(t_parse *parse, char *s, int i);
 int		env_to_str(t_parse *parse, char *s, int i, int e);
 int		type_of_quote(char *str, int i, int quote);
 /* REDIRECTIONS */
-char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s);
+char	**fill_redirections(t_parse *parse, t_bdg *bridge, char **s);
 void	count_redirections(t_parse *parse, char *s);
 int		take_redirection(t_parse *parse, char **s, int i, int j);
 char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j);
@@ -125,12 +125,12 @@ char	*worth_part(char *s);
 ///// EXECUTION /////
 
 //execution.c
-void	execution(t_bridge *bridge);
+void	execution(t_bdg *bridge);
 
 //execution_utils.c
 void	close_all(t_exec *exec);
-char	*last_pwd(char *arg, t_bridge *bridge);
-char	*parse_chdir(char *arg, t_bridge *bridge);
+char	*last_pwd(char *arg, t_bdg *bridge);
+char	*parse_chdir(char *arg, t_bdg *bridge);
 int		check_dir(char *chdirectory, char *arg);
 void	check_access(char *file);
 
@@ -141,31 +141,31 @@ void	child_process(t_exec exec, int num);
 void	set_redirections(t_exec *exec, int num);
 
 //init_utils.c
-void	init_heredoc(t_exec *exec, t_bridge *bridge);
-void	init_in_out(t_exec *exec, t_bridge *bridge);
+void	init_heredoc(t_exec *exec, t_bdg *bridge);
+void	init_in_out(t_exec *exec, t_bdg *bridge);
 
 ///// BUILTINS /////
 //built_ins.c
 int		is_parent_builtin(char *commands);
 int		is_builtin(char *commands);
-void	builtins(t_bridge *bridge, char **commands, int type);
+void	builtins(t_bdg *bridge, char **commands, int type);
 
 //cd.c
-int		cd(t_bridge *bridge, char **commands);
+int		cd(t_bdg *bridge, char **commands);
 
 //pwd.c
 int		pwd(void);
 
 //unset.c
-int		unset(t_bridge *bridge, char **commands);
+int		unset(t_bdg *bridge, char **commands);
 void	b_delete(char ***m_env, char *key);
 
 //export.c
-int		b_export(t_bridge *bridge, char **commands);
+int		b_export(t_bdg *bridge, char **commands);
 void	add(char ***m_env, char *str, int type);
 
 //env_sort.c
-void	env_sorted(t_bridge *bridge);
+void	env_sorted(t_bdg *bridge);
 
 //echo.c
 int		echo(char **commands);
@@ -182,7 +182,7 @@ int		env_len(char **env);
 void	free_env(char **env);
 
 //return_val.c
-void	set_ret_val(t_bridge *bridge, int val);
+void	set_ret_val(t_bdg *bridge, int val);
 int		get_ret_val(char **m_env);
 
 ///// ERRORS /////

@@ -12,11 +12,11 @@
 
 #include "../../../minishell.h"
 
-static void	data_struct(t_parse *parse, t_bridge *bridge, int i);
-static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i);
-static void	start_variables(t_parse *parse, t_bridge *bridge, char **s, int i);
+static void	data_struct(t_parse *parse, t_bdg *bridge, int i);
+static void	select_file_and_type(t_parse *parse, t_bdg *bridge, int i);
+static void	start_variables(t_parse *parse, t_bdg *bridge, char **s, int i);
 
-char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
+char	**fill_redirections(t_parse *parse, t_bdg *bridge, char **s)
 {
 	int		i;
 	int		j;
@@ -44,7 +44,7 @@ char	**fill_redirections(t_parse *parse, t_bridge *bridge, char **s)
 	return (s);
 }
 
-static void	start_variables(t_parse *parse, t_bridge *bridge, char **s, int i)
+static void	start_variables(t_parse *parse, t_bdg *bridge, char **s, int i)
 {
 	parse->n_ip = 0;
 	parse->n_op = 0;
@@ -54,7 +54,7 @@ static void	start_variables(t_parse *parse, t_bridge *bridge, char **s, int i)
 	parse->locate_op_dir = -1;
 }
 
-static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
+static void	data_struct(t_parse *parse, t_bdg *bridge, int i)
 {
 	int	ip;
 	int	op;
@@ -81,7 +81,7 @@ static void	data_struct(t_parse *parse, t_bridge *bridge, int i)
 		bridge->redirect[i].outred = NULL;
 }
 
-static void	select_file_and_type(t_parse *parse, t_bridge *bridge, int i)
+static void	select_file_and_type(t_parse *parse, t_bdg *bridge, int i)
 {
 	int	p;
 

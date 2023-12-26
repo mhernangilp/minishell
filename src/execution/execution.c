@@ -14,10 +14,10 @@
 
 static void	wait_all(t_exec *exec);
 static char	**get_paths(char **m_env);
-static void	initialize_exec(t_exec *exec, t_bridge *bridge);
+static void	initialize_exec(t_exec *exec, t_bdg *bridge);
 static void	free_exec(t_exec *exec);
 
-void	execution(t_bridge *bridge)
+void	execution(t_bdg *bridge)
 {
 	t_exec	exec;
 	int		i;
@@ -80,7 +80,7 @@ static char	**get_paths(char **m_env)
 	return (paths);
 }
 
-static void	initialize_exec(t_exec *exec, t_bridge *bridge)
+static void	initialize_exec(t_exec *exec, t_bdg *bridge)
 {
 	int	i;
 

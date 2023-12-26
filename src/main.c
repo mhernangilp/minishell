@@ -6,20 +6,15 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/26 15:01:17 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/26 17:37:20 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	leaks(void)
-{
-	system("leaks -q minishell");
-}
-
 static char	**minishell(char **m_env);
-static void	free_commands(t_bridge *bridge);
-static void	free_redirect(t_bridge *bridge, int i);
+static void	free_commands(t_bdg *bridge);
+static void	free_redirect(t_bdg *bridge, int i);
 static void	exit_input(void);
 
 int	g_signal;
@@ -28,7 +23,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	**m_env;
 
-	//atexit(leaks);
 	(void) argv;
 	if (argc != 1)
 		exit_msg("Wrong parameters\n", 1);
@@ -38,13 +32,14 @@ int	main(int argc, char **argv, char **envp)
 	ctr();
 	while (1)
 		m_env = minishell(m_env);
+	system("leaks -q minishell");
 	return (0);
 }
 
 static char	**minishell(char **m_env)
 {
-	t_bridge	*bridge;
-	char		*input;
+	t_bdg	*bridge;
+	char	*input;
 
 	g_signal = 0;
 	bridge = NULL;
@@ -74,7 +69,7 @@ static void	exit_input(void)
 	exit(0);
 }
 
-static void	free_commands(t_bridge *bridge)
+static void	free_commands(t_bdg *bridge)
 {
 	int	i;
 
@@ -98,7 +93,7 @@ static void	free_commands(t_bridge *bridge)
 	free(bridge);
 }
 
-static void	free_redirect(t_bridge *bridge, int i)
+static void	free_redirect(t_bdg *bridge, int i)
 {
 	if (bridge->redirect[i].inred)
 	{

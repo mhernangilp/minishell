@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-int	unset(t_bridge *bridge, char **commands)
+int	unset(t_bdg *bridge, char **commands)
 {
 	int	i;
 

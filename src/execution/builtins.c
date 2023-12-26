@@ -44,7 +44,7 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-void	builtins(t_bridge *bridge, char **commands, int type)
+void	builtins(t_bdg *bridge, char **commands, int type)
 {
 	if (!ft_strncmp(commands[0], "cd", ft_strlen(commands[0])))
 		set_ret_val(bridge, cd(bridge, commands));

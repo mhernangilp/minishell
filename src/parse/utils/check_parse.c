@@ -12,9 +12,9 @@
 
 #include "../../../minishell.h"
 
-static int	special_caracter(t_bridge *bridge, char *input, int i);
-static int	spaces_inside(t_bridge *bridge, char *input, char c);
-static int	putreturn(t_bridge *bridge, char c, int nb_c);
+static int	special_caracter(t_bdg *bridge, char *input, int i);
+static int	spaces_inside(t_bdg *bridge, char *input, char c);
+static int	putreturn(t_bdg *bridge, char c, int nb_c);
 
 int	check_input(char *input)
 {
@@ -32,7 +32,7 @@ int	check_input(char *input)
 	return (1);
 }
 
-int	check_rps(t_bridge *bridge, char *input, char c)
+int	check_rps(t_bdg *bridge, char *input, char c)
 {
 	int	i;
 
@@ -60,7 +60,7 @@ int	check_rps(t_bridge *bridge, char *input, char c)
 	return (spaces_inside(bridge, input, c));
 }
 
-static int	special_caracter(t_bridge *bridge, char *input, int i)
+static int	special_caracter(t_bdg *bridge, char *input, int i)
 {
 	if (input[0] == '|' && input[1] == '\0')
 		return (putreturn(bridge, '|', 1));
@@ -84,7 +84,7 @@ static int	special_caracter(t_bridge *bridge, char *input, int i)
 		return (1);
 }
 
-static int	spaces_inside(t_bridge *bridge, char *input, char c)
+static int	spaces_inside(t_bdg *bridge, char *input, char c)
 {
 	int	i;
 
@@ -107,7 +107,7 @@ static int	spaces_inside(t_bridge *bridge, char *input, char c)
 	return (1);
 }
 
-static int	putreturn(t_bridge *bridge, char c, int nb_c)
+static int	putreturn(t_bdg *bridge, char c, int nb_c)
 {
 	if (nb_c == 1)
 	{

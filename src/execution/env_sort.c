@@ -15,7 +15,7 @@
 static void	sort_list(char **s_env);
 static void	print_declare(char **s_env);
 
-void	env_sorted(t_bridge *bridge)
+void	env_sorted(t_bdg *bridge)
 {
 	char	**s_env;
 

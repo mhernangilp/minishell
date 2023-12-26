@@ -24,7 +24,7 @@ void	close_all(t_exec *exec)
 	}
 }
 
-char	*last_pwd(char *arg, t_bridge *bridge)
+char	*last_pwd(char *arg, t_bdg *bridge)
 {
 	char	*oldpwd;
 
@@ -43,7 +43,7 @@ char	*last_pwd(char *arg, t_bridge *bridge)
 	return (ft_strdup(arg));
 }
 
-char	*parse_chdir(char *arg, t_bridge *bridge)
+char	*parse_chdir(char *arg, t_bdg *bridge)
 {
 	char	*ret;
 

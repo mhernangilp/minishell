@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-void	init_heredoc(t_exec *exec, t_bridge *bridge)
+void	init_heredoc(t_exec *exec, t_bdg *bridge)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ void	init_heredoc(t_exec *exec, t_bridge *bridge)
 	}
 }
 
-void	init_in_out(t_exec *exec, t_bridge *bridge)
+void	init_in_out(t_exec *exec, t_bdg *bridge)
 {
 	int	i;
 
