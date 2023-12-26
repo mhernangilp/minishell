@@ -103,11 +103,13 @@ static void	free_redirect(t_bridge *bridge, int i)
 	if (bridge->redirect[i].inred)
 	{
 		ft_splitfree(bridge->redirect[i].inred->file);
+		free(bridge->redirect[i].inred->type);
 		free (bridge->redirect[i].inred);
 	}
 	if (bridge->redirect[i].outred)
 	{
 		ft_splitfree(bridge->redirect[i].outred->file);
+		free(bridge->redirect[i].outred->type);
 		free (bridge->redirect[i].outred);
 	}
 }
