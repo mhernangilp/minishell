@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/26 13:46:21 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 15:01:17 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	leaks(void)
 	system("leaks -q minishell");
 }
 
-static void	ctr(void);
 static char	**minishell(char **m_env);
 static void	free_commands(t_bridge *bridge);
+static void	free_redirect(t_bridge *bridge, int i);
+static void	exit_input(void);
 
 int	g_signal;
 
@@ -50,12 +51,7 @@ static char	**minishell(char **m_env)
 	input_signals();
 	input = readline(ENTRADA_MS);
 	if (input == NULL)
-	{
-		ft_putstr_fd("\033[1A\033[2K", 1);
-		ft_putstr_fd(ENTRADA_MS, 1);
-		ft_putstr_fd("exit\n", 1);
-		exit(0);
-	}
+		exit_input();
 	if (*input)
 	{
 		add_history(input);
@@ -68,6 +64,14 @@ static char	**minishell(char **m_env)
 	free(input);
 	free_commands(bridge);
 	return (m_env);
+}
+
+static void	exit_input(void)
+{
+	ft_putstr_fd("\033[1A\033[2K", 1);
+	ft_putstr_fd(ENTRADA_MS, 1);
+	ft_putstr_fd("exit\n", 1);
+	exit(0);
 }
 
 static void	free_commands(t_bridge *bridge)
@@ -86,16 +90,7 @@ static void	free_commands(t_bridge *bridge)
 		while (bridge->redirect && (bridge->redirect[++i].inred
 				|| bridge->redirect[i].outred))
 		{
-			if (bridge->redirect[i].inred)
-			{
-				ft_splitfree(bridge->redirect[i].inred->file);
-				free (bridge->redirect[i].inred);
-			}
-			if (bridge->redirect[i].outred)
-			{
-				ft_splitfree(bridge->redirect[i].outred->file);
-				free (bridge->redirect[i].outred);
-			}
+			free_redirect(bridge, i);
 		}
 		if (bridge->redirect)
 			free (bridge->redirect);
@@ -103,22 +98,16 @@ static void	free_commands(t_bridge *bridge)
 	free(bridge);
 }
 
-static void	ctr(void)
+static void	free_redirect(t_bridge *bridge, int i)
 {
-	int				x;
-	struct termios	termios;
-
-	x = tcgetattr(0, &termios);
-	if (x)
+	if (bridge->redirect[i].inred)
 	{
-		perror("");
-		exit(1);
+		ft_splitfree(bridge->redirect[i].inred->file);
+		free (bridge->redirect[i].inred);
 	}
-	termios.c_lflag &= ~ECHOCTL;
-	x = tcsetattr(0, 0, &termios);
-	if (x)
+	if (bridge->redirect[i].outred)
 	{
-		perror("");
-		exit(1);
+		ft_splitfree(bridge->redirect[i].outred->file);
+		free (bridge->redirect[i].outred);
 	}
 }

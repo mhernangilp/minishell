@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/26 14:58:54 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 15:06:24 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char	**cut_rdir_in_cmds(t_parse *parse, char **s, int i, int j);
 void	heredoc_signals(void);
 void	input_signals(void);
 void	process_signals(void);
+void	ctr(void);
 
 char	*worth_part(char *s);
 
