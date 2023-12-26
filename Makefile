@@ -52,5 +52,4 @@ fclean: clean
 
 re: fclean all
 
-n:
-	"norminette"
+.PHONY: all clean fclean re

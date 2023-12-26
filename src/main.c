@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:02:26 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/26 17:37:20 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/26 20:36:08 by gfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **envp)
 	ctr();
 	while (1)
 		m_env = minishell(m_env);
-	system("leaks -q minishell");
 	return (0);
 }
 
