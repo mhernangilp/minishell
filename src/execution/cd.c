@@ -61,12 +61,12 @@ static char	*set_chdir(t_bdg *bridge, char **commands)
 				&& !commands[1][2] && commands[1][0] == '-'
 				&& commands[1][1] == '-'))
 	{
-		chdirectory = ft_strdup(getenv_value(bridge -> m_env, "HOME"));
-		if (!chdirectory)
+		if (!getenv_value(bridge -> m_env, "HOME"))
 		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 			return (NULL);
 		}
+		chdirectory = ft_strdup(getenv_value(bridge -> m_env, "HOME"));
 	}
 	else
 		chdirectory = parse_chdir(commands[1], bridge);
