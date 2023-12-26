@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:51:25 by mhernang          #+#    #+#             */
-/*   Updated: 2023/12/26 14:58:35 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 16:36:43 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,18 @@ int	check_dir(char *chdirectory, char *arg)
 	}
 	closedir(dir);
 	return (0);
+}
+
+void	check_access(char *file)
+{
+	if (access(file, F_OK) != 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		error_msg(file, 127);
+	}
+	if (access(file, F_OK | X_OK) != 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		error_msg(file, 126);
+	}
 }

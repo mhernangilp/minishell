@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/26 15:06:24 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/26 16:37:10 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ void	execution(t_bridge *bridge);
 void	close_all(t_exec *exec);
 char	*last_pwd(char *arg, t_bridge *bridge);
 char	*parse_chdir(char *arg, t_bridge *bridge);
-int	check_dir(char *chdirectory, char *arg);
+int		check_dir(char *chdirectory, char *arg);
+void	check_access(char *file);
 
 //child_process.c
 void	child_process(t_exec exec, int num);

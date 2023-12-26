@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 16:50:22 by mhernang          #+#    #+#             */
-/*   Updated: 2023/12/26 14:28:20 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 16:36:48 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ static char	*get_command(char **paths, char *file)
 	check_directories(file);
 	if (!ft_strncmp("/", file, 1))
 	{
-		if (access(file, F_OK | X_OK) == 0)
-			return (file);
-		ft_putstr_fd("minishell: ", 2);
-		error_msg(file, 126);
+		check_access(file);
+		return (file);
 	}
 	if (paths)
 	{
@@ -62,10 +60,8 @@ static char	*get_command(char **paths, char *file)
 	}
 	else if (!is_builtin(file))
 	{
-		if (access(file, F_OK | X_OK) == 0)
-			return (file);
-		ft_putstr_fd("minishell: ", 2);
-		error_msg(file, 126);
+		check_access(file);
+		return (file);
 	}
 	return (NULL);
 }
