@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 13:17:09 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/30 16:16:42 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 12:42:53 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ static void	free_exec(t_exec *exec)
 	free(exec -> in_out);
 	free(exec -> here);
 	i = -1;
-	while (exec -> paths[++i])
+	while (exec -> paths && exec -> paths[++i])
 		free(exec -> paths[i]);
 	free(exec -> paths);
 }
