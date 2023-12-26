@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 16:50:22 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/30 16:31:08 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 14:28:20 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static void	check_directories(char *file)
 	if (!ft_strncmp(".", file, ft_strlen(file)))
 	{
 		ft_putstr_fd("minishell: .: filename argument required\n", 2);
-		exit_msg(".: usage: . filename [arguments]", 2);
+		exit_msg(".: usage: . filename [arguments]\n", 2);
 	}
 	if (!ft_strncmp("..", file, ft_strlen(file)))
 		exit_msg("..: command not found\n", 127);

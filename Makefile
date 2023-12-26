@@ -8,13 +8,13 @@ SRC =	src/main.c \
 		src/signals/heredoc.c src/signals/input.c src/signals/process.c \
 		src/execution/execution.c src/execution/errors.c src/execution/child_process.c src/execution/set_redirections.c \
 		src/execution/here_doc.c src/execution/builtins.c src/execution/cd.c src/execution/return_val.c \
-		src/execution/pwd.c src/execution/enviroment.c src/execution/unset.c src/execution/export.c src/execution/echo.c src/execution/exit.c src/execution/init_utils.c
+		src/execution/pwd.c src/execution/enviroment.c src/execution/unset.c src/execution/export.c src/execution/echo.c src/execution/exit.c src/execution/init_utils.c src/execution/env_sort.c
 
 CC = gcc
 RM = rm -f
 LIBFT_PATH = libft/
 LIBFT = libft/libft.a
-FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+FLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=address
 READLINE_FLAGS = -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include 
 #READLINE_FLAGS = -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include
 

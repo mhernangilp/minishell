@@ -6,7 +6,7 @@
 /*   By: gfernand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:01:46 by gfernand          #+#    #+#             */
-/*   Updated: 2023/12/19 16:27:04 by gfernand         ###   ########.fr       */
+/*   Updated: 2023/12/26 13:46:29 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,9 @@ void	b_delete(char ***m_env, char *key);
 //export.c
 int		b_export(t_bridge *bridge, char **commands);
 void	add(char ***m_env, char *str, int type);
+
+//env_sort.c
+void	env_sorted(t_bridge *bridge);
 
 //echo.c
 int		echo(char **commands);

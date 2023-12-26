@@ -64,6 +64,7 @@ static void	do_bridge(t_bridge *bridge, char **str_pipe)
 			bridge->commands[i][j] = remove_quotes(bridge->commands[i][j]);
 		}
 	}
+	free(parse);
 }
 
 static t_parse	*malloc_bridge_and_parse(t_bridge *bridge)

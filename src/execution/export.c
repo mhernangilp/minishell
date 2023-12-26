@@ -6,7 +6,7 @@
 /*   By: mhernang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:37:19 by mhernang          #+#    #+#             */
-/*   Updated: 2023/11/26 18:37:20 by mhernang         ###   ########.fr       */
+/*   Updated: 2023/12/26 13:46:25 by mhernang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ int	b_export(t_bridge *bridge, char **commands)
 	int	i;
 
 	i = 0;
-	while (commands[++i])
-		add(&bridge -> m_env, commands[i], NORMAL);
+	if (!commands[1])
+		env_sorted(bridge);
+	else
+		while (commands[++i])
+			add(&bridge -> m_env, commands[i], NORMAL);
 	return (0);
 }
 
