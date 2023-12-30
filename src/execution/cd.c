@@ -14,7 +14,6 @@
 
 static char	*set_chdir(t_bdg *bridge, char **commands);
 static int	chdir_err(char *chdirectory);
-static char	*get_pwd(void);
 static int	chpwd(t_bdg *bridge);
 
 int	cd(t_bdg *bridge, char **commands)
@@ -90,7 +89,7 @@ static int	chpwd(t_bdg *bridge)
 	return (0);
 }
 
-static char	*get_pwd(void)
+char	*get_pwd(void)
 {
 	char	pwd[PATH_MAX];
 

@@ -22,6 +22,7 @@ int	g_signal;
 int	main(int argc, char **argv, char **envp)
 {
 	char	**m_env;
+	char	*pwd;
 
 	(void) argv;
 	if (argc != 1)
@@ -29,6 +30,12 @@ int	main(int argc, char **argv, char **envp)
 	m_env = dup_env(envp);
 	add(&m_env, "?=0", RETVAL);
 	b_delete(&m_env, "OLDPWD");
+	if (!getenv_value(m_env, "PWD"))
+	{
+		pwd = ft_strjoin("PWD=", get_pwd());
+		add(&m_env, pwd, NORMAL);
+		free(pwd);
+	}
 	ctr();
 	while (1)
 		m_env = minishell(m_env);

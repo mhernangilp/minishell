@@ -152,6 +152,7 @@ void	builtins(t_bdg *bridge, char **commands, int type);
 
 //cd.c
 int		cd(t_bdg *bridge, char **commands);
+char	*get_pwd(void);
 
 //pwd.c
 int		pwd(void);
