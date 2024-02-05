@@ -50,10 +50,3 @@ To test the program just use this command:
 ```shell
 $ ./minishell
 ```
-
-
-To test the program you just need to launch "pipex" with this parameters:
-
-```shell
-$ ./pipex here_doc LIMITER cmd1 cmd2 file2
-```
