@@ -16,6 +16,10 @@
 
 ---
 
+<p align="center">
+	<img width="750" alt="screenshot" src="https://github.com/mhernangilp/minishell/assets/123759990/7a75ff01-4305-44d8-9d0b-ad66d897e627">
+</p>
+
 ## 💡 About the project
 
 > _The objective of this project is for you to create the simplest start of a shell
