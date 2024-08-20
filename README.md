@@ -27,7 +27,7 @@ script. Shell is beautiful! Isn’t there a famous saying? “As beautiful as Sh
 to all the shell projects, you will connect with the infinite power of Mankind Intelligence._
 
 
-For more detailed information, look at the [**subject of this project**](https://github.com/mhernangilp/minishell/blob/master/es.subject.minishell.pdf).
+For more detailed information, look at the [**subject of this project**](https://github.com/mhernangilp/NetPractice/blob/main/en.subject.net-practice.pdf).
 
 
 ## 🛠️ Usage
